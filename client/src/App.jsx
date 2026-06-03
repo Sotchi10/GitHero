@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Button from "./components/ui/Button";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={null} />
+        <Route></Route>
       </Routes>
     </BrowserRouter>
   );

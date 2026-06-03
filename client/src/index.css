@@ -1,7 +1,102 @@
 @import "tailwindcss";
 
-body {
-  padding: 0;
-  margin: 0;
-  box-sizing: content-box;
+:root {
+  /* Main COlors */
+  --color-bg-primary: #000113;
+  --color-surface: #05052C;
+  --color-accent: #45308D;
+  --color-border: #575757;
+
+  /* Buttons */
+  --color-btn-primary: #0056AB;
+  --color-btn-primary-hover: #0056CA;
+
+  /* Gradients */
+  --gradient-hero: linear-gradient(90deg,
+      rgba(5, 5, 44, 1) 14%,
+      rgba(69, 48, 141, 0.67) 81%);
+
+  --gradient-radial: radial-gradient(circle,
+      rgba(69, 48, 141, 0.43) 42%,
+      rgba(5, 5, 42, 1) 85%);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply m-0 p-0;
+    background: var(--color-bg-primary);
+    color: white;
+    font-family: system-ui, sans-serif;
+  }
+
+  h1 {
+    @apply text-5xl font-bold;
+  }
+
+  h2 {
+    @apply text-4xl font-semibold;
+  }
+
+  h3 {
+    @apply text-3xl font-semibold;
+  }
+
+  h4 {
+    @apply text-2xl font-medium;
+  }
+
+  h5 {
+    @apply text-xl font-medium;
+  }
+
+  h6 {
+    @apply text-lg font-medium;
+  }
+
+  p {
+    @apply text-lg leading-relaxed;
+  }
+}
+
+@layer utilities {
+
+  /* Colors */
+  .bg-primary {
+    background-color: var(--color-bg-primary);
+  }
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+  .text-accent {
+    color: var(--color-accent);
+  }
+
+  /*Borders*/
+  .border-default {
+    border-color: var(--color-border);
+  }
+
+  /* Buttons */
+  .bg-btn-primary {
+    background-color: var(--color-btn-primary);
+  }
+
+  .hover\:bg-btn-primary-hover:hover {
+    background-color: var(--color-btn-primary-hover);
+  }
+
+  /* Gradients */
+  .bg-hero {
+    background: var(--gradient-hero);
+  }
+
+  .bg-radial {
+    background: var(--gradient-radial);
+  }
 }

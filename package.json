@@ -8,5 +8,9 @@
     "build": "cd client && npm run build",
     "lint": "cd client && npm run lint",
     "start": "cd server && npm run start"
+  },
+  "dependencies": {
+    "link": "^2.1.2",
+    "navigate": "^0.3.6"
   }
 }

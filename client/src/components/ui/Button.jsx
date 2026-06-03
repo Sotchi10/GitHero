@@ -1,9 +1,10 @@
 const buttonColors = {
   primary: "bg-btn-primary hover:bg-btn-primary-hover text-white border-transparent",
   outline: "bg-transparent text-white border-white hover:border-default",
+  nonoutline: "bg-transparent text-white"
 };
 
-const Button = ({ text, type = "button", bcolor = "primary", className = "", children }) => {
+const Button = ({ text, type = "button", bcolor = "nonoutline", className = "", children }) => {
   const selectedColor = buttonColors[bcolor];
 
   return (

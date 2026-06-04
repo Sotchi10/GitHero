@@ -13,7 +13,7 @@ const Hero = ({ id }) => {
           </h1>
           <p className="text-gray-300">
             No more guessing commands, understand what you’re doing and why it
-            works.
+            works. helloo
           </p>
         </div>
 

@@ -5,7 +5,7 @@ const Hero = ({ id }) => {
     <>
       <section
         id={id}
-        className="bg-hero h-min flex flex-col justify-center items-center gap-3 px-40 py-20"
+        className="bg-hero h-min flex flex-col justify-center items-center gap-3 px-40 py-40"
       >
         <div className="flex justify-center items-center flex-col px-80 text-center gap-2">
           <h1 className="font-semibold">

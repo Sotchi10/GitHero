@@ -5,7 +5,7 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="flex justify-between items-center px-15 py-5 border-b border-default bg-transparent">
+    <nav className="fixed top-0 left-0 right-0  flex justify-between items-center px-15 py-5 border-b border-default bg-transparent">
       <div className="flex gap-15 items-center">
         {/*Logo*/}
         <div>

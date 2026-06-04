@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Button from "./components/ui/Button";
-import NavBar from './components/layout/NavBar';
+import NavBar from "./components/layout/NavBar";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
     <BrowserRouter>
-    <NavBar />
+      <NavBar />
       <Routes>
-        <Route></Route>
+        <Route path="/" element={<LandingPage />} />
       </Routes>
     </BrowserRouter>
   );

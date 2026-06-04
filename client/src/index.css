@@ -12,7 +12,7 @@
   --color-btn-primary-hover: #0056CA;
 
   /* Gradients */
-  --gradient-hero: linear-gradient(90deg,
+  --gradient-hero: linear-gradient(180deg,
       rgba(5, 5, 44, 1) 14%,
       rgba(69, 48, 141, 0.67) 81%);
 

@@ -10,7 +10,7 @@ const NavBar = () => {
         {/*Logo*/}
         <div>
           <Link to="/">
-            <h4 className="font-bold">GitHero</h4>
+            <h4 className="font-bold text-amber-600">GitHero</h4>
           </Link>
         </div>
 

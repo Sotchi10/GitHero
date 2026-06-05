@@ -1,10 +1,10 @@
 import Button from "./../components/ui/Button";
 
-const Hero = ({ id }) => {
+const Hero = ({ sectionID }) => {
   return (
     <>
       <section
-        id={id}
+        id={sectionID}
         className="bg-hero h-min flex flex-col justify-center items-center gap-3 px-40 py-40"
       >
         <div className="flex justify-center items-center flex-col px-80 text-center gap-2">
@@ -27,7 +27,7 @@ const Hero = ({ id }) => {
                 placeholder="Enter your email"
                 autoComplete="email"
                 required
-                className="w-full pr-10 py-3 pl-4 rounded-md bg-white placeholder-gray-600"
+                className="w-full pr-10 py-3 pl-4 rounded-[7px] bg-white text-black placeholder-gray-600"
               />
 
               <Button

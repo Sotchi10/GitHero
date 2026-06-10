@@ -100,3 +100,7 @@
     background: var(--gradient-radial);
   }
 }
+
+.input {
+  @apply border w-full px-4 py-2 rounded-md;
+}

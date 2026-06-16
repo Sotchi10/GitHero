@@ -33,6 +33,8 @@
     background: var(--color-bg-primary);
     color: white;
     font-family: system-ui, sans-serif;
+    overflow-x: hidden;
+    width: 100vw;
   }
 
   h1 {

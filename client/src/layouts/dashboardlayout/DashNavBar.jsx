@@ -1,0 +1,34 @@
+import DashIconContainer from "../../features/dashboard/components/dashboard-ui/DashIconContainer";
+import SearchBar from "../../components/ui/SearchBar";
+import DashNavItem from "./../../features/dashboard/components/dashboard-ui/DashNavItem";
+import cat from "../../assets/image/cat.jpg";
+import { NavLink } from "react-router-dom";
+
+const DashNavBar = ({ activePath, setActivePath }) => {
+  const currentPath = activePath.slice(1);
+
+  return (
+    <>
+      <nav className="w-full h-16 bg-transparent border-b border-default flex items-center justify-between px-6">
+        <DashNavItem itemName={currentPath} className="font-semibold" />
+        <div className="flex gap-6 items-center">
+          <SearchBar />
+          <div className="flex gap-3">
+            <DashIconContainer />
+            <DashIconContainer />
+            <DashIconContainer />
+            <DashIconContainer />
+          </div>
+          <NavLink to="/profile" className="w-9.5 h-9.5 cursor-pointer">
+            <img
+              src={cat}
+              alt="catpfp"
+              className="w-full h-full rounded-[100%]"
+            />
+          </NavLink>
+        </div>
+      </nav>
+    </>
+  );
+};
+export default DashNavBar;

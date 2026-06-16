@@ -1,13 +1,18 @@
-import Hero from './../sections/Hero';
-import Feature from './../sections/Feature';
+import NavBar from "../components/layout/NavBar";
+import Feature from "./sections/Feature";
+import Hero from "./sections/Hero";
+
 
 const LandingPage = () => {
   return (
     <>
-      <Hero sectionID="Hero" />
-      <section id="problems-solutions">
-        <Feature sectionID="Features" />
-      </section>
+      <NavBar />
+      <main>
+        <Hero sectionID="Hero" />
+        <section id="problems-solutions">
+          <Feature sectionID="Features" />
+        </section>
+      </main>
     </>
   );
 };

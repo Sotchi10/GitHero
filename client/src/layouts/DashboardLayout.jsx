@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const DashboardLayout = () => {
   const [activePath, setActivePath] = useState("/dashboard");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <div className="h-screen w-screen flex flex-col">
@@ -14,7 +15,7 @@ const DashboardLayout = () => {
       {/* Main Layout */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <DashSideBar activePath={activePath} setActivePath={setActivePath} />
+        <DashSideBar activeUser={user.username} activePath={activePath} setActivePath={setActivePath} />
 
         {/* Content Area */}
         <main className="flex-1 bg-[#080808] overflow-y-auto">

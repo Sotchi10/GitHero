@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
     "dev:client": "cd client && npm run dev",
     "dev:server": "cd server && npm run dev",
     "build": "cd client && npm run build",
@@ -12,5 +13,8 @@
   "dependencies": {
     "link": "^2.1.2",
     "navigate": "^0.3.6"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3"
   }
 }

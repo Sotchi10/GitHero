@@ -1,7 +1,8 @@
-const express = require("express");
-const logger = require("./middleware/logger");
 
-const app = express();
+import { express } from 'express';
+import { logger } from './middleware/logger.js'
+
+export const app = express();
 
 // middleware
 app.use(logger);
@@ -11,4 +12,4 @@ app.get("/", (req, res) => {
   res.send("GitHero Backend is running");
 });
 
-module.exports = app;
+

@@ -12,7 +12,7 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { TbSettings } from "react-icons/tb";
 import { PiSignOut } from "react-icons/pi";
 
-const DashSideBar = ({ activePath, setActivePath }) => {
+const DashSideBar = ({ activeUser, activePath, setActivePath }) => {
   const DashNavItems = [
     {
       section: "Workspace",
@@ -68,7 +68,7 @@ const DashSideBar = ({ activePath, setActivePath }) => {
     <aside className="left-0 w-75 px-5 bg-[#0D0D0D] flex flex-col border-r border-default py-10">
       {/* User */}
       <NavLink to="/profile" onClick={() => setActivePath("/profile")}>
-        <DashNavItem itemName="Username" className="w-1/2 cursor-pointer" />
+        <DashNavItem itemName={activeUser} className="w-1/2 cursor-pointer" />
       </NavLink>
 
       {/* Nav */}

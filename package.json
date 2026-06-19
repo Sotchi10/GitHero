@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "link": "^2.1.2",
-    "navigate": "^0.3.6"
+    "navigate": "^0.3.6",
+    "react-router-dom": "^7.18.0"
   },
   "devDependencies": {
     "concurrently": "^10.0.3"

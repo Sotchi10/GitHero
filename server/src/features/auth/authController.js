@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import { db } from "../../config/db.js";
+import { findUserByEmail } from "./authModels.js";
+
 
 export const signup = async (req, res) => {
     try {
@@ -11,25 +13,19 @@ export const signup = async (req, res) => {
         }
 
         // check existing user
-        const [existing] = await db.query(
-            "SELECT email FROM users WHERE email = ?",
-            [email]
-        );
-
-        if (existing.length > 0) {
-            return res.status(400).json({ message: "User already exists" });
-        }
+        const user = await findUserByEmail(email);
+        if (!user) return res.status(400).json({ message: "user exists" });
 
         // hash password
         const hashedPassword = await bcrypt.hash(password_hash, 10);
 
         // insert user
+        const sql = `INSERT INTO users (firstName, lastName, username, email, password_hash, gender, user_role)
+        VALUES (?, ?, ?, ?, ?, ?, ?)`;
         await db.query(
-            `INSERT INTO users (firstName, lastName, username, email, password_hash, gender, user_role)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            sql,
             [firstName, lastName, username, email, hashedPassword, gender, user_role]
         );
-
         res.status(201).json({
             message: "User registered successfully",
         });
@@ -50,16 +46,9 @@ export const login = async (req, res) => {
         }
 
         // find user
-        const [users] = await db.query(
-            "SELECT * FROM users WHERE email = ?",
-            [email]
-        );
+        const user = await findUserByEmail(email);
 
-        if (users.length === 0 || users == null) {
-            return res.status(400).json({ message: "User not found" });
-        }
-
-        const user = users[0];
+        if (!user) return res.status(400).json({ message: "user not exists" });
 
         // compare password
         const isMatch = await bcrypt.compare(password, user.password_hash);

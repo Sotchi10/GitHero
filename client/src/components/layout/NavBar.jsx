@@ -2,8 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
 
 const NavBar = () => {
-  const navigate = useNavigate();
-
   return (
     <nav className="fixed top-0 left-0 right-0  flex justify-between items-center px-15 py-5 border-b border-default bg-transparent">
       <div className="flex gap-15 items-center">
@@ -32,13 +30,14 @@ const NavBar = () => {
       </div>
 
       {/*Buttons*/}
+
       <div className="flex gap-1">
-        <Button onClick={() => navigate("/login")} bcolor="nonoutline">
-          Sign in
-        </Button>
-        <Button onClick={() => navigate("/signup")} bcolor="primary">
-          Sign up
-        </Button>
+        <Link to="/login">
+          <Button bcolor="nonoutline">Sign in</Button>
+        </Link>
+        <Link to="/signup">
+          <Button bcolor="primary">Sign up</Button>
+        </Link>
       </div>
     </nav>
   );

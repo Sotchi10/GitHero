@@ -1,7 +1,8 @@
-
-import Button from './../../components/ui/Button';
+import Button from "./../../components/ui/Button";
+import { Link, useNavigate } from "react-router-dom";
 
 const Hero = ({ sectionID }) => {
+  const navigate = useNavigate();
   return (
     <>
       <section
@@ -14,7 +15,7 @@ const Hero = ({ sectionID }) => {
           </h1>
           <p className="text-gray-300">
             No more guessing commands, understand what you’re doing and why it
-            works. helloo
+            works.
           </p>
         </div>
 
@@ -27,17 +28,17 @@ const Hero = ({ sectionID }) => {
                 type="email"
                 placeholder="Enter your email"
                 autoComplete="email"
-                required
                 className="w-full pr-10 py-3 pl-4 rounded-[7px] bg-white text-black placeholder-gray-600"
               />
 
-              <Button
-                type="submit"
-                bcolor="primary"
-                className="absolute right-1 top-1 bottom-1 items-center flex"
-              >
-                Sign up GitHero
-              </Button>
+              <Link to="/signup">
+                <Button
+                  bcolor="primary"
+                  className="absolute right-1 top-1 bottom-1 items-center flex"
+                >
+                  Sign up GitHero
+                </Button>
+              </Link>
             </div>
           </form>
 

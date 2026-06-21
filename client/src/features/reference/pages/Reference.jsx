@@ -1,221 +1,12 @@
 import { useMemo, useState } from "react";
+import { FiGitBranch, FiSearch } from "react-icons/fi";
+import CommandCard from "../components/CommandCard";
+import CommandList from "../components/CommandList";
 import {
-  FiAlertTriangle,
-  FiGitBranch,
-  FiSearch,
-  FiUser,
-  FiUsers,
-} from "react-icons/fi";
-
-const REFERENCE_DATA = {
-  solo: {
-    do: {
-      title: "Working alone: do this",
-      Icon: FiUser,
-      color: "green",
-      items: [
-        {
-          cmd: 'git commit -m "feat: add profile page"',
-          desc: "Write clear, descriptive commit messages every time.",
-        },
-        {
-          cmd: "git branch feature/name",
-          desc: "Always branch off main before starting new work.",
-        },
-        {
-          cmd: "git stash",
-          desc: "Stash unfinished work before switching context.",
-        },
-        {
-          cmd: "git log --oneline",
-          desc: "Review history regularly to stay oriented.",
-        },
-      ],
-    },
-    avoid: {
-      title: "Working alone: avoid this",
-      Icon: FiAlertTriangle,
-      color: "red",
-      items: [
-        {
-          cmd: 'git commit -m "fix"',
-          desc: "Vague messages make history hard to understand later.",
-        },
-        {
-          cmd: "git push --force",
-          desc: "Force push rewrites history and can remove useful work.",
-        },
-        {
-          cmd: "git add .",
-          desc: "Staging everything blindly can include unintended files.",
-        },
-        {
-          cmd: "git reset --hard",
-          desc: "Hard reset permanently discards uncommitted work.",
-        },
-      ],
-    },
-  },
-  collab: {
-    do: {
-      title: "Collaborating: do this",
-      Icon: FiUsers,
-      color: "green",
-      items: [
-        {
-          cmd: "git pull --rebase",
-          desc: "Rebase keeps your local work on top of the latest changes.",
-        },
-        {
-          cmd: "git fetch origin",
-          desc: "Fetch before starting work to see team changes.",
-        },
-        {
-          cmd: "git merge --no-ff",
-          desc: "Preserve a merge commit for traceability in pull requests.",
-        },
-        {
-          cmd: "git diff main",
-          desc: "Review your diff against main before opening a pull request.",
-        },
-      ],
-    },
-    avoid: {
-      title: "Collaborating: avoid this",
-      Icon: FiAlertTriangle,
-      color: "red",
-      items: [
-        {
-          cmd: "git push -f origin main",
-          desc: "Force pushing shared branches can overwrite team work.",
-        },
-        {
-          cmd: "git commit --amend",
-          desc: "Amending pushed commits can break another person's history.",
-        },
-        {
-          cmd: "git rebase main",
-          desc: "Rebasing public branches can create conflicts for the team.",
-        },
-        {
-          cmd: "git push origin main",
-          desc: "Pushing directly to main bypasses pull request review.",
-        },
-      ],
-    },
-  },
-};
-
-const COMMANDS = [
-  {
-    cmd: "git status",
-    desc: "Show changed, staged, and untracked files.",
-  },
-  {
-    cmd: "git add <file>",
-    desc: "Stage a file for the next commit.",
-  },
-  {
-    cmd: "git commit -m <message>",
-    desc: "Save staged work with a message.",
-  },
-  {
-    cmd: "git checkout -b <branch>",
-    desc: "Create and switch to a new branch.",
-  },
-  {
-    cmd: "git pull --rebase",
-    desc: "Update your branch and replay local commits on top.",
-  },
-  {
-    cmd: "git diff --staged",
-    desc: "Preview staged changes before committing.",
-  },
-];
-
-const tabs = [
-  { id: "todo", label: "To-do" },
-  { id: "commands", label: "Commands" },
-];
-
-const ALL_REFERENCE_CARDS = [
-  REFERENCE_DATA.solo.do,
-  REFERENCE_DATA.solo.avoid,
-  REFERENCE_DATA.collab.do,
-  REFERENCE_DATA.collab.avoid,
-];
-
-function CommandCard({ data }) {
-  const isGreen = data.color === "green";
-  const Icon = data.Icon;
-
-  return (
-    <article
-      className={`rounded-lg border bg-[#111] p-4 ${
-        isGreen ? "border-[#1d4030]" : "border-[#3a1e1e]"
-      }`}
-    >
-      <div className="mb-2 flex items-center gap-2 border-b border-[#1e1e1e] pb-3">
-        <Icon className={isGreen ? "text-[#4caf8a]" : "text-[#e06060]"} />
-        <h3 className="text-sm font-medium text-[#d3d3d3]">{data.title}</h3>
-      </div>
-
-      <div className="divide-y divide-[#1a1a1a]">
-        {data.items.map((item) => (
-          <div key={item.cmd} className="flex items-start gap-3 py-3">
-            <span
-              className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${
-                isGreen ? "bg-[#4caf8a]" : "bg-[#e06060]"
-              }`}
-            />
-            <div className="min-w-0">
-              <code
-                className={`inline-block max-w-full rounded px-2 py-1 font-mono text-xs ${
-                  isGreen
-                    ? "bg-[#0e2018] text-[#7dd3b0]"
-                    : "bg-[#200e0e] text-[#e89090]"
-                }`}
-              >
-                {item.cmd}
-              </code>
-              <p className="mt-1 text-xs leading-relaxed text-[#777]">
-                {item.desc}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </article>
-  );
-}
-
-function CommandList({ commands }) {
-  if (commands.length === 0) {
-    return (
-      <div className="rounded-lg border border-[#202020] bg-[#111] p-10 text-center text-sm text-[#666]">
-        No commands match your search.
-      </div>
-    );
-  }
-
-  return (
-    <div className="grid gap-3">
-      {commands.map((item) => (
-        <div
-          key={item.cmd}
-          className="rounded-lg border border-[#202020] bg-[#111] p-4"
-        >
-          <code className="rounded bg-[#0e2018] px-2 py-1 font-mono text-xs text-[#7dd3b0]">
-            {item.cmd}
-          </code>
-          <p className="mt-2 text-sm leading-relaxed text-[#8a8a8a]">
-            {item.desc}
-          </p>
-        </div>
-      ))}
-    </div>
-  );
-}
+  ALL_REFERENCE_CARDS,
+  COMMANDS,
+  REFERENCE_TABS,
+} from "../data/referenceData";
 
 const Reference = ({ className = "" }) => {
   const [activeTab, setActiveTab] = useState("todo");
@@ -274,7 +65,7 @@ const Reference = ({ className = "" }) => {
       <div className="flex-1 overflow-hidden">
         <main className="h-full overflow-y-auto p-5">
           <div className="mb-4 inline-flex rounded-lg border border-[#222] bg-[#161616] p-1">
-            {tabs.map((tab) => (
+            {REFERENCE_TABS.map((tab) => (
               <button
                 key={tab.id}
                 type="button"
@@ -306,7 +97,6 @@ const Reference = ({ className = "" }) => {
           {activeTab === "commands" && (
             <CommandList commands={filteredCommands} />
           )}
-
         </main>
       </div>
     </section>

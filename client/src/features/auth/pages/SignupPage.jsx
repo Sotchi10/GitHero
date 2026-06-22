@@ -6,25 +6,25 @@ import { signup } from "../../../api/apiAuth";
 const SignupPage = () => {
   const navigate = useNavigate();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password_hash, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [gender, setGender] = useState("");
-  const [user_role, setRole] = useState("");
+  const [role, setRole] = useState("");
 
 
   const handleSignup = async () => {
     try {
       const res = await signup({
-        firstName,
-        lastName, 
+        first_name,
+        last_name, 
         email,
         password_hash,
         username,
         gender,
-        user_role,
+        role,
       });
 
       console.log("Signup success:", res.data);
@@ -60,7 +60,7 @@ const SignupPage = () => {
               label="First Name"
               type="text"
               placeholder="First name"
-              value={firstName}
+              value={first_name}
               onChange={(e) => setFirstName(e.target.value)}
             />
 
@@ -68,7 +68,7 @@ const SignupPage = () => {
               label="Last Name"
               type="text"
               placeholder="Last name"
-              value={lastName}
+              value={last_name}
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
@@ -81,7 +81,7 @@ const SignupPage = () => {
             />
             <Select
               label="Role"
-              value={user_role}
+              value={role}
               onChange={(e) => setRole(e.target.value)}
             />
           </div>

@@ -5,7 +5,7 @@ const DashNavItem = ({ img, icon: Icon, itemName, className = "" }) => {
     >
       <div className="w-4.5 h-4.5 flex items-center justify-center">
         {Icon ? (
-          <Icon className="w-full h-full text-gray-400" />
+          <Icon className="w-full h-full text-[#8a8a8a]" />
         ) : img ? (
           <img
             src={img}

@@ -3,7 +3,7 @@ import { FiAlertTriangle, FiUser, FiUsers } from "react-icons/fi";
 export const REFERENCE_DATA = {
   solo: {
     do: {
-      title: "Working alone: do this",
+      title: "Working Alone: Do This",
       Icon: FiUser,
       color: "green",
       items: [
@@ -26,7 +26,7 @@ export const REFERENCE_DATA = {
       ],
     },
     avoid: {
-      title: "Working alone: avoid this",
+      title: "Working Alone: Avoid This",
       Icon: FiAlertTriangle,
       color: "red",
       items: [
@@ -51,7 +51,7 @@ export const REFERENCE_DATA = {
   },
   collab: {
     do: {
-      title: "Collaborating: do this",
+      title: "Collaborating: Do This",
       Icon: FiUsers,
       color: "green",
       items: [
@@ -74,7 +74,7 @@ export const REFERENCE_DATA = {
       ],
     },
     avoid: {
-      title: "Collaborating: avoid this",
+      title: "Collaborating: Avoid This",
       Icon: FiAlertTriangle,
       color: "red",
       items: [
@@ -99,32 +99,101 @@ export const REFERENCE_DATA = {
   },
 };
 
-export const COMMANDS = [
-  {
-    cmd: "git status",
-    desc: "Show changed, staged, and untracked files.",
+export const COMMANDS = {
+  beginner: {
+    title: "Beginner Git Basics",
+    items: [
+      {
+        cmd: "git init",
+        desc: "Initialize a new Git repository in your project.",
+      },
+      {
+        cmd: "git clone <repo-url>",
+        desc: "Copy an existing repository from GitHub or other remote source.",
+      },
+      {
+        cmd: "git status",
+        desc: "Show changed, staged, and untracked files.",
+      },
+      {
+        cmd: "git add .",
+        desc: "Stage all changes in the current directory.",
+      },
+      {
+        cmd: "git add <file>",
+        desc: "Stage a specific file for commit.",
+      },
+      {
+        cmd: "git commit -m <message>",
+        desc: "Save staged work with a message.",
+      },
+    ],
   },
-  {
-    cmd: "git add <file>",
-    desc: "Stage a file for the next commit.",
+
+  intermediate: {
+    title: "Intermediate Workflow",
+    items: [
+      {
+        cmd: "git log --oneline",
+        desc: "View commit history in a compact format.",
+      },
+      {
+        cmd: "git diff",
+        desc: "See unstaged changes in your working directory.",
+      },
+      {
+        cmd: "git diff --staged",
+        desc: "Preview staged changes before committing.",
+      },
+      {
+        cmd: "git checkout -b <branch>",
+        desc: "Create and switch to a new branch.",
+      },
+      {
+        cmd: "git checkout <branch>",
+        desc: "Switch to an existing branch.",
+      },
+      {
+        cmd: "git stash",
+        desc: "Temporarily save uncommitted changes.",
+      },
+      {
+        cmd: "git stash pop",
+        desc: "Restore stashed changes.",
+      },
+    ],
   },
-  {
-    cmd: "git commit -m <message>",
-    desc: "Save staged work with a message.",
+
+  collaboration: {
+    title: "Collaboration & Remote Work",
+    items: [
+      {
+        cmd: "git push origin <branch>",
+        desc: "Upload your commits to a remote repository.",
+      },
+      {
+        cmd: "git pull --rebase",
+        desc: "Update your branch and replay your commits on top.",
+      },
+      {
+        cmd: "git fetch origin",
+        desc: "Get latest updates from remote without merging.",
+      },
+      {
+        cmd: "git merge --no-ff <branch>",
+        desc: "Merge branches while preserving history.",
+      },
+      {
+        cmd: "git branch -d <branch>",
+        desc: "Delete a local branch safely after merging.",
+      },
+      {
+        cmd: "git push origin --delete <branch>",
+        desc: "Delete a remote branch.",
+      },
+    ],
   },
-  {
-    cmd: "git checkout -b <branch>",
-    desc: "Create and switch to a new branch.",
-  },
-  {
-    cmd: "git pull --rebase",
-    desc: "Update your branch and replay local commits on top.",
-  },
-  {
-    cmd: "git diff --staged",
-    desc: "Preview staged changes before committing.",
-  },
-];
+};
 
 export const REFERENCE_TABS = [
   { id: "todo", label: "To-do" },

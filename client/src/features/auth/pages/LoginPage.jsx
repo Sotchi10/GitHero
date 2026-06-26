@@ -14,18 +14,15 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     if (loading) return;
-
+    
     try {
       setLoading(true);
 
       const res = await loginAPI({ email, password });
-
+      console.log(res.data);
       if (!res.data) throw new Error("Invalid response from server");
-
-      await login(res.data.user);
-
+      await login(res.data);
       console.log("Login success:", res.data);
-
       navigate("/dashboard");
     } catch (err) {
       const message =

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { FiGitBranch, FiSearch } from "react-icons/fi";
+import { FiSearch } from "react-icons/fi";
 import CommandCard from "../components/CommandCard";
 import CommandList from "../components/CommandList";
 import {
@@ -108,7 +108,7 @@ const Reference = ({ className = "" }) => {
               )}
             </div>
 
-            <DashSideBarRight />
+            <DashSideBarRight title="Community" link="Go to developers community ->"/>
           </div>
         </main>
       </div>

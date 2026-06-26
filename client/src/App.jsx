@@ -13,8 +13,11 @@ import Module from "./features/modules/pages/Module";
 import Setting from "./features/setting/pages/Setting";
 import Profile from "./features/profile/pages/Profile";
 import Quiz from "./features/quiz/pages/Quiz";
+import Article from "./features/articles/pages/Article";
+import Developers from "./features/developers/pages/Developers";
 import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import CommunityPost from './features/community/pages/CommunityPost';
 
 
 function App() {
@@ -38,6 +41,9 @@ function App() {
             <Route path="/references" element={<Reference />} />
             <Route path="/codespaces" element={<Codespaces />} />
             <Route path="/community" element={<Community />} />
+            <Route path="/community/posts" element={<CommunityPost />} />
+            <Route path="/:username/post/:id" element={<Article />} />
+            <Route path="/developers" element={<Developers />} />
             <Route path="/modules" element={<Module />} />
             <Route path="/quizes" element={<Quiz />} />
             <Route path="/settings" element={<Setting />} />

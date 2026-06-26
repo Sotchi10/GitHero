@@ -4,11 +4,12 @@ const buttonColors = {
   nonoutline: "bg-transparent text-white"
 };
 
-const Button = ({ text, type = "button", bcolor = "nonoutline", className = "", children }) => {
+const Button = ({ text, type = "button", bcolor = "nonoutline", className = "", children, onClick }) => {
   const selectedColor = buttonColors[bcolor];
 
   return (
     <button
+    onClick={onClick}
       type={type}
       className={`rounded-lg px-6 py-2 font-semibold text-[15px] cursor-pointer transition-colors ${selectedColor} ${className}`}
     >

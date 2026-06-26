@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
-import { updatePfp } from "../../../api/apiProfile";
+import { updateCurrentProfile } from "../../../api/apiProfile";
 import { useNavigate } from "react-router-dom";
 
-const Description = () => {
-  const { profile, updateUser } = useAuth();
+const Description = ({ profile, canEdit = false }) => {
+  const { updateProfile } = useAuth();
   const navigate = useNavigate();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -12,15 +12,11 @@ const Description = () => {
   const [error, setError] = useState("");
 
   const [form, setForm] = useState({
-    username: profile?.username || "",
-    bio: profile?.bio || "",
     description: profile?.description || "",
   });
 
   const resetForm = () => {
     setForm({
-      username: profile?.username || "",
-      bio: profile?.bio || "",
       description: profile?.description || "",
     });
   };
@@ -30,29 +26,24 @@ const Description = () => {
   };
 
   const handleSave = async () => {
-    if (!profile?.user_id || saving) return;
-
-    if (!form.username.trim()) {
-      setError("Username is required");
-      return;
-    }
+    if (!profile?.user_id || saving || !canEdit) return;
 
     try {
       setSaving(true);
       setError("");
 
-      const res = await updatePfp(profile.user_id, {
-        username: form.username.trim(),
-        bio: form.bio.trim(),
+      const updatedData = {
         description: form.description.trim(),
-      });
+      };
 
-      const updatedProfile = res.data.profile;
-
-      updateUser(updatedProfile);
+      const updatedProfile = await updateProfile(updatedData);
+      console.log(updatedProfile);
       setIsEditing(false);
 
-      if (updatedProfile?.username && updatedProfile.username !== profile.username) {
+      if (
+        updatedProfile?.username &&
+        updatedProfile.username !== profile.username
+      ) {
         navigate(`/profile/${updatedProfile.username}`, { replace: true });
       }
     } catch (err) {
@@ -70,6 +61,8 @@ const Description = () => {
   };
 
   const handleEdit = () => {
+    if (!canEdit) return;
+
     resetForm();
     setError("");
     setIsEditing(true);
@@ -87,30 +80,12 @@ const Description = () => {
     <div className="w-full px-8 py-5 border border-default mt-4 rounded-[8px]">
       {isEditing ? (
         <>
-          {/* Username */}
-          <input
-            name="username"
-            value={form.username}
-            onChange={handleChange}
-            className="w-full bg-transparent border p-2 mb-2"
-            placeholder="Username"
-          />
-
-          {/* Bio */}
-          <textarea
-            name="bio"
-            value={form.bio}
-            onChange={handleChange}
-            className="w-full bg-transparent border p-2 mb-2"
-            placeholder="Short bio"
-          />
-
           {/* Description */}
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
-            className="w-full bg-transparent border p-2"
+            className="w-full rounded border border-[#242424] bg-transparent p-2 text-sm"
             placeholder="Write your description..."
           />
 
@@ -136,14 +111,28 @@ const Description = () => {
           </div>
         </>
       ) : (
-        <div onClick={handleEdit} className="cursor-pointer">
-          <p className="font-semibold">{profile.username}</p>
-          <p className="text-sm text-gray-300 mt-2">
-            {profile.bio || "Click to add your bio..."}
-          </p>
-          <p className="mt-4">
-            {profile.description || "Click to add your description..."}
-          </p>
+        <div onClick={handleEdit} className={canEdit ? "cursor-pointer" : ""}>
+          <div>
+            <div className="flex items-center gap-2">
+              <p className="font-semibold">
+                {profile.full_name || profile.username}
+              </p>
+              <div className="px-2 py-1 border rounded-[15px] border-[#242424]">
+                <p className="text-[8px]">{profile.role}</p>
+              </div>
+            </div>
+            <p className="text-[13px]">{profile.bio || "No Bio yet"}</p>
+          </div>
+          <hr className="mt-3 w-1/4" />
+          <div className="mt-3 flex flex-col">
+            <p>{profile.username}'s description</p>
+            <p className="text-[13px]">
+              {profile.description ||
+                (canEdit
+                  ? "Click to add your description..."
+                  : "No description yet.")}
+            </p>
+          </div>
         </div>
       )}
     </div>

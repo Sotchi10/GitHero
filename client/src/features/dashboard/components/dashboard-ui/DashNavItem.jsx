@@ -1,9 +1,9 @@
 const DashNavItem = ({ img, icon: Icon, itemName, className = "" }) => {
   return (
     <div
-      className={`flex items-center gap-2 p-2 hover:bg-[#161616] hover:rounded-[10px] ${className}`}
+      className={`flex items-center gap-2 px-2 py-1.5 hover:bg-[#161616] hover:rounded-[5px] ${className}`}
     >
-      <div className="w-4.5 h-4.5 flex items-center justify-center">
+      <div className="w-4.25 h-4.25 flex items-center justify-center">
         {Icon ? (
           <Icon className="w-full h-full text-[#8a8a8a]" />
         ) : img ? (
@@ -13,7 +13,7 @@ const DashNavItem = ({ img, icon: Icon, itemName, className = "" }) => {
             className="object-contain w-full h-full"
           />
         ) : (
-          <div className="w-full h-full bg-gray-400 rounded-full" />
+          <div className="w-full h-full bg-gray-400 rounded-[5px]" />
         )}
       </div>
 

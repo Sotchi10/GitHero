@@ -2,7 +2,7 @@ function CommandCard({ data }) {
   const Icon = data.Icon;
 
   return (
-    <article className="rounded-lg border border-default bg-[#111] p-4">
+    <article className="rounded-lg border border-[#222] bg-[#111] p-4">
       <div className="mb-2 flex items-center gap-2 border-b border-default pb-3">
         <Icon className="text-border-default" />
         <h3 className="text-sm font-medium text-[#d3d3d3]">{data.title}</h3>
@@ -22,7 +22,7 @@ function CommandCard({ data }) {
                 {item.desc}
               </p>
             </div>
-          </div>
+          </div>  
         ))}
       </div>
     </article>

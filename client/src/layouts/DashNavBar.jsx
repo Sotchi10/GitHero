@@ -1,8 +1,8 @@
 import DashIconContainer from "../features/dashboard/components/dashboard-ui/DashIconContainer";
 import SearchBar from "../components/ui/SearchBar";
-import cat from "../assets/image/cat.jpg";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Avatar from "../features/profile/components/Avatar";
 
 const DashNavBar = () => {
   const { pathname } = useLocation();
@@ -43,9 +43,9 @@ const DashNavBar = () => {
 
         <NavLink
           to={profilePath}
-          className="w-9.5 h-9.5 cursor-pointer"
+          className="cursor-pointer"
         >
-          <img src={cat} alt="catpfp" className="w-full h-full rounded-full" />
+          <Avatar profile={profile} size="md" />
         </NavLink>
       </div>
     </nav>

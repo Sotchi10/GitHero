@@ -7,12 +7,14 @@ const PROFILE_SELECT = `
         u.email,
         p.first_name,
         p.last_name,
+        TRIM(CONCAT_WS(' ', p.first_name, p.last_name)) AS full_name,
         p.username,
         p.bio,
         p.description,
         p.gender,
         p.role,
-        p.location
+        p.location,
+        p.avatar
     FROM profile p
     JOIN users u ON u.user_id = p.user_id
 `;
@@ -45,7 +47,7 @@ export const findProfileByUsernameForOtherUser = async (username, userId) => {
 };
 
 export const updateProfileByUserId = async (userId, data) => {
-    const allowedFields = ["username", "bio", "description"];
+    const allowedFields = ["first_name", "last_name", "username", "bio", "description", "avatar"];
     const entries = Object.entries(data).filter(([key]) =>
         allowedFields.includes(key)
     );

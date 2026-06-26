@@ -13,6 +13,36 @@ const parseUserId = (value) => {
 const validateProfileUpdates = (body) => {
     const updates = {};
 
+    if (Object.prototype.hasOwnProperty.call(body, "full_name")) {
+        const fullName = String(body.full_name || "").trim().replace(/\s+/g, " ");
+        if (!fullName) {
+            return { error: "Full name is required" };
+        }
+        if (fullName.length > 100) {
+            return { error: "Full name must be 100 characters or fewer" };
+        }
+
+        const [firstName, ...lastNameParts] = fullName.split(" ");
+        updates.first_name = firstName;
+        updates.last_name = lastNameParts.join(" ") || null;
+    }
+
+    if (Object.prototype.hasOwnProperty.call(body, "first_name")) {
+        const firstName = String(body.first_name || "").trim();
+        if (firstName.length > 50) {
+            return { error: "First name must be 50 characters or fewer" };
+        }
+        updates.first_name = firstName || null;
+    }
+
+    if (Object.prototype.hasOwnProperty.call(body, "last_name")) {
+        const lastName = String(body.last_name || "").trim();
+        if (lastName.length > 50) {
+            return { error: "Last name must be 50 characters or fewer" };
+        }
+        updates.last_name = lastName || null;
+    }
+
     if (Object.prototype.hasOwnProperty.call(body, "username")) {
         const username = String(body.username || "").trim();
         if (!username) {
@@ -45,6 +75,41 @@ const validateProfileUpdates = (body) => {
     }
 
     return { updates };
+};
+
+const updateProfileForUser = async (userId, body) => {
+    const existingProfile = await findProfileByUserId(userId);
+
+    if (!existingProfile) {
+        return { status: 404, body: { message: "Profile not found" } };
+    }
+
+    const { updates, error } = validateProfileUpdates(body);
+
+    if (error) {
+        return { status: 400, body: { message: error } };
+    }
+
+    if (updates.username) {
+        const duplicateProfile = await findProfileByUsernameForOtherUser(
+            updates.username,
+            userId
+        );
+
+        if (duplicateProfile) {
+            return { status: 409, body: { message: "Username already exists" } };
+        }
+    }
+
+    const profile = await updateProfileByUserId(userId, updates);
+
+    return {
+        status: 200,
+        body: {
+            message: "Profile updated successfully",
+            profile,
+        },
+    };
 };
 
 // Get Profile
@@ -92,33 +157,33 @@ export const updateProfile = async (req, res) => {
             return res.status(400).json({ message: "Invalid user ID" });
         }
 
-        const existingProfile = await findProfileByUserId(userId);
+        const result = await updateProfileForUser(userId, req.body);
+        res.status(result.status).json(result.body);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
 
-        if (!existingProfile) {
-            return res.status(404).json({ message: "Profile not found" });
+export const updateCurrentProfile = async (req, res) => {
+    try {
+        const result = await updateProfileForUser(req.auth.userId, req.body);
+        res.status(result.status).json(result.body);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+export const uploadAvatar = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: "Avatar file is required" });
         }
 
-        const { updates, error } = validateProfileUpdates(req.body);
-
-        if (error) {
-            return res.status(400).json({ message: error });
-        }
-
-        if (updates.username) {
-            const duplicateProfile = await findProfileByUsernameForOtherUser(
-                updates.username,
-                userId
-            );
-
-            if (duplicateProfile) {
-                return res.status(409).json({ message: "Username already exists" });
-            }
-        }
-
-        const profile = await updateProfileByUserId(userId, updates);
+        const avatar = `/uploads/avatars/${req.file.filename}`;
+        const profile = await updateProfileByUserId(req.auth.userId, { avatar });
 
         res.json({
-            message: "Profile updated successfully",
+            message: "Avatar updated successfully",
             profile,
         });
     } catch (err) {

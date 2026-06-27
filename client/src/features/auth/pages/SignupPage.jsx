@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Button from "../../../components/ui/Button";
 import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../../../api/apiAuth";
+import { loginAPI, signup } from "../../../api/apiAuth";
+import { useAuth } from "../../../context/AuthContext";
 
 const SignupPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
@@ -13,10 +15,17 @@ const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [gender, setGender] = useState("");
   const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
 
   const handleSignup = async () => {
+    if (loading) return;
+
     try {
+      setLoading(true);
+      setError("");
+
       const res = await signup({
         first_name,
         last_name, 
@@ -28,10 +37,26 @@ const SignupPage = () => {
       });
 
       console.log("Signup success:", res.data);
-      
-      navigate("/login");
+
+      const loginRes = await loginAPI({
+        email,
+        password: password_hash,
+      });
+
+      await login(loginRes.data.user);
+
+      navigate("/dashboard");
     } catch (err) {
+      const message =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
+        "Something went wrong";
+
+      setError(message);
       console.log(err.response?.data || err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,6 +71,12 @@ const SignupPage = () => {
       {/* RIGHT SIDE */}
       <div className="bg-white text-black flex flex-col justify-center px-10 md:px-30">
         <h4 className="font-semibold">Sign up for GitHero</h4>
+
+        {error && (
+          <p className="mt-4 rounded-md bg-red-50 px-4 py-2 text-sm text-red-600">
+            {error}
+          </p>
+        )}
 
         <form
           className="flex flex-col gap-4 mt-6"
@@ -116,7 +147,7 @@ const SignupPage = () => {
           />
 
           <Button type="submit" bcolor="primary">
-            Create account
+            {loading ? "Creating account..." : "Create account"}
           </Button>
         </form>
 

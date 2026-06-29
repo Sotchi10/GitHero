@@ -10,12 +10,11 @@ import Reference from "./features/reference/pages/Reference";
 import Codespaces from "./features/codespace/pages/Codespaces";
 import Community from "./features/community/pages/Community";
 import Module from "./features/modules/pages/Module";
+import QuizzesPage from "./features/quiz/pages/QuizzesPage.jsx";
 import Setting from "./features/setting/pages/Setting";
 import Profile from "./features/profile/pages/Profile";
-import Quiz from "./features/quiz/pages/Quiz";
 import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
-
 
 function App() {
   const { loading } = useAuth();
@@ -39,7 +38,7 @@ function App() {
             <Route path="/codespaces" element={<Codespaces />} />
             <Route path="/community" element={<Community />} />
             <Route path="/modules" element={<Module />} />
-            <Route path="/quizes" element={<Quiz />} />
+            <Route path="/quiz" element={<QuizzesPage />} />
             <Route path="/settings" element={<Setting />} />
             <Route path="/profile/:username" element={<Profile />} />
           </Route>

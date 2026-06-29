@@ -33,7 +33,7 @@ const DashSideBar = ({ activePath }) => {
         { name: "Quick References", icon: RiTodoLine, path: "/references" },
         { name: "Community", icon: TbBuildingCommunity, path: "/community" },
         { name: "Modules", icon: MdOutlinePlayLesson, path: "/modules" },
-        { name: "Quizzes", icon: FaQuestionCircle, path: "/quizes" },
+        { name: "Quizzes", icon: FaQuestionCircle, path: "/quiz" },
       ],
     },
     {

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import  FiSearch  from "react-icons/fi";
+import { FiSearch } from "react-icons/fi";
 import CommandCard from "../components/CommandCard";
 import CommandList from "../components/CommandList";
 import {

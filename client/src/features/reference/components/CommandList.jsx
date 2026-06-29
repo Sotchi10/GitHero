@@ -1,30 +1,33 @@
 function CommandList({ commands }) {
   if (!commands || Object.keys(commands).length === 0) {
     return (
-      <div className="rounded-lg border border-[#202020] bg-[#111] p-10 text-center text-sm text-[#666]">
+      <div className="rounded-xl border border-[#243041] bg-[#10161d] p-10 text-center text-sm text-[#9ba7b6]">
         No commands found.
       </div>
     );
   }
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-6">
       {Object.entries(commands).map(([key, group]) => (
-        <div key={key}>
-          <h2 className="mb-3 text-lg font-semibold text-white">
+        <div
+          key={key}
+          className="rounded-2xl border border-[#243041] bg-[#10161d] p-4 shadow-[0_8px_24px_rgba(0,0,0,0.22)]"
+        >
+          <h2 className="mb-4 text-lg font-semibold text-[#f2f6ff]">
             {group.title}
           </h2>
 
-          <div className="grid gap-3 xl:grid-cols-1">
+          <div className="grid gap-3">
             {group.items.map((item) => (
               <div
                 key={item.cmd}
-                className="rounded-lg border border-[#202020] bg-[#111] p-4"
+                className="rounded-lg border border-[#263240] bg-[#121820] p-4 transition duration-150 hover:-translate-y-0.5 hover:border-[#4f7fbf] hover:bg-[#17212c]"
               >
-                <code className="rounded bg-[#202020] px-2 py-1 font-mono text-xs">
+                <code className="rounded-md border border-[#2a394a] bg-[#0f151b] px-2 py-1 font-mono text-xs text-[#8ee4b2]">
                   {item.cmd}
                 </code>
-                <p className="mt-2 text-sm leading-relaxed text-[#8a8a8a]">
+                <p className="mt-2 text-sm leading-relaxed text-[#9ba7b6]">
                   {item.desc}
                 </p>
               </div>

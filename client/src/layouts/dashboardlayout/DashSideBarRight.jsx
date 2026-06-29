@@ -1,12 +1,18 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
+import NotePanel from "../../features/modules/components/modules/NotePanel";
 
 const DashSideBarRight = () => {
   return (
     <>
       {/* Right Sidebar */}
       <aside className="space-y-4">
-        {/* Empty Placeholder Card */}
-        <div className="h-64 rounded-xl border border-[#242424] bg-[#0d0d0d]" />
+        <NotePanel
+          compact
+          lessonId={999}
+          title="Reference Notes"
+          placeholder="Write your GitHub workflow notes here…"
+          emptyMessage="Add quick notes for this reference page."
+        />
 
         {/* Workflow Hub Card */}
         <div className="overflow-hidden rounded-xl border border-[#242424] bg-[#111111]">

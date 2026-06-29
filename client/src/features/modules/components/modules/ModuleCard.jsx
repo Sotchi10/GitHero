@@ -1,6 +1,6 @@
 import styles from "./ModuleCard.module.css";
 
-function ModuleCard({ module = {} }) {
+function ModuleCard({ module = {}, isSelected = false, onClick = () => {} }) {
   const {
     id = 0,
     title = "Untitled lesson",
@@ -32,11 +32,12 @@ function ModuleCard({ module = {} }) {
   };
 
   return (
-    <div className={styles.card}>
+    <div
+      className={`${styles.card} ${isSelected ? styles.selected : ""}`}
+      onClick={onClick}
+    >
       <div className={styles.cardHeader}>
-        <div className={styles.lessonNum}>
-          {String(id).padStart(2, "0")}
-        </div>
+        <div className={styles.lessonNum}>{String(id).padStart(2, "0")}</div>
       </div>
 
       <div className={styles.cardBody}>

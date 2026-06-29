@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import FilterBar from "../components/modules/FilterBar";
 import ModulesGrid from "../components/modules/ModuleGrid";
+import NotePanel from "../components/modules/NotePanel";
 import modulesData from "../data/modulesData";
 import styles from "./ModulesPage.module.css";
 
@@ -13,6 +14,7 @@ function getStatusKey(progress) {
 function ModulesPage() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [search, setSearch] = useState("");
+  const [selectedLesson, setSelectedLesson] = useState(null);
 
   const filtered = useMemo(() => {
     const list = Array.isArray(modulesData) ? modulesData : [];
@@ -50,17 +52,25 @@ function ModulesPage() {
         </div>
       </div>
 
-      <div className={styles.content}>
-        <div className={styles.pageHeader}>
-          <h1 className={styles.heading}>Modules</h1>
-          <p className={styles.subheading}>
-            {modulesData.length} lessons · learn Git and GitHub from scratch
-          </p>
+      <div className={styles.body}>
+        <div className={styles.content}>
+          <div className={styles.pageHeader}>
+            <h1 className={styles.heading}>Modules</h1>
+            <p className={styles.subheading}>
+              {modulesData.length} lessons · learn Git and GitHub from scratch
+            </p>
+          </div>
+
+          <FilterBar active={activeFilter} onChange={setActiveFilter} />
+
+          <ModulesGrid
+            modules={filtered}
+            selectedId={selectedLesson?.id}
+            onSelect={setSelectedLesson}
+          />
         </div>
 
-        <FilterBar active={activeFilter} onChange={setActiveFilter} />
-
-        <ModulesGrid modules={filtered} />
+        <NotePanel selectedLesson={selectedLesson} />
       </div>
     </div>
   );

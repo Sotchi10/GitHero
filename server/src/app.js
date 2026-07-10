@@ -5,6 +5,7 @@ import pfpRoute from "./features/profile/pfpRoute.js";
 import postsRoute from "./features/posts/postsRoute.js";
 import developersRoute from "./features/developers/developersRoute.js";
 import repositoryRoute from "./features/repository/repositoryRoute.js";
+import notesRoute from "./features/notes/notesRoute.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -35,5 +36,8 @@ app.use("/api/developers", developersRoute);
 
 //Repositories
 app.use("/api/repositories", repositoryRoute);
+
+//Notes
+app.use("/api/notes", notesRoute);
 
 export default app;

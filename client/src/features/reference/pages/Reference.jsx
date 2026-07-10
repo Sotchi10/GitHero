@@ -43,7 +43,7 @@ const Reference = ({ className = "" }) => {
 
   return (
     <section
-      className={`flex min-h-full flex-col bg-[#080808] text-[#e0e0e0] ${className} px-4 py-15`}
+      className={`flex min-h-full flex-col bg-[radial-gradient(circle_at_top_left,rgba(78,122,255,0.16),transparent_32%),#080808] text-[#e0e0e0] ${className} px-4 py-15`}
     >
       <div className=" flex-1 overflow-hidden">
         <main className="h-full overflow-y-auto px-5">
@@ -51,7 +51,7 @@ const Reference = ({ className = "" }) => {
             {/* Left Content */}
             <div>
               <div className="flex items-center mb-4">
-                <div className="mb-4 inline-flex rounded-[10px] border border-[#222] py-1 px-6">
+                <div className="mb-4 inline-flex rounded-[10px] border border-[#243041] bg-[#121821] py-1 px-6 shadow-[0_6px_18px_rgba(0,0,0,0.18)]">
                   {REFERENCE_TABS.map((tab) => (
                     <button
                       key={tab.id}
@@ -59,8 +59,8 @@ const Reference = ({ className = "" }) => {
                       onClick={() => setActiveTab(tab.id)}
                       className={`rounded-md px-4 py-2 text-sm transition cursor-pointer ${
                         activeTab === tab.id
-                          ? "bg-[#242424] text-[#f0f0f0]"
-                          : "text-[#777] hover:text-[#ddd]"
+                          ? "bg-[#1b2a3f] text-[#f2f6ff] shadow-[inset_0_0_0_1px_rgba(110,168,255,0.25)]"
+                          : "text-[#8f9aad] hover:bg-[#17212c] hover:text-[#f2f6ff]"
                       }`}
                     >
                       {tab.label}
@@ -73,8 +73,8 @@ const Reference = ({ className = "" }) => {
                     Search commands
                   </label>
 
-                  <div className="flex items-center gap-2 rounded-md border border-[#2a2a2a] bg-[#181818] px-3 py-2 focus-within:border-[#3a3a3a]">
-                    <FiSearch className="shrink-0 text-[#666]" />
+                  <div className="flex items-center gap-2 rounded-md border border-[#243041] bg-[#121821] px-3 py-2 transition focus-within:border-[#4f7fbf] focus-within:shadow-[0_0_0_1px_rgba(110,168,255,0.25)]">
+                    <FiSearch className="shrink-0 text-[#6ea8ff]" />
 
                     <input
                       id="command-search"
@@ -82,7 +82,7 @@ const Reference = ({ className = "" }) => {
                       value={search}
                       onChange={(event) => setSearch(event.target.value)}
                       placeholder="Search commands..."
-                      className="w-full bg-transparent text-sm text-[#d0d0d0] outline-none placeholder:text-[#666]"
+                      className="w-full bg-transparent text-sm text-[#d0d0d0] outline-none placeholder:text-[#6f7b8b]"
                     />
                   </div>
                 </div>
@@ -95,7 +95,7 @@ const Reference = ({ className = "" }) => {
                       <CommandCard key={card.title} data={card} />
                     ))}
                     {filteredCards.length === 0 && (
-                      <div className="rounded-lg border border-[#202020] bg-[#111] p-10 text-center text-sm text-[#666] xl:col-span-2">
+                      <div className="rounded-xl border border-[#243041] bg-[#10161d] p-10 text-center text-sm text-[#9ba7b6] xl:col-span-2">
                         No commands match "{search}".
                       </div>
                     )}

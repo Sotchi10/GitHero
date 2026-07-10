@@ -1,0 +1,79 @@
+import { useState, useMemo } from "react";
+import FilterBar from "../components/modules/FilterBar";
+import ModulesGrid from "../components/modules/ModuleGrid";
+import NotePanel from "../components/modules/NotePanel";
+import modulesData from "../data/modulesData";
+import styles from "./ModulesPage.module.css";
+
+function getStatusKey(progress) {
+  if (progress === 100) return "completed";
+  if (progress > 0) return "in-progress";
+  return "not-started";
+}
+
+function ModulesPage() {
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [search, setSearch] = useState("");
+  const [selectedLesson, setSelectedLesson] = useState(null);
+
+  const filtered = useMemo(() => {
+    const list = Array.isArray(modulesData) ? modulesData : [];
+
+    return list.filter((m) => {
+      const matchesFilter =
+        activeFilter === "all" ||
+        getStatusKey(m?.progress ?? 0) === activeFilter;
+      const title = (m?.title ?? "").toLowerCase();
+      const matchesSearch =
+        search.trim() === "" || title.includes(search.toLowerCase());
+      return matchesFilter && matchesSearch;
+    });
+  }, [activeFilter, search]);
+
+  return (
+    <div className={styles.page}>
+      <div className={styles.topbar}>
+        <div className={styles.breadcrumb}>
+          <span>GitHero</span>
+          <span className={styles.sep}>›</span>
+          <span>Modules</span>
+        </div>
+        <div className={styles.topbarRight}>
+          <div className={styles.searchBox}>
+            <span className={styles.searchIcon}>⌕</span>
+            <input
+              type="text"
+              placeholder="Search modules…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className={styles.searchInput}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.body}>
+        <div className={styles.content}>
+          <div className={styles.pageHeader}>
+            <h1 className={styles.heading}>Modules</h1>
+            <p className={styles.subheading}>
+              {modulesData.length} lessons · learn Git and GitHub from scratch
+            </p>
+          </div>
+
+          <FilterBar active={activeFilter} onChange={setActiveFilter} />
+
+          <ModulesGrid
+            modules={filtered}
+            selectedId={selectedLesson?.id}
+            onSelect={setSelectedLesson}
+          />
+        </div>
+
+        <NotePanel selectedLesson={selectedLesson} />
+      </div>
+    </div>
+  );
+}
+
+export default ModulesPage;

@@ -9,8 +9,17 @@ import { getPfpByUserId, updateCurrentProfile } from "../api/apiProfile.js";
 
 const AuthContext = createContext();
 
-const normalizeAuthUser = (userData) => userData?.user || userData;
-const getAuthUserId = (userData) => userData?.userId || userData?.user_id;
+// Normalize user shape to always use user_id
+const normalizeAuthUser = (userData) => {
+  const user = userData?.user || userData;
+
+  return {
+    user_id: user.user_id || user.userId,
+    username: user.username,
+    email: user.email,
+    role: user.role,
+  };
+};
 
 export const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
@@ -18,42 +27,25 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Apply profile
   const applyProfile = useCallback((profileData) => {
     if (!profileData) return;
 
     setProfile(profileData);
 
-    setAuthUser((currentUser) => {
-      if (!currentUser) {
-        const fallbackUser = {
-          userId: profileData.user_id,
-          username: profileData.username,
-          email: profileData.email,
-          role: profileData.role,
-        };
+    const updatedUser = {
+      user_id: profileData.user_id,
+      username: profileData.username,
+      email: profileData.email,
+      role: profileData.role,
+    };
 
-        localStorage.setItem("authUser", JSON.stringify(fallbackUser));
-        return fallbackUser;
-      }
-
-      const nextUser = {
-        ...currentUser,
-        userId: profileData.user_id,
-        email: profileData.email,
-        username: profileData.username,
-        role: profileData.role,
-      };
-
-      localStorage.setItem("authUser", JSON.stringify(nextUser));
-      return nextUser;
-    });
+    setAuthUser(updatedUser);
+    localStorage.setItem("authUser", JSON.stringify(updatedUser));
   }, []);
 
-  // Load profile
   const loadProfile = useCallback(
     async (userData) => {
-      const userId = getAuthUserId(userData);
+      const userId = userData?.user_id;
 
       if (!userId) throw new Error("Missing authenticated user ID");
 
@@ -64,27 +56,30 @@ export const AuthProvider = ({ children }) => {
     [applyProfile],
   );
 
-  // Restore session
   useEffect(() => {
     const restoreSession = async () => {
       try {
-        const stored = localStorage.getItem("authUser");
+        const storedUser = localStorage.getItem("authUser");
+        const token = localStorage.getItem("token");
 
-        if (!stored) {
+        if (!storedUser || !token) {
           setLoading(false);
           return;
         }
 
-        const parsedUser = normalizeAuthUser(JSON.parse(stored));
+        const parsedUser = normalizeAuthUser(JSON.parse(storedUser));
         setAuthUser(parsedUser);
 
         await loadProfile(parsedUser);
       } catch (err) {
         console.error("Failed to restore session:", err);
+
         setError(err.response?.data?.message || err.message);
         setAuthUser(null);
         setProfile(null);
+
         localStorage.removeItem("authUser");
+        localStorage.removeItem("token");
       } finally {
         setLoading(false);
       }
@@ -93,41 +88,48 @@ export const AuthProvider = ({ children }) => {
     restoreSession();
   }, [loadProfile]);
 
-  // Login
   const login = async (userData) => {
-    const normalizedUser = normalizeAuthUser(userData);
-
     try {
       setError(null);
+
+      if (userData?.token) {
+        localStorage.setItem("token", userData.token);
+      }
+
+      const normalizedUser = normalizeAuthUser(userData);
+
       setAuthUser(normalizedUser);
       localStorage.setItem("authUser", JSON.stringify(normalizedUser));
 
       await loadProfile(normalizedUser);
     } catch (err) {
-      console.error("Login profile fetch failed:", err);
+      console.error("Login failed:", err);
+
       setError(err.response?.data?.message || err.message);
       setAuthUser(null);
       setProfile(null);
+
       localStorage.removeItem("authUser");
+      localStorage.removeItem("token");
+
       throw err;
     }
   };
 
-  // Logout
   const logout = () => {
     setAuthUser(null);
     setProfile(null);
     setError(null);
+
     localStorage.removeItem("authUser");
+    localStorage.removeItem("token");
   };
 
-  //  updateProfile
   const updateProfile = async (data) => {
     try {
       if (!profile?.user_id) throw new Error("Profile not loaded");
 
       const res = await updateCurrentProfile(profile.user_id, data);
-
       const updatedProfile = res?.data?.profile || res?.data || res;
 
       if (!updatedProfile) {
@@ -135,7 +137,6 @@ export const AuthProvider = ({ children }) => {
       }
 
       applyProfile(updatedProfile);
-
       return updatedProfile;
     } catch (err) {
       console.error("updateProfile error:", err);

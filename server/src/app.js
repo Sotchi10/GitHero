@@ -4,6 +4,7 @@ import cors from "cors";
 import pfpRoute from "./features/profile/pfpRoute.js";
 import postsRoute from "./features/posts/postsRoute.js";
 import developersRoute from "./features/developers/developersRoute.js";
+import repositoryRoute from "./features/repository/repositoryRoute.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -31,5 +32,8 @@ app.use("/api/profile", pfpRoute);
 //Community
 app.use("/api/posts", postsRoute);
 app.use("/api/developers", developersRoute);
+
+//Repositories
+app.use("/api/repositories", repositoryRoute);
 
 export default app;

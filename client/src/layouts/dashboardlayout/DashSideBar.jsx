@@ -21,6 +21,7 @@ const DashSideBar = () => {
   const { pathname } = useLocation();
 
   const isProfileSection = pathname.startsWith("/profile");
+  const isRepoSection = pathname.startsWith("/repository");
 
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);

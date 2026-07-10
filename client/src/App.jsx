@@ -18,6 +18,7 @@ import Developers from "./features/developers/pages/Developers";
 import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import CommunityPost from './features/community/pages/CommunityPost';
+import RepositoryDetail from "./features/repository/pages/RepositoryDetail";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<DashboardHome />} />
             <Route path="/repository" element={<Repository />} />
+            <Route path="/repository/:username/:reponame" element={<RepositoryDetail />} />
             <Route path="/references" element={<Reference />} />
             <Route path="/codespaces" element={<Codespaces />} />
             <Route path="/community" element={<Community />} />

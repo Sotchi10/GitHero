@@ -4,19 +4,22 @@ import { Outlet, useLocation } from "react-router-dom";
 
 const DashboardLayout = () => {
   const { pathname } = useLocation();
+  const isSettings = pathname.startsWith("/settings");
 
   return (
-    <div className="min-h-screen w-full flex flex-col bg-[#080808]">
+    <div className="min-h-screen w-full flex flex-col bg-primary">
       {/* Navbar */}
       <DashNavBar activePath={pathname} />
 
       {/* Body */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <DashSideBar activePath={pathname} />
+        {!isSettings ? <DashSideBar activePath={pathname} /> : null}
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto p-6">
+        <main
+          className={`flex-1 overflow-y-auto ${isSettings ? "p-0" : "p-6"}`}
+        >
           <Outlet />
         </main>
       </div>

@@ -1,7 +1,7 @@
 function CommandList({ commands }) {
   if (!commands || Object.keys(commands).length === 0) {
     return (
-      <div className="rounded-xl border border-[#243041] bg-[#10161d] p-10 text-center text-sm text-[#9ba7b6]">
+      <div className="rounded-xl border border-[#243041] bg-[#10161d] p-8 text-center text-sm text-[#9ba7b6]">
         No commands found.
       </div>
     );
@@ -14,7 +14,7 @@ function CommandList({ commands }) {
           key={key}
           className="rounded-2xl p-4"
         >
-          <h2 className="mb-4 text-lg font-semibold text-[#f2f6ff]">
+          <h2 className="mb-4 text-size-lg font-semibold text-[#f2f6ff]">
             {group.title}
           </h2>
 
@@ -24,10 +24,10 @@ function CommandList({ commands }) {
                 key={item.cmd}
                 className="rounded-lg border border-[#242424] bg-[#111111] p-4 transition duration-150 hover:-translate-y-0.5 hover:border-white"
               >
-                <code className="rounded-md border border-[#242424] bg-[#111111] px-2 py-1 font-mono text-xs text-[#8ee4b2]">
+                <code className="rounded-md border border-[#242424] bg-[#111111] px-2 py-1 font-mono text-xs text-blue-500">
                   {item.cmd}
                 </code>
-                <p className="mt-2 text-sm leading-relaxed text-[#9ba7b6]">
+                <p className="mt-6 text-sm leading-relaxed text-[#9ba7b6]">
                   {item.desc}
                 </p>
               </div>

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
-import { updateCurrentProfile } from "../../../api/apiProfile";
 import { useNavigate } from "react-router-dom";
 
 const Description = ({ profile, canEdit = false }) => {
@@ -70,7 +69,7 @@ const Description = ({ profile, canEdit = false }) => {
 
   if (!profile) {
     return (
-      <div className="w-full px-8 py-5 border border-default mt-4 rounded-[8px]">
+      <div className="w-full px-8 py-5 border border-default mt-4 rounded-lg">
         <p>Profile data is unavailable.</p>
       </div>
     );
@@ -79,7 +78,7 @@ const Description = ({ profile, canEdit = false }) => {
   const roleLabel = canEdit ? authUser?.role || profile.role : profile.role;
 
   return (
-    <div className="w-full px-8 py-5 border border-default mt-4 rounded-[8px]">
+    <div className="w-full px-8 py-5 border border-default mt-4 rounded-lg">
       {isEditing ? (
         <>
           {/* Description */}

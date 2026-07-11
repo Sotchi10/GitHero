@@ -5,7 +5,6 @@ export const REFERENCE_DATA = {
     do: {
       title: "Working Alone: Do This",
       Icon: FiUser,
-      color: "green",
       items: [
         {
           cmd: 'git commit -m "feat: add profile page"',
@@ -28,7 +27,6 @@ export const REFERENCE_DATA = {
     avoid: {
       title: "Working Alone: Avoid This",
       Icon: FiAlertTriangle,
-      color: "red",
       items: [
         {
           cmd: 'git commit -m "fix"',
@@ -53,7 +51,6 @@ export const REFERENCE_DATA = {
     do: {
       title: "Collaborating: Do This",
       Icon: FiUsers,
-      color: "green",
       items: [
         {
           cmd: "git pull --rebase",
@@ -76,7 +73,6 @@ export const REFERENCE_DATA = {
     avoid: {
       title: "Collaborating: Avoid This",
       Icon: FiAlertTriangle,
-      color: "red",
       items: [
         {
           cmd: "git push -f origin main",

@@ -31,6 +31,7 @@ export const signupService = async (userData) => {
     const user = await createUser({
         email,
         password_hash: hashedPassword,
+        role,
     });
 
     const userId = user.insertId;
@@ -42,7 +43,6 @@ export const signupService = async (userData) => {
         last_name: last_name,
         username,
         gender,
-        role,
         bio: null,
         description: null,
         location: null
@@ -51,7 +51,8 @@ export const signupService = async (userData) => {
     return {
         user_id: userId,
         email,
-        username
+        username,
+        role: role || "Student"
     };
 };
 

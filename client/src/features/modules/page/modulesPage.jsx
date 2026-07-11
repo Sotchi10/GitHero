@@ -56,7 +56,7 @@ function ModulesPage() {
           <header className={styles.pageHeader}>
             <h1 className={styles.heading}>Modules</h1>
             <p className={styles.subheading}>
-              {modulesData.length} lessons · learn Git and GitHub from scratch
+              {modulesData.length} lessons · Learn Git and GitHub from scratch
             </p>
           </header>
 

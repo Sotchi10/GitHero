@@ -32,15 +32,17 @@ export const AuthProvider = ({ children }) => {
 
     setProfile(profileData);
 
-    const updatedUser = {
-      user_id: profileData.user_id,
-      username: profileData.username,
-      email: profileData.email,
-      role: profileData.role,
-    };
+    setAuthUser((currentUser) => {
+      const updatedUser = {
+        user_id: profileData.user_id,
+        username: profileData.username,
+        email: profileData.email,
+        role: profileData.role || currentUser?.role,
+      };
 
-    setAuthUser(updatedUser);
-    localStorage.setItem("authUser", JSON.stringify(updatedUser));
+      localStorage.setItem("authUser", JSON.stringify(updatedUser));
+      return updatedUser;
+    });
   }, []);
 
   const loadProfile = useCallback(
@@ -96,6 +98,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authUser", JSON.stringify(normalizedUser));
 
       await loadProfile(normalizedUser);
+      return normalizedUser;
     } catch (err) {
       console.error("Login failed:", err);
 

@@ -18,8 +18,14 @@ import Article from "./features/articles/pages/Article";
 import Developers from "./features/developers/pages/Developers";
 import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import CommunityPost from './features/community/pages/CommunityPost';
+import AdminRoute from "./routes/AdminRoute";
+import CommunityPost from "./features/community/pages/CommunityPost";
 import RepositoryDetail from "./features/repository/pages/RepositoryDetail";
+import AdminLayout from './admin/layout/AdminLayout';
+import AdminDashboard from './admin/AdminDashboard';
+import AdminModules from './admin/AdminModules';
+import AdminLessons from './admin/AdminLessons';
+
 
 function App() {
   const { loading } = useAuth();
@@ -39,7 +45,10 @@ function App() {
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<DashboardHome />} />
             <Route path="/repository" element={<Repository />} />
-            <Route path="/repository/:username/:reponame" element={<RepositoryDetail />} />
+            <Route
+              path="/repository/:username/:reponame"
+              element={<RepositoryDetail />}
+            />
             <Route path="/references" element={<Reference />} />
             <Route path="/codespaces" element={<Codespaces />} />
             <Route path="/community" element={<Community />} />
@@ -50,6 +59,16 @@ function App() {
             <Route path="/quiz" element={<QuizzesPage />} />
             <Route path="/settings" element={<Setting />} />
             <Route path="/profile/:username" element={<Profile />} />
+          </Route>
+
+          <Route element={<AdminRoute />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+
+              <Route path="modules" element={<AdminModules />} />
+
+              <Route path="lessons" element={<AdminLessons />} />
+            </Route>
           </Route>
         </Route>
 

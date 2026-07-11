@@ -3,9 +3,11 @@ import authRoute from "./features/auth/authRoute.js";
 import cors from "cors";
 import pfpRoute from "./features/profile/pfpRoute.js";
 import postsRoute from "./features/posts/postsRoute.js";
-import developersRoute from "./features/developers/developersRoute.js";
+import userRoute from "./features/users/usersRoute.js";
 import repositoryRoute from "./features/repository/repositoryRoute.js";
 import notesRoute from "./features/notes/notesRoute.js";
+import moduleRoute from "./admin/modules/moduleRoutes.js";
+
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -32,12 +34,15 @@ app.use("/api/profile", pfpRoute);
 
 //Community
 app.use("/api/posts", postsRoute);
-app.use("/api/developers", developersRoute);
+app.use("/api/users", userRoute);
 
 //Repositories
 app.use("/api/repositories", repositoryRoute);
 
 //Notes
 app.use("/api/notes", notesRoute);
+
+//Modules
+app.use("/api/modules", moduleRoute);
 
 export default app;

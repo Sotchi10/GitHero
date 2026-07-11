@@ -16,12 +16,13 @@ import { useState, useEffect } from "react";
 import { updateCurrentProfile } from "../../api/apiProfile";
 
 const DashSideBar = () => {
-  const { profile, updateProfile } = useAuth();
+  const { authUser, profile, updateProfile } = useAuth();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const isProfileSection = pathname.startsWith("/profile");
   const isRepoSection = pathname.startsWith("/repository");
+  const roleLabel = authUser?.role || profile?.role || "";
 
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -144,7 +145,7 @@ const DashSideBar = () => {
                 </h4>
 
                 <p className="text-gray-400 text-[15px]">
-                  @{profile.username} - {profile.role}
+                  @{profile.username} - {roleLabel}
                 </p>
 
                 <p className="text-sm">{profile.bio || "BIO HERE..."}</p>

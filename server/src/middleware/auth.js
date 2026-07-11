@@ -21,9 +21,12 @@ export const requireAuth = async (req, res, next) => {
             return res.status(401).json({ message: "Authenticated profile not found" });
         }
 
+        const { role, ...authProfile } = profile;
+
         req.auth = {
             userId,
-            profile,
+            role,
+            profile: authProfile,
         };
 
         next();
@@ -33,11 +36,22 @@ export const requireAuth = async (req, res, next) => {
 };
 
 export const requireDeveloper = (req, res, next) => {
-    const role = String(req.auth?.profile?.role || "").toLowerCase();
+    const role = String(req.auth?.role || "").toLowerCase();
 
     if (role !== "developer") {
         return res.status(403).json({
             message: "Only developers can create posts",
+        });
+    }
+
+    next();
+};
+export const requireAdmin = (req, res, next) => {
+    const role = String(req.auth?.role || "").toLowerCase();
+
+    if (role !== "admin") {
+        return res.status(403).json({
+            message: "Only admin can manage changes",
         });
     }
 

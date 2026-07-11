@@ -8,13 +8,13 @@ export const findUserByEmail = async (email) => {
             u.user_id,
             u.email,
             u.password_hash,
+            u.role,
             p.first_name,
             p.last_name,
             p.username,
             p.bio,
             p.description,
             p.gender,
-            p.role,
             p.location
         FROM users u
         LEFT JOIN profile p ON u.user_id = p.user_id
@@ -32,13 +32,13 @@ export const findUserByUsername = async (username) => {
             u.user_id,
             u.email,
             u.password_hash,
+            u.role,
             p.first_name,
             p.last_name,
             p.username,
             p.bio,
             p.description,
             p.gender,
-            p.role,
             p.location
         FROM users u
         JOIN profile p ON u.user_id = p.user_id
@@ -51,16 +51,17 @@ export const findUserByUsername = async (username) => {
 
 //  Create user
 export const createUser = async (userData) => {
-    const { email, password_hash } = userData;
+    const { email, password_hash, role } = userData;
 
     const sql = `
-        INSERT INTO users (email, password_hash)
-        VALUES (?, ?)
+        INSERT INTO users (email, password_hash, role)
+        VALUES (?, ?, ?)
     `;
 
     const [result] = await db.query(sql, [
         email,
-        password_hash
+        password_hash,
+        role || "Student"
     ]);
 
     return result;
@@ -74,7 +75,6 @@ export const createProfile = async (userData) => {
         last_name,
         username,
         gender,
-        role,
         bio,
         description,
         location
@@ -82,8 +82,8 @@ export const createProfile = async (userData) => {
 
     const sql = `
         INSERT INTO profile 
-        (user_id, first_name, last_name, username, bio, description, gender, role, location)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (user_id, first_name, last_name, username, bio, description, gender, location)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     const [result] = await db.query(sql, [
@@ -94,7 +94,6 @@ export const createProfile = async (userData) => {
         bio || null,
         description || null,
         gender || null,
-        role || null,
         location || null
     ]);
 

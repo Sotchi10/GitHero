@@ -6,13 +6,13 @@ import { useAuth } from "../../../context/AuthContext";
 import { NavLink } from "react-router-dom";
 
 const CommunityPost = () => {
-  const { profile } = useAuth();
+  const { authUser, profile } = useAuth();
   const [posts, setPosts] = useState([]);
   const [form, setForm] = useState({ title: "", content: "" });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const isDeveloper = profile?.role?.toLowerCase() === "developer";
+  const isDeveloper = (authUser?.role || "").toLowerCase() === "developer";
 
   useEffect(() => {
     let active = true;

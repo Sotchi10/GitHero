@@ -21,9 +21,11 @@ const LoginPage = () => {
       const res = await loginAPI({ email, password });
       console.log(res.data);
       if (!res.data) throw new Error("Invalid response from server");
-      await login(res.data);
+      const user = await login(res.data);
       console.log("Login success:", res.data);
-      navigate("/dashboard");
+      navigate(user?.role?.toLowerCase() === "admin" ? "/admin" : "/dashboard", {
+        replace: true,
+      });
     } catch (err) {
       const message =
         err.response?.data?.message ||

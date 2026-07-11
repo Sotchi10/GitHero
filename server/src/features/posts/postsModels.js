@@ -14,10 +14,11 @@ const POST_SELECT = `
         TRIM(CONCAT_WS(' ', p.first_name, p.last_name)) AS full_name,
         p.username,
         p.bio,
-        p.role,
+        u.role,
         p.avatar
     FROM posts po
     JOIN profile p ON p.user_id = po.user_id
+    JOIN users u ON u.user_id = po.user_id
 `;
 
 export const findAllPosts = async () => {

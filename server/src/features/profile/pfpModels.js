@@ -12,7 +12,7 @@ const PROFILE_SELECT = `
         p.bio,
         p.description,
         p.gender,
-        p.role,
+        u.role,
         p.location,
         p.avatar
     FROM profile p

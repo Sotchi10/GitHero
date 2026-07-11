@@ -4,7 +4,7 @@ import { updateCurrentProfile } from "../../../api/apiProfile";
 import { useNavigate } from "react-router-dom";
 
 const Description = ({ profile, canEdit = false }) => {
-  const { updateProfile } = useAuth();
+  const { authUser, updateProfile } = useAuth();
   const navigate = useNavigate();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -76,6 +76,8 @@ const Description = ({ profile, canEdit = false }) => {
     );
   }
 
+  const roleLabel = canEdit ? authUser?.role || profile.role : profile.role;
+
   return (
     <div className="w-full px-8 py-5 border border-default mt-4 rounded-[8px]">
       {isEditing ? (
@@ -118,7 +120,7 @@ const Description = ({ profile, canEdit = false }) => {
                 {profile.full_name || profile.username}
               </p>
               <div className="px-2 py-1 border rounded-[15px] border-[#242424]">
-                <p className="text-[8px]">{profile.role}</p>
+                <p className="text-[8px]">{roleLabel}</p>
               </div>
             </div>
             <p className="text-[13px]">{profile.bio || "No Bio yet"}</p>

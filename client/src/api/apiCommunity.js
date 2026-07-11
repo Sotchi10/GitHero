@@ -11,4 +11,7 @@ export const createPost = (data, userId) =>
     },
   });
 
-export const getDevelopers = () => API.get("/api/developers");
+export const getUsers = () => API.get("/api/users");
+export const getDevelopers = () => API.get("/api/users/developers");
+export const getStudents = () => API.get("/api/users/students");
+

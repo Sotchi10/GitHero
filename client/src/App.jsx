@@ -10,16 +10,16 @@ import Reference from "./features/reference/pages/Reference";
 import Codespaces from "./features/codespace/pages/Codespaces";
 import Community from "./features/community/pages/Community";
 import Module from "./features/modules/pages/Module";
+import QuizzesPage from "./features/quiz/pages/QuizzesPage.jsx";
 import Setting from "./features/setting/pages/Setting";
 import Profile from "./features/profile/pages/Profile";
-import Quiz from "./features/quiz/pages/Quiz";
+import Quiz from "./features/quiz/pages/QuizzesPage.jsx";
 import Article from "./features/articles/pages/Article";
 import Developers from "./features/developers/pages/Developers";
 import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import CommunityPost from './features/community/pages/CommunityPost';
 import RepositoryDetail from "./features/repository/pages/RepositoryDetail";
-
 
 function App() {
   const { loading } = useAuth();
@@ -47,7 +47,7 @@ function App() {
             <Route path="/:username/post/:id" element={<Article />} />
             <Route path="/developers" element={<Developers />} />
             <Route path="/modules" element={<Module />} />
-            <Route path="/quizes" element={<Quiz />} />
+            <Route path="/quiz" element={<QuizzesPage />} />
             <Route path="/settings" element={<Setting />} />
             <Route path="/profile/:username" element={<Profile />} />
           </Route>

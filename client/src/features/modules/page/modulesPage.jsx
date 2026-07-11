@@ -31,13 +31,9 @@ function ModulesPage() {
   }, [activeFilter, search]);
 
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} px-4`}>
+      {/* Top Bar */}
       <div className={styles.topbar}>
-        <div className={styles.breadcrumb}>
-          <span>GitHero</span>
-          <span className={styles.sep}>›</span>
-          <span>Modules</span>
-        </div>
         <div className={styles.topbarRight}>
           <div className={styles.searchBox}>
             <span className={styles.searchIcon}>⌕</span>
@@ -52,25 +48,33 @@ function ModulesPage() {
         </div>
       </div>
 
+      {/* Main Layout */}
       <div className={styles.body}>
-        <div className={styles.content}>
-          <div className={styles.pageHeader}>
+        {/* Content */}
+        <main className={styles.content}>
+          {/* Page Header */}
+          <header className={styles.pageHeader}>
             <h1 className={styles.heading}>Modules</h1>
             <p className={styles.subheading}>
               {modulesData.length} lessons · learn Git and GitHub from scratch
             </p>
-          </div>
+          </header>
 
+          {/* Filters */}
           <FilterBar active={activeFilter} onChange={setActiveFilter} />
 
+          {/* Modules */}
           <ModulesGrid
             modules={filtered}
             selectedId={selectedLesson?.id}
             onSelect={setSelectedLesson}
           />
-        </div>
+        </main>
 
-        <NotePanel selectedLesson={selectedLesson} />
+        {/* Right Sidebar */}
+        <aside>
+          <NotePanel selectedLesson={selectedLesson} />
+        </aside>
       </div>
     </div>
   );

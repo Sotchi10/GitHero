@@ -60,9 +60,8 @@ export const AuthProvider = ({ children }) => {
     const restoreSession = async () => {
       try {
         const storedUser = localStorage.getItem("authUser");
-        const token = localStorage.getItem("token");
 
-        if (!storedUser || !token) {
+        if (!storedUser) {
           setLoading(false);
           return;
         }
@@ -79,7 +78,6 @@ export const AuthProvider = ({ children }) => {
         setProfile(null);
 
         localStorage.removeItem("authUser");
-        localStorage.removeItem("token");
       } finally {
         setLoading(false);
       }
@@ -91,10 +89,6 @@ export const AuthProvider = ({ children }) => {
   const login = async (userData) => {
     try {
       setError(null);
-
-      if (userData?.token) {
-        localStorage.setItem("token", userData.token);
-      }
 
       const normalizedUser = normalizeAuthUser(userData);
 
@@ -110,7 +104,6 @@ export const AuthProvider = ({ children }) => {
       setProfile(null);
 
       localStorage.removeItem("authUser");
-      localStorage.removeItem("token");
 
       throw err;
     }
@@ -122,7 +115,6 @@ export const AuthProvider = ({ children }) => {
     setError(null);
 
     localStorage.removeItem("authUser");
-    localStorage.removeItem("token");
   };
 
   const updateProfile = async (data) => {

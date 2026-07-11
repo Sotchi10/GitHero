@@ -12,7 +12,7 @@ function CommandList({ commands }) {
       {Object.entries(commands).map(([key, group]) => (
         <div
           key={key}
-          className="rounded-2xl border border-[#243041] bg-[#10161d] p-4 shadow-[0_8px_24px_rgba(0,0,0,0.22)]"
+          className="rounded-2xl p-4"
         >
           <h2 className="mb-4 text-lg font-semibold text-[#f2f6ff]">
             {group.title}
@@ -22,9 +22,9 @@ function CommandList({ commands }) {
             {group.items.map((item) => (
               <div
                 key={item.cmd}
-                className="rounded-lg border border-[#263240] bg-[#121820] p-4 transition duration-150 hover:-translate-y-0.5 hover:border-[#4f7fbf] hover:bg-[#17212c]"
+                className="rounded-lg border border-[#242424] bg-[#111111] p-4 transition duration-150 hover:-translate-y-0.5 hover:border-white"
               >
-                <code className="rounded-md border border-[#2a394a] bg-[#0f151b] px-2 py-1 font-mono text-xs text-[#8ee4b2]">
+                <code className="rounded-md border border-[#242424] bg-[#111111] px-2 py-1 font-mono text-xs text-[#8ee4b2]">
                   {item.cmd}
                 </code>
                 <p className="mt-2 text-sm leading-relaxed text-[#9ba7b6]">

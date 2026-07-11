@@ -12,12 +12,10 @@ function CommandCard({ data }) {
         {data.items.map((item) => (
           <div
             key={item.cmd}
-            className="flex items-start gap-3 rounded-md px-2 py-3 transition-colors duration-150 hover:bg-[#151d28]"
+            className="flex items-start gap-3 rounded-md px-2 py-3 transition-colors duration-150"
           >
-            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6ea8ff]" />
-
             <div className="min-w-0">
-              <code className="inline-block max-w-full rounded-md border border-[#2b3949] bg-[#111821] px-2 py-1 font-mono text-xs text-[#4ee6b8]">
+              <code className="inline-block max-w-full rounded-md border border-[#242424] bg-[#111111] px-2 py-1 font-mono text-xs ">
                 {item.cmd}
               </code>
 
@@ -25,7 +23,7 @@ function CommandCard({ data }) {
                 {item.desc}
               </p>
             </div>
-          </div>  
+          </div>
         ))}
       </div>
     </article>

@@ -51,7 +51,7 @@ const Reference = ({ className = "" }) => {
             {/* Left Content */}
             <div>
               <div className="flex items-center mb-4">
-                <div className="mb-4 inline-flex rounded-[10px] border border-[#243041] bg-[#121821] py-1 px-6 shadow-[0_6px_18px_rgba(0,0,0,0.18)]">
+                <div className="mb-4 inline-flex rounded-[10px] border border-[#242424]  py-1 px-6 gap-4">
                   {REFERENCE_TABS.map((tab) => (
                     <button
                       key={tab.id}
@@ -59,8 +59,8 @@ const Reference = ({ className = "" }) => {
                       onClick={() => setActiveTab(tab.id)}
                       className={`rounded-md px-4 py-2 text-sm transition cursor-pointer ${
                         activeTab === tab.id
-                          ? "bg-[#1b2a3f] text-[#f2f6ff] shadow-[inset_0_0_0_1px_rgba(110,168,255,0.25)]"
-                          : "text-[#8f9aad] hover:bg-[#17212c] hover:text-[#f2f6ff]"
+                          ? "bg-[#161616]  text-[#f2f6ff]"
+                          : "text-[#8f9aad] hover:bg-[#161616]  hover:text-[#f2f6ff]"
                       }`}
                     >
                       {tab.label}
@@ -73,8 +73,8 @@ const Reference = ({ className = "" }) => {
                     Search commands
                   </label>
 
-                  <div className="flex items-center gap-2 rounded-md border border-[#243041] bg-[#121821] px-3 py-2 transition focus-within:border-[#4f7fbf] focus-within:shadow-[0_0_0_1px_rgba(110,168,255,0.25)]">
-                    <FiSearch className="shrink-0 text-[#6ea8ff]" />
+                  <div className="flex items-center gap-2 rounded-md border border-[#242424]  px-3 py-2 transition focus-within:border-blue-500">
+                    <FiSearch className="shrink-0" />
 
                     <input
                       id="command-search"
@@ -82,7 +82,7 @@ const Reference = ({ className = "" }) => {
                       value={search}
                       onChange={(event) => setSearch(event.target.value)}
                       placeholder="Search commands..."
-                      className="w-full bg-transparent text-sm text-[#d0d0d0] outline-none placeholder:text-[#6f7b8b]"
+                      className="w-full  bg-transparent text-sm text-[#d0d0d0] outline-none placeholder:text-[#6f7b8b]"
                     />
                   </div>
                 </div>
@@ -95,7 +95,7 @@ const Reference = ({ className = "" }) => {
                       <CommandCard key={card.title} data={card} />
                     ))}
                     {filteredCards.length === 0 && (
-                      <div className="rounded-xl border border-[#243041] bg-[#10161d] p-10 text-center text-sm text-[#9ba7b6] xl:col-span-2">
+                      <div className="rounded-xl border border-[#242424] p-10 text-center text-sm text-[#9ba7b6] xl:col-span-2">
                         No commands match "{search}".
                       </div>
                     )}

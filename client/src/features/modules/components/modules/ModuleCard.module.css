@@ -1,5 +1,5 @@
 .card {
-  background: #161a1e;
+  background: #0d0d0d;
   border: 0.5px solid #2a2d30;
   border-radius: 16px;
   overflow: hidden;
@@ -15,12 +15,12 @@
 }
 
 .card:hover {
-  border-color: #3a4d6b;
+  border-color: #ffffff;
   transform: translateY(-2px);
 }
 
 .selected {
-  border-color: #7ab3f0;
+  border-color: white;
   box-shadow: 0 0 0 1px rgba(122, 179, 240, 0.24);
   transform: translateY(-2px);
 }
@@ -83,14 +83,14 @@
 }
 
 .title {
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   color: #e8eaed;
   margin-bottom: 4px;
 }
 
 .description {
-  font-size: 14px;
+  font-size: 13px;
   color: #555a60;
   line-height: 1.7;
 }
@@ -110,17 +110,17 @@
 .previewCode {
   font-family: monospace;
   font-size: 13px;
-  color: #4ecda4;
+  color: #ffffff;
 }
 
 .previewLine1 {
   font-size: 13px;
-  color: #7ab3f0;
+  color: #919191;
 }
 
 .previewLine2 {
   font-size: 13px;
-  color: #3a3f44;
+  color: #0058e5;
 }
 
 /* ── Progress bar ── */

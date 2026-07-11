@@ -2,7 +2,6 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #111417;
   min-height: 100vh;
   color: #e8eaed;
   font-family: sans-serif;
@@ -14,8 +13,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 24px;
-  border-bottom: 0.5px solid #2a2d30;
-  background: #0d0f10;
   flex-shrink: 0;
 }
 
@@ -41,10 +38,9 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: #1a1d20;
   border: 0.5px solid #2a2d30;
   border-radius: 6px;
-  padding: 5px 10px;
+  padding: 8px 15px;
 }
 
 .searchIcon {
@@ -66,6 +62,7 @@
 .searchInput::placeholder {
   color: #3a3f44;
 }
+
 
 /* ── Content + note panel ── */
 .body {

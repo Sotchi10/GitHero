@@ -1,13 +1,14 @@
 .panel {
   width: 320px;
   flex-shrink: 0;
-  background: #0f1216;
-  border-left: 0.5px solid #2a2d30;
+  background:  #0d0d0d;
+  border: 0.5px solid #242424;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 64px);
+  height: 200px;
   position: sticky;
   top: 0;
+  border-radius: 8px;
   align-self: flex-start;
   color: #e8eaed;
 }
@@ -18,7 +19,7 @@
   position: static;
   border: 0.5px solid #2a2d30;
   border-radius: 12px;
-  background: #111417;
+  background:  #0d0d0d;
   box-shadow: none;
 }
 
@@ -27,7 +28,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 18px 12px;
-  border-bottom: 0.5px solid #2a2d30;
+  border-bottom: 0.5px solid #242424;
 }
 
 .compactHeader {
@@ -114,10 +115,9 @@
 
 .saveBtn {
   padding: 6px 14px;
-  background: #1c2430;
-  border: 0.5px solid #2a4a7f;
+  background: #0053cf;
   border-radius: 6px;
-  color: #7ab3f0;
+  color: #ffffff;
   font-size: 12px;
   cursor: pointer;
   font-family: inherit;
@@ -129,8 +129,7 @@
 }
 
 .saveBtn:hover:not(:disabled) {
-  background: #243a5e;
-  border-color: #3a5a9f;
+  background: #0049be;
 }
 
 .saveBtn:disabled {

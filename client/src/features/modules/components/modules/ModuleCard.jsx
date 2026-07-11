@@ -41,7 +41,7 @@ function ModuleCard({ module = {}, isSelected = false, onClick = () => {} }) {
       </div>
 
       <div className={styles.cardBody}>
-        <h3 className={styles.title}>{title}</h3>
+        <h4 className={styles.title}>{title}</h4>
         <p className={styles.description}>{description}</p>
       </div>
 
@@ -60,7 +60,7 @@ function ModuleCard({ module = {}, isSelected = false, onClick = () => {} }) {
           className={styles.pdfBtn}
           onClick={handlePdfClick}
         >
-          ↓ Open PDF
+          Download
         </a>
       </div>
     </div>

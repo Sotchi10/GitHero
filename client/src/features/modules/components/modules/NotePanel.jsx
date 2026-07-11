@@ -130,8 +130,8 @@ function NotePanel({
           >
             <span className={styles.statusText}>
               {status === "saving" && "Saving…"}
-              {status === "saved" && "✓ Saved"}
-              {status === "error" && "✗ Failed to save"}
+              {status === "saved" && " Saved"}
+              {status === "error" && " Failed to save"}
             </span>
             <button
               className={`${styles.saveBtn} ${compact ? styles.compactSaveBtn : ""}`}

@@ -1,0 +1,258 @@
+.section {
+  background: #0d0d0d;
+  border: 0.5px solid #242424;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.header {
+  padding: 16px 20px;
+  border-bottom: 0.5px solid #2a2d30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerTitle {
+  font-size: 13px;
+  color: #c5c8cc;
+}
+
+.counter {
+  font-size: 11px;
+  font-family: monospace;
+  color: #ffffff;
+  background: #1a1d20;
+  border: 0.5px solid #2a2d30;
+  border-radius: 6px;
+  padding: 3px 9px;
+}
+
+/* ── Empty ── */
+.empty {
+  padding: 32px 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #3a3f44;
+}
+
+/* ── Body ── */
+.body {
+  padding: 20px;
+}
+
+.typeTag {
+  font-size: 10px;
+  font-family: monospace;
+  color: #555a60;
+  border: 0.5px solid #2a2d30;
+  border-radius: 4px;
+  padding: 2px 7px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.qText {
+  font-size: 14px;
+  font-weight: 500;
+  color: #e8eaed;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+/* ── MC options ── */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #0d0f10;
+  border: 0.5px solid #2a2d30;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.option:hover {
+  border-color: #3a4d6b;
+}
+
+.optSelected {
+  border-color: #2a4a7f;
+  background: #111c2a;
+}
+
+.correct {
+  border-color: #2e5c22 !important;
+  background: #0f1e0d !important;
+  cursor: default;
+}
+
+.wrong {
+  border-color: #5c2222 !important;
+  background: #1e0d0d !important;
+  cursor: default;
+}
+
+.letter {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  border: 0.5px solid #2a2d30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-family: monospace;
+  color: #555a60;
+  flex-shrink: 0;
+}
+
+.optSelected .letter {
+  border-color: #2a4a7f;
+  color: #7ab3f0;
+}
+
+.correct .letter {
+  border-color: #2e5c22;
+  color: #72c45a;
+}
+
+.wrong .letter {
+  border-color: #5c2222;
+  color: #e07a7a;
+}
+
+.optText {
+  font-size: 12px;
+  color: #c5c8cc;
+}
+
+/* ── True / False ── */
+.tfRow {
+  display: flex;
+  gap: 10px;
+}
+
+.tfBtn {
+  flex: 1;
+  padding: 10px;
+  border: 0.5px solid #2a2d30;
+  border-radius: 8px;
+  background: #0d0f10;
+  color: #8a8f96;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.tfBtn:hover:not(:disabled) {
+  border-color: #3a4d6b;
+  color: #c5c8cc;
+}
+
+.tfBtn:disabled {
+  cursor: default;
+}
+
+.tSel {
+  border-color: #2a4a7f;
+  background: #111c2a;
+  color: #7ab3f0;
+}
+
+.fSel {
+  border-color: #5c2222;
+  background: #1e0d0d;
+  color: #e07a7a;
+}
+
+/* ── Footer ── */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+.feedback {
+  font-size: 12px;
+}
+
+.nextBtn {
+  padding: 7px 18px;
+  background: #0043ae;
+  border-radius: 7px;
+  color: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.nextBtn:hover:not(:disabled) {
+  background: #243a5e;
+}
+
+.nextBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Result ── */
+.result {
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.resultSub {
+  font-size: 11px;
+  color: #555a60;
+  font-family: monospace;
+}
+
+.resultScore {
+  font-size: 48px;
+  font-weight: 500;
+  color: #e8eaed;
+  font-family: monospace;
+  line-height: 1;
+}
+
+.resultTotal {
+  font-size: 20px;
+  color: #555a60;
+}
+
+.resultMsg {
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.retryBtn {
+  padding: 7px 20px;
+  background: #1c2430;
+  border: 0.5px solid #2a4a7f;
+  border-radius: 7px;
+  color: #7ab3f0;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.retryBtn:hover {
+  background: #243a5e;
+}

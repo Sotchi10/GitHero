@@ -94,7 +94,7 @@ const DashSideBar = () => {
 
   if (!profile) {
     return (
-      <div className="w-full px-8 py-5 border border-default mt-4 rounded-[8px]">
+      <div className="w-full px-8 py-5 border border-[var(--border-subtle,rgba(255,255,255,0.1))] mt-4 rounded-[8px]">
         <p>Profile data is unavailable.</p>
       </div>
     );
@@ -128,27 +128,26 @@ const DashSideBar = () => {
     <aside
       className={`${
         isProfileSection
-          ? "w-95 bg-[#080808] px-20"
-          : "w-75 border-r border-default bg-[#0D0D0D] px-5"
+          ? "w-95 bg-[var(--surface-primary,#0b0b0f)] px-20"
+          : "w-75 border-r border-[var(--border-subtle,rgba(255,255,255,0.1))] bg-[var(--surface-card,#14141a)] px-5"
       } h-auto py-10`}
     >
       {isProfileSection ? (
-        // ===== PROFILE SECTION =====
         <div className="w-full flex flex-col items-start gap-3">
           <Avatar profile={profile} size="2xl" />
 
           {!isEditing ? (
             <>
               <div className="flex flex-col">
-                <h4 className="text-[24px]">
+                <h4 className="text-[24px] text-[var(--text-primary,#ffffff)]">
                   {profile.full_name || profile.username}
                 </h4>
 
-                <p className="text-gray-400 text-[15px]">
+                <p className="text-[var(--text-secondary,rgba(255,255,255,0.65))] text-[15px]">
                   @{profile.username} - {roleLabel}
                 </p>
 
-                <p className="text-sm">{profile.bio || "BIO HERE..."}</p>
+                <p className="text-sm text-[var(--text-primary,#ffffff)]">{profile.bio || "BIO HERE..."}</p>
               </div>
 
               <Button
@@ -164,7 +163,7 @@ const DashSideBar = () => {
                 name="username"
                 value={form.username}
                 onChange={handleChange}
-                className="w-full rounded border border-[#242424] bg-transparent p-2 text-sm"
+                className="w-full rounded border border-[var(--border-subtle,rgba(255,255,255,0.1))] bg-transparent p-2 text-sm text-[var(--text-primary,#ffffff)]"
                 placeholder="Username"
               />
 
@@ -172,7 +171,7 @@ const DashSideBar = () => {
                 name="bio"
                 value={form.bio}
                 onChange={handleChange}
-                className="w-full rounded border border-[#242424] bg-transparent p-2 text-sm"
+                className="w-full rounded border border-[var(--border-subtle,rgba(255,255,255,0.1))] bg-transparent p-2 text-sm text-[var(--text-primary,#ffffff)]"
                 placeholder="Short bio"
               />
 
@@ -196,20 +195,19 @@ const DashSideBar = () => {
           )}
         </div>
       ) : (
-        // ===== DASHBOARD NAV =====
         <>
           <div className="flex items-center gap-2">
             <NavLink to={`/profile/${profile.username}`}>
               <div className="flex items-center gap-2">
                 <Avatar profile={profile} size="sm" />
-                <p className="text-[13px]">{profile.username}</p>
+                <p className="text-[13px] text-[var(--text-primary,#ffffff)]">{profile.username}</p>
               </div>
             </NavLink>
           </div>
 
           {navItems.map((section) => (
             <div key={section.section} className="mt-4">
-              <p className="text-xs text-gray-400 uppercase mb-2">
+              <p className="text-xs text-[var(--text-muted,rgba(255,255,255,0.45))] uppercase mb-2">
                 {section.section}
               </p>
 
@@ -223,7 +221,7 @@ const DashSideBar = () => {
                           itemName={item.name}
                           className={
                             isActive
-                              ? "bg-[#161616] rounded-[3px] font-semibold"
+                              ? "bg-[var(--overlay-hover,rgba(255,255,255,0.1))] rounded-[3px] font-semibold"
                               : ""
                           }
                         />

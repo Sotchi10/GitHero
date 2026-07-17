@@ -27,7 +27,7 @@ import AdminLessons from "./admin/AdminLessons";
 import { useEffect } from "react";
 
 function App() {
-  const { loading } = useAuth();
+  const { loading } = useAuth();  
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("githero-theme") || "dark";

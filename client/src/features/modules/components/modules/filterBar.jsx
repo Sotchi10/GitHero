@@ -1,7 +1,5 @@
-import styles from "./FilterBar.module.css";
-
 function FilterBar() {
-  return <div className={styles.filterRow}></div>;
+  return <div className="mb-4 flex flex-wrap gap-2"></div>;
 }
 
 export default FilterBar;

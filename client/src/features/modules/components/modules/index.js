@@ -1,2 +1,1 @@
-export { default as ModuleCard } from "./ModuleCard";
-export { default as ModulesGrid } from "./ModulesGrid";
+export { default as NotePanel } from "./NotePanel";

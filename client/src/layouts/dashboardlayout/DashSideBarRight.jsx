@@ -94,13 +94,15 @@ const DashSideBarRight = ({ title, link }) => {
   if (isDevpath) {
     return (
       <aside className="space-y-4">
-        <div className="overflow-hidden rounded-xl border border-[#242424] bg-[#111111]">
-          <div className="border-b border-[#242424] px-5 py-4">
-            <h3 className="text-sm font-medium text-white">{title}</h3>
-          </div>
+        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-[#242424] dark:bg-[#111111]">
+  <div className="border-b border-gray-200 px-5 py-4 dark:border-[#242424]">
+    <h3 className="text-sm font-medium text-gray-900 dark:text-white">
+      {title}
+    </h3>
+  </div>
 
           <div className="flex flex-col gap-4 px-5 py-4">
-            <p className="text-[13px]">
+            <p className="text-[13px] text-gray-600 dark:text-gray-300">
               See what senior developers share regarding their Git learning
               journey.
             </p>
@@ -114,7 +116,7 @@ const DashSideBarRight = ({ title, link }) => {
                   />
                 ))
               ) : (
-                <p className="text-[13px] text-gray-400">
+                <p className="text-[13px] text-gray-400 dark:text-gray-400">
                   No developers yet.
                 </p>
               )}
@@ -126,7 +128,7 @@ const DashSideBarRight = ({ title, link }) => {
                   ? "/developers"
                   : `/${title.toLowerCase()}`
               }
-              className="text-sm text-blue-500 hover:underline"
+              className="text-sm text-blue-500 hover:underline dark:text-blue-400"
             >
               {link}
             </NavLink>
@@ -163,8 +165,8 @@ export default DashSideBarRight;
 /* -------------------------------------------------------------------------- */
 
 const LinkCard = ({ title, desc, linkTitle, link }) => (
-  <div className="rounded-xl border border-[#242424] bg-[#0d0d0d]">
-    <div className="flex flex-col gap-4 px-5 py-4">
+  <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-[#242424] dark:bg-[#0d0d0d]">
+    <div className="flex flex-col gap-4 px-5 py-4 ">
       <h3 className="text-[15px] font-medium text-white">{title}</h3>
 
       <p className="text-[14px]">{desc}</p>

@@ -66,23 +66,22 @@ const CommunityPost = () => {
 
   return (
     <>
-      <section
-        className={`flex min-h-full flex-col bg-[#080808] text-[#e0e0e0] px-4 py-8`}
-      >
+      <section className="flex min-h-full flex-col bg-white px-4 py-8 text-gray-900 dark:bg-[#080808] dark:text-[#e0e0e0]">
+
         <div className=" flex-1 overflow-hidden mt-5">
-          <main className="h-full overflow-y-auto px-5">
+          <main className="h-full overflow-y-auto bg-white px-5 dark:bg-[#080808]">
             <div className="grid gap-6 xl:grid-cols-[1fr_280px]">
               {/* Left Content */}
 
               <div className="space-y-5">
-                <div className="flex justify-between items-center text-[13px]">
+                <div className="flex items-center justify-between text-[13px] text-gray-900 dark:text-gray-100">
                   <h4>Posts</h4>
                   {isDeveloper ? (
                     <>
                       <NavLink to="/community">
-                        <button className="px-2 py-1 bg-blue-600 rounded-[5px] cursor-pointer">
-                          Create Post
-                        </button>
+                        <button className="cursor-pointer rounded-[5px] bg-blue-600 px-2 py-1 text-white hover:bg-blue-700">
+  Create Post
+</button>
                       </NavLink>
                     </>
                   ) : (

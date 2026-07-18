@@ -41,47 +41,55 @@ const PostCard = ({ post }) => {
     : "/community";
 
   return (
-    <article className="flex flex-col gap-4 rounded border border-[#242424] bg-[#0d0d0d] p-5">
-      <div className="flex gap-3 items-center">
-        <NavLink to={profilePath} aria-label={`${displayName} profile`}>
-          <Avatar profile={author} size="sm" />
-        </NavLink>
+    <article className="flex flex-col gap-4 rounded border border-gray-200 bg-white p-5 shadow-sm dark:border-[#242424] dark:bg-[#0d0d0d]">
+  <div className="flex items-center gap-3">
+    <NavLink to={profilePath} aria-label={`${displayName} profile`}>
+      <Avatar profile={author} size="sm" />
+    </NavLink>
 
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-x-2">
-            <NavLink
-              to={profilePath}
-              className="text-[13px] font-medium hover:underline"
-            >
-              {displayName}
-            </NavLink>
-            <p className="text-[13px] text-gray-400">made a post</p>
-          </div>
-          <p className="text-[12px] text-gray-500">@{post.username}</p>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <h5 className="text-base font-semibold text-[14px] text-white">
-          {post.title}
-        </h5>
-        <p className="text-[13px] leading-6 text-gray-300">
-          {getPreview(post.content)}
-        </p>
-      </div>
-
-      <div className="flex justify-between gap-4">
+    <div className="min-w-0">
+      <div className="flex flex-wrap items-center gap-x-2">
         <NavLink
-          to={postId ? `/${post.username}/post/${postId}` : "/community"}
-          className="text-blue-500 hover:underline text-[13px]"
+          to={profilePath}
+          className="text-[13px] font-medium text-gray-900 hover:underline dark:text-gray-100"
         >
-          Read More
+          {displayName}
         </NavLink>
-        <p className="text-[12px] text-gray-500">
-          {getDaysAgo(post.created_at)}
+
+        <p className="text-[13px] text-gray-500 dark:text-gray-400">
+          made a post
         </p>
       </div>
-    </article>
+
+      <p className="text-[12px] text-gray-500 dark:text-gray-500">
+        @{post.username}
+      </p>
+    </div>
+  </div>
+
+  <div className="space-y-2">
+    <h5 className="text-[14px] font-semibold text-gray-900 dark:text-white">
+      {post.title}
+    </h5>
+
+    <p className="text-[13px] leading-6 text-gray-700 dark:text-gray-300">
+      {getPreview(post.content)}
+    </p>
+  </div>
+
+  <div className="flex justify-between gap-4">
+    <NavLink
+      to={postId ? `/${post.username}/post/${postId}` : "/community"}
+      className="text-[13px] text-blue-600 hover:underline dark:text-blue-500"
+    >
+      Read More
+    </NavLink>
+
+    <p className="text-[12px] text-gray-500 dark:text-gray-500">
+      {getDaysAgo(post.created_at)}
+    </p>
+  </div>
+</article>
   );
 };
 export default PostCard;

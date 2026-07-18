@@ -1,0 +1,1 @@
+export { default as NotePanel } from "../note/NotePanel.jsx";

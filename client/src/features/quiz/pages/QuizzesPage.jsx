@@ -7,8 +7,8 @@ function QuizzesPage() {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
 
   return (
-    <div className="min-h-screen bg-[#080808] px-4 py-6 text-[#e8eaed]">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 lg:grid lg:grid-cols-[360px_minmax(0,1fr)]">
+    <div className="min-h-screen bg-gray-50 px-4 py-6 text-gray-900 dark:bg-[#080808] dark:text-[#141414]">
+      <div className="flex w-full max-w-7xl flex-col gap-4 lg:grid lg:grid-cols-[560px_minmax(0,1fr)]">
         <div className="lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)]">
           <QuizGrid
             quizzes={quizzesData}

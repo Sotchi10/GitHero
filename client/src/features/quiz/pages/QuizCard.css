@@ -15,13 +15,13 @@
 }
 
 .card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.45);
   transform: translateY(-2px);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
 }
 
 .card.selected {
-  border-color: rgba(35, 95, 58, 0.7);
+  border-color: rgba(255, 255, 255, 0.7);
   background: linear-gradient(180deg, rgba(24, 25, 27, 0.95) 0%, #101010 100%);
   box-shadow: 0 16px 34px rgba(20, 122, 88, 0.15);
 }
@@ -58,20 +58,20 @@
 .quizBadge {
   flex-shrink: 0;
   padding: 5px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
+  border: 1px solid rgba(241, 230, 230, 0.08);
   background: rgba(255, 255, 255, 0.04);
   font-size: 10px;
-  font-family: monospace;
+  font-family: sans-serif;
   color: #d7dbe0;
 }
 
 .selectBtn {
   margin-top: 2px;
   padding: 10px 0;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
-  background: #121212;
+  background: transparent;
   color: #ffffff;
   font-size: 12px;
   cursor: pointer;
@@ -81,13 +81,65 @@
 }
 
 .selectBtn:hover {
-  border-color: rgba(34, 45, 58, 0.45);
+  border-color: #ffffff;
   color: #ffffff;
-  background: #171717;
+  background: transparent;
 }
 
 .selected .selectBtn {
-  border-color: rgba(21, 108, 189, 0.65);
-  background: rgba(122, 179, 240, 0.1);
-  color: #b8d7ff;
+  border-color: rgba(122, 179, 240, 0.65);
+  background: transparent;
+  color: #7ab3f0;
+}
+
+/* ── Light mode ── */
+:root[data-theme="white"] .card {
+  background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="white"] .card:hover {
+  border-color: #0f172a;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
+}
+
+:root[data-theme="white"] .card.selected {
+  border-color: rgba(47, 100, 214, 0.5);
+  background: linear-gradient(180deg, rgba(238, 244, 255, 0.9) 0%, #ffffff 100%);
+  box-shadow: 0 16px 34px rgba(47, 100, 214, 0.12);
+}
+
+:root[data-theme="white"] .num {
+  color: #64748b;
+}
+
+:root[data-theme="white"] .title {
+  color: #0f172a;
+}
+
+:root[data-theme="white"] .desc {
+  color: #475569;
+}
+
+:root[data-theme="white"] .quizBadge {
+  border-color: rgba(15, 23, 42, 0.08);
+  background: rgba(15, 23, 42, 0.03);
+  color: #334155;
+}
+
+:root[data-theme="white"] .selectBtn {
+  border-color: rgba(15, 23, 42, 0.2);
+  background: transparent;
+  color: #0f172a;
+}
+
+:root[data-theme="white"] .selectBtn:hover {
+  border-color: #0f172a;
+  background: transparent;
+}
+
+:root[data-theme="white"] .selected .selectBtn {
+  border-color: #2f64d6;
+  background: transparent;
+  color: #2f64d6;
 }

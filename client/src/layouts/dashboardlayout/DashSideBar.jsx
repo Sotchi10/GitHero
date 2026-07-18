@@ -94,7 +94,7 @@ const DashSideBar = () => {
 
   if (!profile) {
     return (
-      <div className="w-full px-8 py-5 border border-[var(--border-subtle,rgba(255,255,255,0.1))] mt-4 rounded-[8px]">
+      <div className="w-full px-8 py-5 border border-gray-200 dark:border-white/10 mt-4 rounded-[8px]">
         <p>Profile data is unavailable.</p>
       </div>
     );
@@ -128,8 +128,8 @@ const DashSideBar = () => {
     <aside
       className={`${
         isProfileSection
-          ? "w-95 bg-[var(--surface-primary,#0b0b0f)] px-20"
-          : "w-75 border-r border-[var(--border-subtle,rgba(255,255,255,0.1))] bg-[var(--surface-card,#14141a)] px-5"
+          ? "w-95 bg-white px-20 dark:bg-[#0b0b0f]"
+          : "w-75 border-r border-gray-200 bg-gray-50 px-5 dark:border-white/10 dark:bg-[#14141a]"
       } h-auto py-10`}
     >
       {isProfileSection ? (
@@ -139,15 +139,15 @@ const DashSideBar = () => {
           {!isEditing ? (
             <>
               <div className="flex flex-col">
-                <h4 className="text-[24px] text-[var(--text-primary,#ffffff)]">
+                <h4 className="text-[24px] text-gray-900 dark:text-white">
                   {profile.full_name || profile.username}
                 </h4>
 
-                <p className="text-[var(--text-secondary,rgba(255,255,255,0.65))] text-[15px]">
+                <p className="text-gray-600 dark:text-white/65 text-[15px]">
                   @{profile.username} - {roleLabel}
                 </p>
 
-                <p className="text-sm text-[var(--text-primary,#ffffff)]">{profile.bio || "BIO HERE..."}</p>
+                <p className="text-sm text-gray-900 dark:text-white">{profile.bio || "BIO HERE..."}</p>
               </div>
 
               <Button
@@ -163,7 +163,7 @@ const DashSideBar = () => {
                 name="username"
                 value={form.username}
                 onChange={handleChange}
-                className="w-full rounded border border-[var(--border-subtle,rgba(255,255,255,0.1))] bg-transparent p-2 text-sm text-[var(--text-primary,#ffffff)]"
+                className="w-full rounded border border-gray-300 bg-white p-2 text-sm text-gray-900 dark:border-white/10 dark:bg-transparent dark:text-white"
                 placeholder="Username"
               />
 
@@ -171,11 +171,11 @@ const DashSideBar = () => {
                 name="bio"
                 value={form.bio}
                 onChange={handleChange}
-                className="w-full rounded border border-[var(--border-subtle,rgba(255,255,255,0.1))] bg-transparent p-2 text-sm text-[var(--text-primary,#ffffff)]"
+                className="w-full rounded border border-gray-300 bg-white p-2 text-sm text-gray-900 dark:border-white/10 dark:bg-transparent dark:text-white"
                 placeholder="Short bio"
               />
 
-              {error && <p className="text-red-400 text-sm">{error}</p>}
+              {error && <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>}
 
               <div className="flex gap-2 w-full">
                 <Button
@@ -200,14 +200,14 @@ const DashSideBar = () => {
             <NavLink to={`/profile/${profile.username}`}>
               <div className="flex items-center gap-2">
                 <Avatar profile={profile} size="sm" />
-                <p className="text-[13px] text-[var(--text-primary,#ffffff)]">{profile.username}</p>
+                <p className="text-[13px] text-gray-900 dark:text-white">{profile.username}</p>
               </div>
             </NavLink>
           </div>
 
           {navItems.map((section) => (
             <div key={section.section} className="mt-4">
-              <p className="text-xs text-[var(--text-muted,rgba(255,255,255,0.45))] uppercase mb-2">
+              <p className="text-xs text-gray-500 dark:text-white/45 uppercase mb-2">
                 {section.section}
               </p>
 
@@ -221,7 +221,7 @@ const DashSideBar = () => {
                           itemName={item.name}
                           className={
                             isActive
-                              ? "bg-[var(--overlay-hover,rgba(255,255,255,0.1))] rounded-[3px] font-semibold"
+                              ? "bg-gray-200 dark:bg-white/10 rounded-[3px] font-semibold"
                               : ""
                           }
                         />

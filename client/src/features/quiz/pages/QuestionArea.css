@@ -102,7 +102,7 @@
 }
 
 .option:hover {
-  border-color: rgba(122, 179, 240, 0.45);
+  border-color: rgba(240, 240, 240, 0.45);
   background: #141414;
   transform: translateY(-1px);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
@@ -114,14 +114,14 @@
 }
 
 .correct {
-  border-color: rgba(114, 196, 90, 0.7) !important;
-  background: rgba(114, 196, 90, 0.08) !important;
+  border-color: rgba(114, 196, 90, 0.7) ;
+  background: rgba(114, 196, 90, 0.08) ;
   cursor: default;
 }
 
 .wrong {
-  border-color: rgba(224, 122, 122, 0.7) !important;
-  background: rgba(224, 122, 122, 0.08) !important;
+  border-color: rgba(224, 122, 122, 0.7) ;
+  background: rgba(224, 122, 122, 0.08) ;
   cursor: default;
 }
 
@@ -141,8 +141,8 @@
 }
 
 .optSelected .letter {
-  border-color: rgba(122, 179, 240, 0.65);
-  color: #7ab3f0;
+  border-color: rgba(248, 248, 248, 0.65);
+  color: #f0f0f0;
 }
 
 .correct .letter {
@@ -181,7 +181,7 @@
 }
 
 .tfBtn:hover:not(:disabled) {
-  border-color: rgba(122, 179, 240, 0.45);
+  border-color: rgba(242, 243, 245, 0.45);
   color: #f0f3f6;
   background: #141414;
   transform: translateY(-1px);
@@ -192,8 +192,8 @@
 }
 
 .tSel {
-  border-color: rgba(122, 179, 240, 0.65);
-  background: rgba(122, 179, 240, 0.1);
+  border-color: rgba(122, 179, 240, 0.7);
+  background: rgba(122, 179, 240, 0.08);
   color: #7ab3f0;
 }
 
@@ -279,9 +279,9 @@
 .retryBtn {
   padding: 9px 20px;
   background: #111111;
-  border: 1px solid rgba(122, 179, 240, 0.35);
+  border: 1px solid rgba(13, 13, 14, 0.35);
   border-radius: 10px;
-  color: #7ab3f0;
+  color: #0d0d0e;
   font-size: 12px;
   cursor: pointer;
   font-family: inherit;
@@ -290,5 +290,141 @@
 
 .retryBtn:hover {
   background: #151515;
-  border-color: rgba(122, 179, 240, 0.55);
+  border-color: rgba(22, 23, 26, 0.55);
+}
+
+/* ── Light mode ── */
+:root[data-theme="white"] .section {
+  background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
+  border-color: rgba(15, 23, 42, 0.08);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="white"] .header {
+  border-color: rgba(15, 23, 42, 0.08);
+  background: rgba(15, 23, 42, 0.02);
+}
+
+:root[data-theme="white"] .headerTitle {
+  color: #0f172a;
+}
+
+:root[data-theme="white"] .counter {
+  color: #0f172a;
+  background: #f1f4f9;
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="white"] .empty {
+  color: #64748b;
+}
+
+:root[data-theme="white"] .typeTag {
+  color: #475569;
+  border-color: rgba(15, 23, 42, 0.08);
+  background: rgba(15, 23, 42, 0.03);
+}
+
+:root[data-theme="white"] .qText {
+  color: #0f172a;
+  background: #f8f9fb;
+  border-color: rgba(15, 23, 42, 0.06);
+}
+
+:root[data-theme="white"] .option {
+  background: #f8f9fb;
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="white"] .option:hover {
+  border-color: rgba(5, 5, 5, 0.4);
+  background: #f1f4f9;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="white"] .optSelected {
+  border-color: rgba(17, 19, 22, 0.5);
+  background: rgba(47, 100, 214, 0.08);
+}
+
+:root[data-theme="white"] .correct {
+  border-color: rgba(34, 153, 84, 0.6);
+  background: rgba(34, 153, 84, 0.08);
+}
+
+:root[data-theme="white"] .wrong {
+  border-color: rgba(220, 38, 38, 0.6);
+  background: rgba(220, 38, 38, 0.08);
+}
+
+:root[data-theme="white"] .letter {
+  border-color: rgba(15, 23, 42, 0.1);
+  color: #64748b;
+  background: rgba(15, 23, 42, 0.03);
+}
+
+:root[data-theme="white"] .optSelected .letter {
+  border-color: rgba(9, 10, 10, 0.5);
+  color: #131416;
+}
+
+:root[data-theme="white"] .correct .letter {
+  border-color: rgba(34, 153, 84, 0.6);
+  color: #229954;
+}
+
+:root[data-theme="white"] .wrong .letter {
+  border-color: rgba(220, 38, 38, 0.6);
+  color: #dc2626;
+}
+
+:root[data-theme="white"] .optText {
+  color: #1e293b;
+}
+
+:root[data-theme="white"] .tfBtn {
+  background: #f8f9fb;
+  border-color: rgba(15, 23, 42, 0.08);
+  color: #475569;
+}
+
+:root[data-theme="white"] .tfBtn:hover:not(:disabled) {
+  border-color: rgba(62, 67, 77, 0.4);
+  color: #0f172a;
+  background: #f1f4f9;
+}
+
+:root[data-theme="white"] .tSel {
+  border-color: rgba(27, 30, 37, 0.5);
+  background: rgba(47, 100, 214, 0.08);
+  color: #1a1b1d;
+}
+
+:root[data-theme="white"] .fSel {
+  border-color: rgba(220, 38, 38, 0.6);
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+}
+
+:root[data-theme="white"] .resultSub {
+  color: #64748b;
+}
+
+:root[data-theme="white"] .resultScore {
+  color: #0f172a;
+}
+
+:root[data-theme="white"] .resultTotal {
+  color: #94a3b8;
+}
+
+:root[data-theme="white"] .retryBtn {
+  background: #ffffff;
+  border-color: rgba(8, 8, 8, 0.35);
+  color: #070708;
+}
+
+:root[data-theme="white"] .retryBtn:hover {
+  background: #f1f4f9;
+  border-color: rgba(17, 18, 19, 0.55);
 }

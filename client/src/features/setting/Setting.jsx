@@ -34,8 +34,8 @@ useEffect(() => {
   };
 
   return (
-    <section className="min-h-full w-full bg-white px-4 py-6 text-gray-900 dark:bg-[#0b0b0f] dark:text-white">
-      <div className="mx-auto grid w-full min-h-[calc(100vh-3rem)] max-w-7xl gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
+    <section className="min-h-full w-full bg-gray-50 px-4 py-6 text-gray-900 dark:bg-[#0b0b0f] dark:text-white">
+      <div className="grid w-full min-h-[calc(100vh-3rem)] max-w-7xl gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
         <SettingSidebar
           activeSection={activeSection}
           sections={sections}
@@ -43,7 +43,7 @@ useEffect(() => {
           onLogout={handleLogout}
         />
 
-        <div className="min-w-0 w-full rounded-[28px] border border-gray-200 bg-gray-50 p-5 dark:border-white/10 dark:bg-[#14141a] sm:p-6">
+        <div className="min-w-0 w-full rounded-[28px] border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#14141a] dark:shadow-none sm:p-6">
           {activeSection === "profile" ? (
             <ProfilePanel />
           ) : (

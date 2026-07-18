@@ -69,7 +69,7 @@ const ProfilePanel = () => {
 
   if (!profile || !form) {
     return (
-      <div className="flex min-h-[300px] items-center justify-center text-sm text-gray-400 dark:text-white/45">
+      <div className="flex min-h-300px items-center justify-center text-sm text-gray-400 dark:text-white/45">
         Loading profile...
       </div>
     );

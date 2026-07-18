@@ -15,7 +15,7 @@ function QuizGrid({ quizzes, selectedId, onSelect }) {
         </p>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-1">
+      <div className="grid grid-cols-3 gap-3 overflow-y-auto pr-1">
         {quizzes.map((quiz) => (
           <QuizCard
             key={quiz.id}

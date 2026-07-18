@@ -102,7 +102,7 @@
 }
 
 .option:hover {
-  border-color: rgba(122, 179, 240, 0.45);
+  border-color: rgba(240, 240, 240, 0.45);
   background: #141414;
   transform: translateY(-1px);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
@@ -114,14 +114,14 @@
 }
 
 .correct {
-  border-color: rgba(114, 196, 90, 0.7) !important;
-  background: rgba(114, 196, 90, 0.08) !important;
+  border-color: rgba(114, 196, 90, 0.7) ;
+  background: rgba(114, 196, 90, 0.08) ;
   cursor: default;
 }
 
 .wrong {
-  border-color: rgba(224, 122, 122, 0.7) !important;
-  background: rgba(224, 122, 122, 0.08) !important;
+  border-color: rgba(224, 122, 122, 0.7) ;
+  background: rgba(224, 122, 122, 0.08) ;
   cursor: default;
 }
 
@@ -141,8 +141,8 @@
 }
 
 .optSelected .letter {
-  border-color: rgba(122, 179, 240, 0.65);
-  color: #7ab3f0;
+  border-color: rgba(248, 248, 248, 0.65);
+  color: #f0f0f0;
 }
 
 .correct .letter {
@@ -181,7 +181,7 @@
 }
 
 .tfBtn:hover:not(:disabled) {
-  border-color: rgba(122, 179, 240, 0.45);
+  border-color: rgba(242, 243, 245, 0.45);
   color: #f0f3f6;
   background: #141414;
   transform: translateY(-1px);

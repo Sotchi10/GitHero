@@ -1,8 +1,6 @@
 import { db } from "../../config/db.js";
 import { signupService, getUserByUsernameService, loginService } from "./authService.js";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
 
 // Sign up
 export const signup = async (req, res) => {

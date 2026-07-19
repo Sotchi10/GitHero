@@ -6,7 +6,6 @@ import { getPfp } from "../api/apiProfile";
 
 const DashboardLayout = () => {
   const { pathname } = useLocation();
-<<<<<<< HEAD
   const profileUsername = pathname.startsWith("/profile/")
     ? decodeURIComponent(pathname.split("/")[2] || "")
     : "";
@@ -54,9 +53,7 @@ const DashboardLayout = () => {
       active = false;
     };
   }, [profileUsername]);
-=======
   const isSettings = pathname.startsWith("/settings");
->>>>>>> be28d6d1cdd56d5909cd093a5284dad3a24e43e0
 
   return (
     <div className="min-h-screen w-full flex flex-col bg-primary">
@@ -66,21 +63,15 @@ const DashboardLayout = () => {
       {/* Body */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-<<<<<<< HEAD
-        <DashSideBar activePath={pathname} viewedProfile={viewedProfile} />
-
-        {/* Content */}
-        <main className="flex-1 overflow-y-auto p-6">
-          <Outlet context={{ viewedProfile, profileLoading, profileError }} />
-=======
-        {!isSettings ? <DashSideBar activePath={pathname} /> : null}
+        {!isSettings && (
+          <DashSideBar activePath={pathname} viewedProfile={viewedProfile} />
+        )}
 
         {/* Content */}
         <main
           className={`flex-1 overflow-y-auto ${isSettings ? "p-0" : "p-6"}`}
         >
-          <Outlet />
->>>>>>> be28d6d1cdd56d5909cd093a5284dad3a24e43e0
+          <Outlet context={{ viewedProfile, profileLoading, profileError }} />
         </main>
       </div>
     </div>

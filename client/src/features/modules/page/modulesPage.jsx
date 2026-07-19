@@ -1,35 +1,45 @@
-import { useState, useMemo } from "react";
-import FilterBar from "../components/modules/FilterBar";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ModulesGrid from "../components/modules/ModuleGrid";
+<<<<<<< HEAD
 import { NotePanel } from "../components/note";
 import modulesData from "../data/modulesData";
-
-function getStatusKey(progress) {
-  if (progress === 100) return "completed";
-  if (progress > 0) return "in-progress";
-  return "not-started";
-}
+=======
+import { getModules } from "../../../api/apiModule";
+import styles from "./ModulesPage.module.css";
+>>>>>>> f2a9bcab4362cf3db2b6f77b342368f09167d970
 
 function ModulesPage() {
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [modules, setModules] = useState([]);
   const [search, setSearch] = useState("");
-  const [selectedLesson, setSelectedLesson] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const filtered = useMemo(() => {
-    const list = Array.isArray(modulesData) ? modulesData : [];
+  useEffect(() => {
+    const loadModules = async () => {
+      try {
+        const res = await getModules();
+        setModules(res.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Failed to load modules");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadModules();
+  }, []);
 
-    return list.filter((m) => {
-      const matchesFilter =
-        activeFilter === "all" ||
-        getStatusKey(m?.progress ?? 0) === activeFilter;
-      const title = (m?.title ?? "").toLowerCase();
-      const matchesSearch =
-        search.trim() === "" || title.includes(search.toLowerCase());
-      return matchesFilter && matchesSearch;
-    });
-  }, [activeFilter, search]);
+  const filtered = useMemo(
+    () =>
+      modules.filter((module) =>
+        module.title.toLowerCase().includes(search.toLowerCase()),
+      ),
+    [modules, search],
+  );
 
   return (
+<<<<<<< HEAD
     <div className="flex min-h-screen flex-1 flex-col px-4 font-sans text-gray-900 dark:text-[#e8eaed]">
       {/* Top Bar */}
       <div className="flex flex-shrink-0 items-center justify-between px-6 py-3.5">
@@ -38,9 +48,16 @@ function ModulesPage() {
             <span className="text-base leading-none text-gray-500 dark:text-[#555a60]">
               ⌕
             </span>
+=======
+    <div className={`${styles.page} px-4`}>
+      <div className={styles.topbar}>
+        <div className={styles.topbarRight}>
+          <div className={styles.searchBox}>
+            <span className={styles.searchIcon}>⌕</span>
+>>>>>>> f2a9bcab4362cf3db2b6f77b342368f09167d970
             <input
               type="text"
-              placeholder="Search modules…"
+              placeholder="Search modules..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-40 border-none bg-transparent text-[13px] text-gray-900 outline-none placeholder:text-gray-400 dark:text-[#c5c8cc] dark:placeholder:text-[#3a3f44]"
@@ -48,6 +65,7 @@ function ModulesPage() {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
 
       {/* Main Layout */}
       <div className="flex min-h-0 flex-1">
@@ -60,24 +78,29 @@ function ModulesPage() {
             </h1>
             <p className="mt-1 text-[13px] text-gray-600 dark:text-[#555a60]">
               {modulesData.length} lessons · Learn Git and GitHub from scratch
+=======
+      <div className={styles.body}>
+        <main className={styles.content}>
+          <header className={styles.pageHeader}>
+            <h1 className={styles.heading}>Modules</h1>
+            <p className={styles.subheading}>
+              Learn Git and GitHub from scratch
+>>>>>>> f2a9bcab4362cf3db2b6f77b342368f09167d970
             </p>
           </header>
-
-          {/* Filters */}
-          <FilterBar active={activeFilter} onChange={setActiveFilter} />
-
-          {/* Modules */}
-          <ModulesGrid
-            modules={filtered}
-            selectedId={selectedLesson?.id}
-            onSelect={setSelectedLesson}
-          />
+          {loading && <p className="text-gray-400">Loading modules...</p>}
+          {error && (
+            <div className="rounded-lg border border-red-500 bg-red-500/10 p-4 text-red-400">
+              {error}
+            </div>
+          )}
+          {!loading && !error && (
+            <ModulesGrid
+              modules={filtered}
+              onSelect={(module) => navigate(`/modules/${module.module_id}`)}
+            />
+          )}
         </main>
-
-        {/* Right Sidebar */}
-        <aside>
-          <NotePanel selectedLesson={selectedLesson} />
-        </aside>
       </div>
     </div>
   );

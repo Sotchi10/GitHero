@@ -12,17 +12,24 @@ import Button from "../../components/ui/Button";
 import { useAuth } from "../../context/AuthContext";
 import DashNavItem from "../../features/dashboard/components/dashboard-ui/DashNavItem";
 import Avatar from "../../features/profile/components/Avatar";
-import { useState, useEffect } from "react";
-import { updateCurrentProfile } from "../../api/apiProfile";
+import { useState } from "react";
 
-const DashSideBar = () => {
+const DashSideBar = ({ viewedProfile = null }) => {
   const { authUser, profile, updateProfile } = useAuth();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const isProfileSection = pathname.startsWith("/profile");
-  const isRepoSection = pathname.startsWith("/repository");
-  const roleLabel = authUser?.role || profile?.role || "";
+  const isOwnProfile =
+    isProfileSection &&
+    viewedProfile?.user_id &&
+    profile?.user_id &&
+    String(viewedProfile.user_id) === String(profile.user_id);
+  const displayProfile =
+    isProfileSection && !isOwnProfile ? viewedProfile : profile;
+  const roleLabel = isOwnProfile
+    ? authUser?.role || displayProfile?.role || ""
+    : displayProfile?.role || "";
 
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -32,22 +39,20 @@ const DashSideBar = () => {
     username: "",
     bio: "",
   });
-
-  useEffect(() => {
-    if (profile) {
-      setForm({
-        username: profile.username || "",
-        bio: profile.bio || "",
-      });
-    }
-  }, [profile]);
+  const showEditor = isOwnProfile && isEditing;
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleEdit = () => {
+    if (!isOwnProfile) return;
+
     setError("");
+    setForm({
+      username: profile?.username || "",
+      bio: profile?.bio || "",
+    });
     setIsEditing(true);
   };
 
@@ -61,7 +66,7 @@ const DashSideBar = () => {
   };
 
   const handleSave = async () => {
-    if (!profile?.user_id || saving) return;
+    if (!profile?.user_id || saving || !isOwnProfile) return;
 
     if (!form.username.trim()) {
       setError("Username is required");
@@ -92,7 +97,7 @@ const DashSideBar = () => {
     }
   };
 
-  if (!profile) {
+  if (!displayProfile) {
     return (
       <div className="w-full px-8 py-5 border border-gray-200 dark:border-white/10 mt-4 rounded-[8px]">
         <p>Profile data is unavailable.</p>
@@ -134,11 +139,12 @@ const DashSideBar = () => {
     >
       {isProfileSection ? (
         <div className="w-full flex flex-col items-start gap-3">
-          <Avatar profile={profile} size="2xl" />
+          <Avatar profile={displayProfile} size="2xl" />
 
-          {!isEditing ? (
+          {!showEditor ? (
             <>
               <div className="flex flex-col">
+<<<<<<< HEAD
                 <h4 className="text-[24px] text-gray-900 dark:text-white">
                   {profile.full_name || profile.username}
                 </h4>
@@ -148,14 +154,27 @@ const DashSideBar = () => {
                 </p>
 
                 <p className="text-sm text-gray-900 dark:text-white">{profile.bio || "BIO HERE..."}</p>
+=======
+                <h4 className="text-[24px]">
+                  {displayProfile.full_name || displayProfile.username}
+                </h4>
+
+                <p className="text-gray-400 text-[15px]">
+                  @{displayProfile.username} - {roleLabel}
+                </p>
+
+                <p className="text-sm">{displayProfile.bio || "BIO HERE..."}</p>
+>>>>>>> f2a9bcab4362cf3db2b6f77b342368f09167d970
               </div>
 
-              <Button
-                bcolor="outline"
-                text="Edit Profile"
-                className="w-full mt-4"
-                onClick={handleEdit}
-              />
+              {isOwnProfile && (
+                <Button
+                  bcolor="outline"
+                  text="Edit Profile"
+                  className="w-full mt-4"
+                  onClick={handleEdit}
+                />
+              )}
             </>
           ) : (
             <>

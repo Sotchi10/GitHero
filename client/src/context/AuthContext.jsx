@@ -96,6 +96,7 @@ export const AuthProvider = ({ children }) => {
 
       setAuthUser(normalizedUser);
       localStorage.setItem("authUser", JSON.stringify(normalizedUser));
+      if (userData?.token) localStorage.setItem("authToken", userData.token);
 
       await loadProfile(normalizedUser);
       return normalizedUser;
@@ -107,6 +108,7 @@ export const AuthProvider = ({ children }) => {
       setProfile(null);
 
       localStorage.removeItem("authUser");
+      localStorage.removeItem("authToken");
 
       throw err;
     }
@@ -118,6 +120,7 @@ export const AuthProvider = ({ children }) => {
     setError(null);
 
     localStorage.removeItem("authUser");
+    localStorage.removeItem("authToken");
   };
 
   const updateProfile = async (data) => {

@@ -6,7 +6,8 @@ import postsRoute from "./features/posts/postsRoute.js";
 import userRoute from "./features/users/usersRoute.js";
 import repositoryRoute from "./features/repository/repositoryRoute.js";
 import notesRoute from "./features/notes/notesRoute.js";
-import moduleRoute from "./admin/modules/moduleRoutes.js";
+import moduleRoute, { adminModuleRoute } from "./admin/modules/moduleRoutes.js";
+import lessonRoute from "./admin/lessons/lessonRoutes.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -21,6 +22,7 @@ app.use(cors({
   credentials: true
 }));
 app.use("/uploads", express.static(path.resolve(__dirname, "../uploads")));
+app.use("/upload/lesson", express.static(path.resolve(__dirname, "../upload/lesson")));
 
 // Routes
 app.get("/", (req, res) => res.send("Hello World!"));
@@ -44,5 +46,7 @@ app.use("/api/notes", notesRoute);
 
 //Modules
 app.use("/api/modules", moduleRoute);
+app.use("/api/admin/modules", adminModuleRoute);
+app.use("/api/lessons", lessonRoute);
 
 export default app;

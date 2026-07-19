@@ -1,5 +1,7 @@
 import {
   createRepository,
+  deleteRepositoryById,
+  findRepositoryById,
   findRepositoryByPath,
   findRepositoriesForProfile,
   findRepositoriesByOwner,
@@ -76,6 +78,34 @@ export const addRepository = async (req, res) => {
       message: "Repository created successfully",
       repository: createdRepository,
     });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const removeRepository = async (req, res) => {
+  try {
+    const repoId = parseRepositoryId(req.params.repoId);
+
+    if (!repoId) {
+      return res.status(400).json({ message: "Invalid repository ID" });
+    }
+
+    const repository = await findRepositoryById(repoId);
+
+    if (!repository) {
+      return res.status(404).json({ message: "Repository not found" });
+    }
+
+    if (Number(repository.owner_id) !== Number(req.auth.userId)) {
+      return res.status(403).json({
+        message: "You can only delete your own repositories",
+      });
+    }
+
+    await deleteRepositoryById(repoId, req.auth.userId);
+
+    res.json({ message: "Repository deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -210,4 +240,9 @@ export const createRepositoryCommit = async (req, res) => {
       error: err.message,
     });
   }
+};
+
+const parseRepositoryId = (value) => {
+  const id = Number(value);
+  return Number.isInteger(id) && id > 0 ? id : null;
 };

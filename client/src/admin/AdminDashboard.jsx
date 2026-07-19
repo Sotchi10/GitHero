@@ -1,100 +1,82 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { MdLibraryBooks, MdOutlinePlayLesson } from "react-icons/md";
 import { PiStudentFill } from "react-icons/pi";
-import { RiPulseLine } from "react-icons/ri";
 
-import modulesData from "../features/modules/data/modulesData";
-import { getUsers, getDevelopers, getStudents } from "../api/apiCommunity";
+import { getAdminDashboardSummary } from "../api/apiModule";
 
-const moduleProgress = [
-  {
-    name: "Git Fundamentals",
-    progress: 86,
-  },
-  {
-    name: "Collaboration Workflow",
-    progress: 64,
-  },
-  {
-    name: "Advanced Repository Tools",
-    progress: 42,
-  },
-];
+const errorMessage = (err) =>
+  err.response?.data?.message || err.message || "Failed to load dashboard data";
+
+const formatDate = (value) =>
+  value ? new Date(value).toLocaleDateString() : "No date available";
 
 const AdminDashboard = () => {
-  const [usersCount, setUsersCount] = useState(0);
-  const [studentsCount, setStudentsCount] = useState(0);
-  const [developersCount, setDevelopersCount] = useState(0);
-
+  const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
+    const loadDashboard = async () => {
       try {
-        const [usersRes, studentsRes, developersRes] = await Promise.all([
-          getUsers(),
-          getStudents(),
-          getDevelopers(),
-        ]);
-
-        setUsersCount(usersRes.data.length);
-        setStudentsCount(studentsRes.data.length);
-        setDevelopersCount(developersRes.data.length);
+        setLoading(true);
+        setError("");
+        const response = await getAdminDashboardSummary();
+        setSummary(response.data);
       } catch (err) {
-        setError(
-          err.response?.data?.message || "Failed to load dashboard data",
-        );
+        setError(errorMessage(err));
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDashboardData();
+    loadDashboard();
   }, []);
 
-  const stats = useMemo(
-    () => [
+  const stats = useMemo(() => {
+    if (!summary) return [];
+
+    return [
       {
         label: "Modules",
-        value: modulesData.length,
-        detail: "3 drafts",
+        value: summary.modules.total,
+        detail: `${summary.modules.published} published · ${summary.modules.unpublished} unpublished`,
         icon: MdLibraryBooks,
       },
       {
         label: "Lessons",
-        value: 84,
-        detail: "18 published this month",
+        value: summary.lessons.total,
+        detail: `${summary.lessons.with_pdf} with PDFs · ${summary.lessons.without_pdf} without PDFs`,
         icon: MdOutlinePlayLesson,
       },
       {
-        label: "Total Users",
-        value: loading ? "..." : usersCount,
-        detail: `${studentsCount} students · ${developersCount} developers`,
+        label: "Registered users",
+        value: summary.users.total,
+        detail: "All registered accounts",
         icon: PiStudentFill,
       },
       {
-        label: "Completion",
-        value: "68%",
-        detail: "Average course progress",
-        icon: RiPulseLine,
+        label: "Modules without lessons",
+        value: summary.modules_without_lessons.length,
+        detail: "Need lesson content",
+        icon: MdLibraryBooks,
       },
-    ],
-    [loading, usersCount, studentsCount, developersCount],
-  );
+    ];
+  }, [summary]);
 
   return (
     <div className="space-y-7">
-      <header className="flex items-start justify-between gap-4">
+      <header className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
           <p className="text-sm uppercase text-gray-400">Admin dashboard</p>
-
           <h1 className="mt-2 text-3xl font-bold">Learning overview</h1>
         </div>
-
-        <button className="rounded-lg bg-btn-primary px-5 py-2 text-sm font-semibold hover:bg-btn-primary-hover">
+        <Link
+          to="/admin/modules"
+          className="rounded-lg bg-btn-primary px-5 py-2 text-center text-sm font-semibold hover:bg-btn-primary-hover"
+        >
           Add module
-        </button>
+        </Link>
       </header>
 
       {error && (
@@ -103,57 +85,81 @@ const AdminDashboard = () => {
         </div>
       )}
 
-      {/* Statistics */}
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-
-          return (
-            <article
-              key={stat.label}
-              className="rounded-lg border border-default p-5"
-            >
-              <div className="flex justify-between items-center">
-                <p className="font-semibold text-white">{stat.label}</p>
-
-                <Icon className="text-xl text-gray-300" />
-              </div>
-
-              <p className="mt-3 text-3xl font-bold text-blue-500">
-                {stat.value}
-              </p>
-
-              <p className="mt-2 text-sm text-gray-400">{stat.detail}</p>
-            </article>
-          );
-        })}
-      </section>
-
-      {/* Module Progress */}
-      <section className="rounded-lg border border-default p-5">
-        <h2 className="text-xl font-semibold">Module progress</h2>
-
-        <div className="mt-5 space-y-4">
-          {moduleProgress.map((module) => (
-            <div key={module.name}>
-              <div className="mb-2 flex justify-between text-sm">
-                <span>{module.name}</span>
-
-                <span className="text-gray-400">{module.progress}%</span>
-              </div>
-
-              <div className="h-2 rounded-full bg-[#161616]">
-                <div
-                  className="h-2 rounded-full bg-btn-primary"
-                  style={{
-                    width: `${module.progress}%`,
-                  }}
-                />
-              </div>
-            </div>
-          ))}
+      {loading ? (
+        <div className="rounded-lg border border-default p-6 text-gray-400">
+          Loading dashboard data...
         </div>
-      </section>
+      ) : summary ? (
+        <>
+          <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {stats.map((stat) => {
+              const Icon = stat.icon;
+              return (
+                <article key={stat.label} className="rounded-lg border border-default p-5">
+                  <div className="flex items-center justify-between">
+                    <p className="font-semibold text-white">{stat.label}</p>
+                    <Icon className="text-xl text-gray-300" />
+                  </div>
+                  <p className="mt-3 text-3xl font-bold text-blue-500">{stat.value}</p>
+                  <p className="mt-2 text-sm text-gray-400">{stat.detail}</p>
+                </article>
+              );
+            })}
+          </section>
+
+          <section className="grid gap-4 xl:grid-cols-2">
+            <article className="rounded-lg border border-default p-5">
+              <h2 className="text-xl font-semibold">Recently updated modules</h2>
+              <div className="mt-5 space-y-3">
+                {summary.recent_modules.length ? summary.recent_modules.map((module) => (
+                  <Link key={module.module_id} to="/admin/modules" className="block rounded-lg border border-default p-3 hover:bg-[#161616]">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-medium">{module.title}</span>
+                      <span className="text-xs text-gray-400">{module.is_published ? "Published" : "Unpublished"}</span>
+                    </div>
+                    <p className="mt-1 text-sm text-gray-400">Updated {formatDate(module.updated_at)}</p>
+                  </Link>
+                )) : <p className="text-sm text-gray-400">No modules yet.</p>}
+              </div>
+            </article>
+
+            <article className="rounded-lg border border-default p-5">
+              <h2 className="text-xl font-semibold">Recently updated lessons</h2>
+              <div className="mt-5 space-y-3">
+                {summary.recent_lessons.length ? summary.recent_lessons.map((lesson) => (
+                  <Link key={lesson.lesson_id} to="/admin/lessons" className="block rounded-lg border border-default p-3 hover:bg-[#161616]">
+                    <p className="font-medium">{lesson.title}</p>
+                    <p className="mt-1 text-sm text-gray-400">{lesson.module_title} · Updated {formatDate(lesson.updated_at)}</p>
+                  </Link>
+                )) : <p className="text-sm text-gray-400">No lessons yet.</p>}
+              </div>
+            </article>
+          </section>
+
+          <section className="grid gap-4 xl:grid-cols-2">
+            <article className="rounded-lg border border-default p-5">
+              <h2 className="text-xl font-semibold">Modules without lessons</h2>
+              <div className="mt-5 space-y-3">
+                {summary.modules_without_lessons.length ? summary.modules_without_lessons.map((module) => (
+                  <Link key={module.module_id} to={`/admin/lessons?moduleId=${module.module_id}`} className="flex items-center justify-between rounded-lg border border-default p-3 hover:bg-[#161616]">
+                    <span className="font-medium">{module.title}</span>
+                    <span className="text-xs text-gray-400">Add lesson</span>
+                  </Link>
+                )) : <p className="text-sm text-gray-400">Every module has at least one lesson.</p>}
+              </div>
+            </article>
+
+            <article className="rounded-lg border border-default p-5">
+              <h2 className="text-xl font-semibold">Quick links</h2>
+              <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                <Link to="/admin/modules" className="rounded-lg border border-default p-3 text-sm font-medium hover:bg-[#161616]">Add or manage modules</Link>
+                <Link to="/admin/lessons" className="rounded-lg border border-default p-3 text-sm font-medium hover:bg-[#161616]">Add or manage lessons</Link>
+                <Link to="/admin/users" className="rounded-lg border border-default p-3 text-sm font-medium hover:bg-[#161616]">Manage users</Link>
+              </div>
+            </article>
+          </section>
+        </>
+      ) : null}
     </div>
   );
 };

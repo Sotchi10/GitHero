@@ -1,33 +1,12 @@
 function ModuleCard({ module = {}, isSelected = false, onClick = () => {} }) {
   const {
-    id = 0,
-    title = "Untitled lesson",
+    module_id = 0,
+    title = "Untitled module",
     description = "No description available.",
-    topics = 0,
-    previewCode = "",
-    previewLine1 = "",
-    previewLine2 = "",
-    pdfUrl = "#",
+    total_lessons = 0,
+    difficulty = "",
+    estimated_minutes,
   } = module;
-
-  const resolvedPdfUrl =
-    pdfUrl && pdfUrl !== "#"
-      ? pdfUrl.startsWith("http")
-        ? pdfUrl
-        : `${window.location.origin}${pdfUrl}`
-      : "#";
-
-  const handlePdfClick = (event) => {
-    event.stopPropagation();
-
-    if (!resolvedPdfUrl || resolvedPdfUrl === "#") {
-      event.preventDefault();
-      return;
-    }
-
-    window.open(resolvedPdfUrl, "_blank", "noopener,noreferrer");
-    event.preventDefault();
-  };
 
   return (
     <div
@@ -38,10 +17,15 @@ function ModuleCard({ module = {}, isSelected = false, onClick = () => {} }) {
           : ""
       }`}
     >
+<<<<<<< HEAD
       <div className="flex items-start justify-between gap-2.5 px-5 pt-5 pb-3.5">
         <div className="flex h-[42px] w-[42px] flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-gray-100 font-mono text-[13px] font-medium text-gray-600 dark:border-[#2a2d30] dark:bg-[#1a1d20] dark:text-[#8a8f96]">
           {String(id).padStart(2, "0")}
         </div>
+=======
+      <div className={styles.cardHeader}>
+        <div className={styles.lessonNum}>{String(module_id).padStart(2, "0")}</div>
+>>>>>>> f2a9bcab4362cf3db2b6f77b342368f09167d970
       </div>
 
       <div className="px-5 pb-4">
@@ -53,6 +37,7 @@ function ModuleCard({ module = {}, isSelected = false, onClick = () => {} }) {
         </p>
       </div>
 
+<<<<<<< HEAD
       <div className="mx-5 flex flex-col gap-1 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3.5 dark:border-[#2a2d30] dark:bg-[#0d0f10]">
         <span className="font-mono text-[13px] text-gray-900 dark:text-white">
           {previewCode}
@@ -78,6 +63,15 @@ function ModuleCard({ module = {}, isSelected = false, onClick = () => {} }) {
         >
           Download
         </a>
+=======
+      <div className={styles.codePreview}>
+        <span className={styles.previewCode}>{difficulty || "Module"}</span>
+        <span className={styles.previewLine1}>{estimated_minutes ? `${estimated_minutes} minutes` : "Self-paced"}</span>
+      </div>
+
+      <div className={styles.cardFooter}>
+        <span className={styles.topicCount}>{total_lessons} lessons</span>
+>>>>>>> f2a9bcab4362cf3db2b6f77b342368f09167d970
       </div>
     </div>
   );

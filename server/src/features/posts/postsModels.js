@@ -2,7 +2,6 @@ import { db } from "../../config/db.js";
 
 const POST_SELECT = `
     SELECT
-        po.post_id,
         po.post_id AS id,
         po.user_id,
         po.title,
@@ -38,4 +37,13 @@ export const createPost = async ({ userId, title, content }) => {
     );
 
     return findPostById(result.insertId);
+};
+
+export const deletePostById = async (id, userId) => {
+    const [result] = await db.query(
+        "DELETE FROM posts WHERE post_id = ? AND user_id = ?",
+        [id, userId]
+    );
+
+    return result.affectedRows;
 };

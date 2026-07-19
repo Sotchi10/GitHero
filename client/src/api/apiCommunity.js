@@ -11,6 +11,13 @@ export const createPost = (data, userId) =>
     },
   });
 
+export const deletePost = (id, userId) =>
+  API.delete(`/api/posts/${id}`, {
+    headers: {
+      "x-user-id": userId,
+    },
+  });
+
 export const getUsers = () => API.get("/api/users");
 export const getDevelopers = () => API.get("/api/users/developers");
 export const getStudents = () => API.get("/api/users/students");

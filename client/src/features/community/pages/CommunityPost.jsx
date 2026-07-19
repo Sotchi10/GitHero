@@ -1,12 +1,13 @@
 import DashSideBarRight from "./../../../layouts/dashboardlayout/DashSideBarRight";
 import PostCard from "./../components/PostCard";
 import { useEffect, useState } from "react";
-import { createPost, getPosts } from "../../../api/apiCommunity";
+import { createPost, deletePost, getPosts } from "../../../api/apiCommunity";
 import { useAuth } from "../../../context/AuthContext";
 import { NavLink } from "react-router-dom";
 
 const CommunityPost = () => {
   const { authUser, profile } = useAuth();
+  const currentUserId = profile?.user_id || authUser?.user_id;
   const [posts, setPosts] = useState([]);
   const [form, setForm] = useState({ title: "", content: "" });
   const [loading, setLoading] = useState(true);
@@ -64,6 +65,21 @@ const CommunityPost = () => {
     }
   };
 
+  const handleDeletePost = async (postId) => {
+    if (!postId || !currentUserId) return;
+    if (!window.confirm("Delete this post?")) return;
+
+    try {
+      setError("");
+      await deletePost(postId, currentUserId);
+      setPosts((prev) =>
+        prev.filter((post) => String(post.id || post.post_id) !== String(postId)),
+      );
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to delete post");
+    }
+  };
+
   return (
     <>
       <section className="flex min-h-full flex-col bg-white px-4 py-8 text-gray-900 dark:bg-[#080808] dark:text-[#e0e0e0]">
@@ -93,7 +109,14 @@ const CommunityPost = () => {
                 {loading ? (
                   <p className="text-sm text-gray-400">Loading posts...</p>
                 ) : posts.length > 0 ? (
-                  posts.map((post) => <PostCard key={post.id} post={post} />)
+                  posts.map((post) => (
+                    <PostCard
+                      key={post.id || post.post_id}
+                      post={post}
+                      currentUserId={currentUserId}
+                      onDelete={handleDeletePost}
+                    />
+                  ))
                 ) : (
                   <p className="text-sm text-gray-400">No posts yet.</p>
                 )}

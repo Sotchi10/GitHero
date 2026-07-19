@@ -5,6 +5,7 @@ export const findAllDevelopers = async () => {
         SELECT
             p.profile_id,
             p.user_id,
+            u.email,
             p.first_name,
             p.last_name,
             TRIM(CONCAT_WS(' ', p.first_name, p.last_name)) AS full_name,
@@ -27,6 +28,7 @@ export const findAllStudents = async () => {
             p.profile_id,
             p.user_id,
             p.first_name,
+            u.email,
             p.last_name,
             TRIM(CONCAT_WS(' ', p.first_name, p.last_name)) AS full_name,
             p.username,
@@ -47,6 +49,7 @@ export const findAllUsers = async () => {
         SELECT
             p.profile_id,
             p.user_id,
+            u.email,
             p.first_name,
             p.last_name,
             TRIM(CONCAT_WS(' ', p.first_name, p.last_name)) AS full_name,

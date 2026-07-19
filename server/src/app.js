@@ -14,7 +14,7 @@ import moduleRoute, {
 } from "./admin/modules/moduleRoutes.js";
 import lessonRoute from "./admin/lessons/lessonRoutes.js";
 
-import { dotenv } from 'dotenv'
+import  dotenv  from 'dotenv'
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);

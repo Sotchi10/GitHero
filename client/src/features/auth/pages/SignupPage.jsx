@@ -43,7 +43,7 @@ const SignupPage = () => {
         password: password_hash,
       });
 
-      await login(loginRes.data.user);
+      await login(loginRes.data);
 
       navigate("/dashboard");
     } catch (err) {

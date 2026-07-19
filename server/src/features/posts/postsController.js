@@ -1,4 +1,9 @@
-import { createPost, findAllPosts, findPostById } from "./postsModels.js";
+import {
+    createPost,
+    deletePostById,
+    findAllPosts,
+    findPostById,
+} from "./postsModels.js";
 
 const parsePostId = (value) => {
     const id = Number(value);
@@ -68,6 +73,32 @@ export const addPost = async (req, res) => {
             message: "Post created successfully",
             post: createdPost,
         });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+export const removePost = async (req, res) => {
+    try {
+        const id = parsePostId(req.params.id);
+
+        if (!id) {
+            return res.status(400).json({ message: "Invalid post ID" });
+        }
+
+        const post = await findPostById(id);
+
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        if (Number(post.user_id) !== Number(req.auth.userId)) {
+            return res.status(403).json({ message: "You can only delete your own posts" });
+        }
+
+        await deletePostById(id, req.auth.userId);
+
+        res.json({ message: "Post deleted successfully" });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

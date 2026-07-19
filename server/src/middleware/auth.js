@@ -1,4 +1,7 @@
 import { findProfileByUserId } from "../features/profile/pfpModels.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 const parseUserId = (value) => {
     const userId = Number(value);
@@ -7,12 +10,37 @@ const parseUserId = (value) => {
 
 export const requireAuth = async (req, res, next) => {
     try {
-        const userId = parseUserId(
-            req.get("x-user-id") || req.body?.user_id || req.query?.user_id
-        );
+        const authorization = req.get("authorization");
+
+        if (!authorization) {
+            return res.status(401).json({ message: "Bearer token is required" });
+        }
+
+        const [scheme, token] = authorization.split(" ");
+
+        if (scheme !== "Bearer" || !token) {
+            return res.status(401).json({ message: "Bearer token is required" });
+        }
+
+        if (!process.env.JWT_SECRET) {
+            return res.status(500).json({ message: "JWT configuration is missing" });
+        }
+
+        let payload;
+        try {
+            payload = jwt.verify(token, process.env.JWT_SECRET);
+        } catch (err) {
+            if (err.name === "TokenExpiredError") {
+                return res.status(401).json({ message: "Token has expired" });
+            }
+
+            return res.status(401).json({ message: "Invalid token" });
+        }
+
+        const userId = parseUserId(payload.userId);
 
         if (!userId) {
-            return res.status(401).json({ message: "Authentication required" });
+            return res.status(401).json({ message: "Invalid token" });
         }
 
         const profile = await findProfileByUserId(userId);
@@ -23,11 +51,14 @@ export const requireAuth = async (req, res, next) => {
 
         const { role, ...authProfile } = profile;
 
-        req.auth = {
+        req.user = {
+            id: userId,
             userId,
+            email: payload.email,
+            username: payload.username,
             role,
-            profile: authProfile,
         };
+        req.auth = { userId, role, profile: authProfile };
 
         next();
     } catch (err) {

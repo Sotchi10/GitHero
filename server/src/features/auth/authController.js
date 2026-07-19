@@ -1,5 +1,8 @@
 import { db } from "../../config/db.js";
 import { signupService, getUserByUsernameService, loginService } from "./authService.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 // Sign up
 export const signup = async (req, res) => {
@@ -62,10 +65,30 @@ export const login = async (req, res) => {
         }
 
         const user = await loginService({ email, password });
+        const jwtSecret = process.env.JWT_SECRET;
+        const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
+
+        if (!jwtSecret || !jwtExpiresIn) {
+            return res.status(500).json({
+                message: "JWT configuration is missing"
+            });
+        }
+
+        const token = jwt.sign(
+            {
+                userId: user.user_id,
+                email: user.email,
+                username: user.username,
+                role: user.role,
+            },
+            jwtSecret,
+            { expiresIn: jwtExpiresIn }
+        );
 
         // success response
         return res.status(200).json({
             message: "Login successful",
+            token,
             user: {
                 userId: user.user_id,
                 email: user.email,

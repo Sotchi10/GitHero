@@ -4,6 +4,7 @@ const REPOSITORY_SELECT = `
   SELECT
     r.repo_id AS id,
     r.owner_id,
+    r.owner_id AS user_id,
     r.name,
     r.description,
     r.visibility,
@@ -89,4 +90,13 @@ export const createRepository = async ({
   );
 
   return findRepositoryById(result.insertId);
+};
+
+export const deleteRepositoryById = async (repoId, ownerId) => {
+  const [result] = await db.query(
+    "DELETE FROM repositories WHERE repo_id = ? AND owner_id = ?",
+    [repoId, ownerId],
+  );
+
+  return result.affectedRows;
 };

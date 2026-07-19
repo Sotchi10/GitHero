@@ -11,6 +11,7 @@ import {
   saveRepositoryFile,
   getRepositoryCommits,
   createRepositoryCommit,
+  removeRepository,
 } from "./repositoryController.js";
 
 
@@ -22,6 +23,9 @@ repositoryRoute.get("/", requireAuth, getMyRepositories);
 
 // CREATE
 repositoryRoute.post("/", requireAuth, addRepository);
+
+// DELETE
+repositoryRoute.delete("/:repoId", requireAuth, removeRepository);
 
 // FILES
 repositoryRoute.get("/:repoId/files", requireAuth, getRepositoryFiles);

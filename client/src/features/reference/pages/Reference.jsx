@@ -43,15 +43,15 @@ const Reference = ({ className = "" }) => {
 
   return (
     <section
-      className={`flex min-h-full flex-col bg-[radial-gradient(circle_at_top_left,rgba(78,122,255,0.16),transparent_32%),#080808] text-[#e0e0e0] ${className} px-4 py-15`}
+      className={`flex min-h-full flex-col bg-white text-gray-900 dark:bg-[radial-gradient(circle_at_top_left,rgba(78,122,255,0.16),transparent_32%),#080808] dark:text-[#e0e0e0] ${className} px-4 py-15`}
     >
       <div className=" flex-1 overflow-hidden">
-        <main className="h-full overflow-y-auto px-5">
+        <main className="h-full overflow-y-auto px-5 bg-amber-50 dark:bg-[#080808] ">
           <div className="grid gap-6 xl:grid-cols-[1fr_280px]">
             {/* Left Content */}
             <div>
               <div className="flex items-center mb-4">
-                <div className="mb-4 inline-flex rounded-[10px] border border-[#242424]  py-1 px-6 gap-4">
+                <div className="inline-flex rounded-[10px] border border-gray-200 bg-white px-6 py-1 shadow-sm dark:border-[#242424] dark:bg-[#0d0d0d]">
                   {REFERENCE_TABS.map((tab) => (
                     <button
                       key={tab.id}
@@ -59,8 +59,8 @@ const Reference = ({ className = "" }) => {
                       onClick={() => setActiveTab(tab.id)}
                       className={`rounded-md px-4 py-2 text-sm transition cursor-pointer ${
                         activeTab === tab.id
-                          ? "bg-[#161616]  text-[#f2f6ff]"
-                          : "text-[#8f9aad] hover:bg-[#161616]  hover:text-[#f2f6ff]"
+                          ? "bg-gray-100 text-gray-900 dark:bg-[#161616] dark:text-white"
+                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-[#8f9aad] dark:hover:bg-[#161616] dark:hover:text-white"
                       }`}
                     >
                       {tab.label}
@@ -73,8 +73,8 @@ const Reference = ({ className = "" }) => {
                     Search commands
                   </label>
 
-                  <div className="flex items-center gap-2 rounded-md border border-[#242424]  px-3 py-2 transition focus-within:border-blue-500">
-                    <FiSearch className="shrink-0" />
+                  <div className="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-2 transition focus-within:border-blue-500 dark:border-[#242424] dark:bg-[#0d0d0d]">
+                    <FiSearch className="shrink-0 text-gray-500 dark:text-gray-400" />
 
                     <input
                       id="command-search"
@@ -82,7 +82,7 @@ const Reference = ({ className = "" }) => {
                       value={search}
                       onChange={(event) => setSearch(event.target.value)}
                       placeholder="Search commands..."
-                      className="w-full  bg-transparent text-sm text-[#d0d0d0] outline-none placeholder:text-[#6f7b8b]"
+                      className="w-full bg-transparent text-sm text-gray-900 outline-none placeholder:text-gray-400 dark:text-gray-200 dark:placeholder:text-[#6f7b8b]"
                     />
                   </div>
                 </div>
@@ -95,7 +95,7 @@ const Reference = ({ className = "" }) => {
                       <CommandCard key={card.title} data={card} />
                     ))}
                     {filteredCards.length === 0 && (
-                      <div className="rounded-xl border border-[#242424] p-10 text-center text-sm text-[#9ba7b6] xl:col-span-2">
+                      <div className="rounded-xl border border-[#242424] bg-white p-10 text-center text-sm text-gray-500 shadow-sm dark:border-[#242424] dark:bg-[#0d0d0d] dark:text-[#9ba7b6] xl:col-span-2">
                         No commands match "{search}".
                       </div>
                     )}
@@ -108,7 +108,10 @@ const Reference = ({ className = "" }) => {
               )}
             </div>
 
-            <DashSideBarRight title="Community" link="Go to developers community ->"/>
+            <DashSideBarRight
+              title="Community"
+              link="Go to developers community ->"
+            />
           </div>
         </main>
       </div>

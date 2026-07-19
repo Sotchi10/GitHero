@@ -87,7 +87,7 @@ const Community = () => {
                       value={form.title}
                       onChange={handleChange}
                       placeholder="Post title"
-className="mt-4 w-full rounded border border-gray-300 bg-white px-3 py-2 text-[13px] text-gray-900 outline-none focus:border-blue-500 dark:border-[#242424] dark:bg-[#080808] dark:text-white"
+                      className="mt-4 w-full rounded border border-gray-300 bg-white px-3 py-2 text-[13px] text-gray-900 outline-none focus:border-blue-500 dark:border-[#242424] dark:bg-[#080808] dark:text-white"
                       maxLength={150}
                       required
                     />
@@ -103,28 +103,38 @@ className="mt-4 w-full rounded border border-gray-300 bg-white px-3 py-2 text-[1
                     <button
                       type="submit"
                       disabled={saving}
-                      className="mt-3 rounded bg-blue-600 px-4 py-2 text-sm text-white disabled:opacity-60"
+                      className="mt-3 cursor-pointer rounded bg-gray-200 px-4 py-2 text-sm text-gray-900 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 disabled:opacity-60"
                     >
                       {saving ? "Posting..." : "Post"}
                     </button>
                   </form>
                 )}
 
-                {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+                {error && (
+                  <p className="text-sm text-red-600 dark:text-red-400">
+                    {error}
+                  </p>
+                )}
 
                 {loading ? (
-                  <p className="text-sm text-gray-400 dark:text-gray-500">Loading posts...</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500">
+                    Loading posts...
+                  </p>
                 ) : posts.length > 0 ? (
                   posts.map((post) => <PostCard key={post.id} post={post} />)
                 ) : (
-                  <p className="text-sm text-gray-400 dark:text-gray-500">No posts yet.</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500">
+                    No posts yet.
+                  </p>
                 )}
                 <div className="flex item-center w-full justify-end">
                   <NavLink
                     to="/community/posts"
                     className="text-[13px] text-blue-500"
                   >
-                    <button className="cursor-pointer hover:underline">See more</button>
+                    <button className="cursor-pointer hover:underline">
+                      See more
+                    </button>
                   </NavLink>
                 </div>
               </div>

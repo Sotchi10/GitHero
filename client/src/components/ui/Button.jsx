@@ -1,5 +1,6 @@
 const buttonColors = {
-  primary: "bg-btn-primary hover:bg-btn-primary-hover text-white border border-transparent",
+  primary:
+  "bg-white text-gray-600 border border-gray-600 hover:bg-blue-50 dark:bg-blue-600 dark:text-white dark:border-transparent dark:hover:bg-blue-700",
   outline: "bg-transparent text-white border border-white hover:border-default",
   nonoutline: "bg-transparent text-white"
 };

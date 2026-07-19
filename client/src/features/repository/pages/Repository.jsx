@@ -90,27 +90,27 @@ const Repository = ({ className = "" }) => {
       )}
 
       <section
-        className={`flex min-h-full flex-col bg-[#080808] text-[#e0e0e0] ${className} px-4 py-10`}
+      className={`flex min-h-full flex-col bg-white text-gray-900 dark:bg-[#080808] dark:text-[#e0e0e0] ${className} px-4 py-10`}
       >
         <div className="flex-1 overflow-hidden">
-          <main className="h-full overflow-y-auto px-5">
+          <main className="h-full overflow-y-auto px-5 bg-white dark:bg-[#080808]">
             <div className="grid gap-6 xl:grid-cols-[1fr_280px]">
               {/* LEFT */}
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h1 className="text-xl font-semibold">Your Repositories</h1>
+                  <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Your Repositories</h1>
                   <Button text="New" bcolor="primary" onClick={showPopup} />
                 </div>
 
-                <div className="border border-[#242424] px-3 py-4 rounded-lg">
+                <div className="rounded-lg border border-gray-200 bg-white px-3 py-4 shadow-sm dark:border-[#242424] dark:bg-[#0d0d0d]">
                   {visibleLoadError && (
-                    <p className="px-5 py-4 text-sm text-red-400">
+                    <p className="px-5 py-4 text-sm text-red-600 dark:text-red-400">
                       {visibleLoadError}
                     </p>
                   )}
 
                   {isRepoLoading ? (
-                    <p className="px-5 py-4 text-sm text-gray-400">
+                    <p className="px-5 py-4 text-sm text-gray-400 dark:text-gray-500">
                       Loading repositories...
                     </p>
                   ) : repositories.length > 0 ? (
@@ -118,7 +118,7 @@ const Repository = ({ className = "" }) => {
                       <RepoCard key={repo.repo_id} repo={repo} />
                     ))
                   ) : (
-                    <p className="px-5 py-4 text-sm text-gray-400">
+                    <p className="px-5 py-4 text-sm text-gray-400 dark:text-gray-500">
                       No repositories yet.
                     </p>
                   )}

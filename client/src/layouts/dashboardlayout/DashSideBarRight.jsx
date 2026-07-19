@@ -142,20 +142,22 @@ const DashSideBarRight = ({ title, link }) => {
 
   return (
     <aside className="space-y-4">
-      <div className="rounded-xl border border-[#242424] bg-[#0d0d0d] p-4">
-        <h3 className="mb-3 font-semibold">Activity</h3>
+      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-[#242424] dark:bg-[#0d0d0d]">
+  <h3 className="mb-3 font-semibold text-gray-900 dark:text-white">
+    Activity
+  </h3>
 
-        <ul className="space-y-2 text-sm text-gray-400">
-          {activities.map((item, index) => (
-            <li
-              key={index}
-              className="rounded bg-[#161b22] p-2"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
+  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+    {activities.map((item, index) => (
+      <li
+        key={index}
+        className="rounded bg-gray-100 p-2 text-gray-700 dark:bg-[#161b22] dark:text-gray-300"
+      >
+        {item}
+      </li>
+    ))}
+  </ul>
+</div>
     </aside>
   );
 };

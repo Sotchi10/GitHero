@@ -183,34 +183,34 @@ const RepositoryDetail = ({ className = "" }) => {
 
   return (
     <section
-      className={`flex min-h-full flex-col bg-[#080808] text-[#e0e0e0] ${className} px-4 py-15`}
+      className={`flex min-h-full flex-col bg-white text-gray-900 dark:bg-[#080808] dark:text-[#e0e0e0] ${className} px-4 py-15`}
     >
-      <main className="h-full overflow-y-auto px-5">
+      <main className="h-full overflow-y-auto px-5 bg-white dark:bg-[#080808]">
         {loading ? (
-          <p className="text-sm text-gray-400">Loading repository...</p>
+          <p className="text-sm text-gray-400 dark:text-gray-500">Loading repository...</p>
         ) : (
           <div className="grid gap-6 xl:grid-cols-[1fr_280px]">
             {/* LEFT */}
             <div className="flex flex-col gap-4">
               {/* HEADER */}
-              <div className="rounded border border-[#242424] bg-[#0d0d0d] p-5">
+              <div className="rounded border border-gray-200 bg-white p-5 shadow-sm dark:border-[#242424] dark:bg-[#0d0d0d]">
                 <h1 className="text-xl font-semibold text-blue-500">
                   {repository?.name}
                 </h1>
 
-                <p className="mt-2 text-sm text-gray-300">
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
                   {repository?.description || "No description"}
                 </p>
 
-                <p className="mt-2 text-xs text-gray-500">
+                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
                   Owner: {repository?.username}
                 </p>
               </div>
 
-              {error && <p className="text-sm text-red-400">{error}</p>}
+              {error && <p className="text-sm text-red-400 dark:text-red-400">{error}</p>}
 
               {/* CREATE FILE */}
-              <div className="rounded border border-[#242424] bg-[#0d0d0d] p-4">
+              <div className="rounded border border-gray-200 bg-white p-4 shadow-sm dark:border-[#242424] dark:bg-[#0d0d0d]">
                 <h2 className="mb-3 text-sm font-semibold">Create File</h2>
 
                 <form onSubmit={handleCreateFile} className="flex gap-2">
@@ -220,7 +220,7 @@ const RepositoryDetail = ({ className = "" }) => {
                     value={newFileName}
                     onChange={(e) => setNewFileName(e.target.value)}
                     placeholder="example.js"
-                    className="flex-1 rounded bg-[#1a1a1a] border border-[#333] px-3 py-2 text-sm"
+                    className="flex-1 rounded border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 dark:border-[#333] dark:bg-[#1a1a1a] dark:text-white"
                   />
 
                   <button
@@ -234,13 +234,13 @@ const RepositoryDetail = ({ className = "" }) => {
               </div>
 
               {/* FILE AREA */}
-              <div className="grid lg:grid-cols-[220px_1fr] gap-4 rounded border border-[#242424] bg-[#0d0d0d] p-4">
+              <div className="grid gap-4 rounded border border-gray-200 bg-white p-4 shadow-sm lg:grid-cols-[220px_1fr] dark:border-[#242424] dark:bg-[#0d0d0d]">
                 {/* FILE LIST */}
-                <div className="border-r border-[#242424] pr-3">
+                <div className="border-r border-gray-200 pr-3 dark:border-[#242424]">
                   <h2 className="mb-3 text-sm font-semibold">Files</h2>
 
                   {files.length === 0 ? (
-                    <p className="text-sm text-gray-500">No files</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">No files</p>
                   ) : (
                     files.map((file) => (
                       <button
@@ -248,8 +248,8 @@ const RepositoryDetail = ({ className = "" }) => {
                         onClick={() => handleSelectFile(file)}
                         className={`block w-full rounded px-3 py-2 text-left text-sm ${
                           selectedFile?.file_id === file.file_id
-                            ? "bg-blue-600"
-                            : "hover:bg-[#1a1a1a]"
+                            ? "bg-blue-600 text-white"
+                            : "hover:bg-[#1a1a1a] dark:hover:bg-[#1a1a1a]"
                         } cursor-pointer`}
                       >
                         {file.path}
@@ -279,13 +279,13 @@ const RepositoryDetail = ({ className = "" }) => {
                     disabled={!selectedFile}
                     onChange={(e) => setContent(e.target.value)}
                     placeholder="File content..."
-                    className="min-h-[350px] resize-none rounded bg-[#111] border border-[#333] p-4 font-mono text-sm"
+                    className="min-h-350px resize-none rounded border border-gray-300 bg-white p-4 font-mono text-sm text-gray-900 dark:border-[#333] dark:bg-[#111] dark:text-white"
                   />
                 </div>
               </div>
 
               {/* COMMIT */}
-              <div className="rounded border border-[#242424] bg-[#0d0d0d] p-4">
+              <div className="rounded border border-gray-200 bg-white p-4 shadow-sm dark:border-[#242424] dark:bg-[#0d0d0d]">
                 <h2 className="mb-3 text-sm font-semibold">Commit Changes</h2>
 
                 <form onSubmit={handleCreateCommit} className="flex gap-2">
@@ -295,13 +295,13 @@ const RepositoryDetail = ({ className = "" }) => {
                     value={commitMessage}
                     onChange={(e) => setCommitMessage(e.target.value)}
                     placeholder="Commit message..."
-                    className="flex-1 rounded bg-[#1a1a1a] border border-[#333] px-3 py-2 text-sm"
+                   className="flex-1 rounded border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 dark:border-[#333] dark:bg-[#1a1a1a] dark:text-white"
                   />
 
                   <button
                     type="submit"
                     disabled={committing}
-                    className="rounded bg-purple-600 px-4 py-2 text-sm disabled:opacity-50"
+                    className="cursor-pointer rounded bg-purple-600 px-4 py-2 text-sm text-white disabled:opacity-50"
                   >
                     {committing ? "Committing..." : "Commit"}
                   </button>
@@ -309,7 +309,7 @@ const RepositoryDetail = ({ className = "" }) => {
               </div>
 
               {/* HISTORY */}
-              <div className="rounded border border-[#242424] bg-[#0d0d0d] p-4">
+              <div className="rounded border border-gray-200 bg-white p-4 shadow-sm dark:border-[#242424] dark:bg-[#0d0d0d]">
                 <h2 className="mb-3 text-sm font-semibold">Commit History</h2>
 
                 {commits.length === 0 ? (
@@ -318,7 +318,7 @@ const RepositoryDetail = ({ className = "" }) => {
                   commits.map((commit) => (
                     <div
                       key={commit.commit_id}
-                      className="border-b border-[#242424] py-3"
+                      className="border-b border-[#242424] py-3 dark:border-[#242424]"
                     >
                       <p className="text-sm">{commit.message}</p>
                       <p className="text-xs text-gray-500">

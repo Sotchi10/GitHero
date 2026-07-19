@@ -22,9 +22,9 @@ const RepoCreate = ({ onClose, onCreate, saving = false, error = "" }) => {
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <form
         onSubmit={handleSubmit}
-        className="bg-[#111] p-6 rounded-lg w-[400px] border border-[#242424]"
+        className="w-400px rounded-lg border border-gray-200 bg-white p-6 shadow-lg dark:border-[#242424] dark:bg-[#111]"
       >
-        <h2 className="text-lg font-semibold mb-4">Create Repository</h2>
+        <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Create Repository</h2>
 
         <input
           name="name"
@@ -32,7 +32,7 @@ const RepoCreate = ({ onClose, onCreate, saving = false, error = "" }) => {
           value={form.name}
           onChange={handleChange}
           placeholder="Repository name"
-          className="w-full mb-3 p-2 bg-[#1a1a1a] border border-[#333] rounded"
+          className="mb-3 w-full rounded border border-gray-300 bg-white p-2 text-gray-900 dark:border-[#333] dark:bg-[#1a1a1a] dark:text-white"
           maxLength={100}
           required
         />
@@ -42,7 +42,7 @@ const RepoCreate = ({ onClose, onCreate, saving = false, error = "" }) => {
           value={form.description}
           onChange={handleChange}
           placeholder="Description"
-          className="w-full mb-3 p-2 bg-[#1a1a1a] border border-[#333] rounded"
+          className="mb-3 w-full rounded border border-gray-300 bg-white p-2 text-gray-900 dark:border-[#333] dark:bg-[#1a1a1a] dark:text-white"
           maxLength={500}
         />
 
@@ -50,19 +50,19 @@ const RepoCreate = ({ onClose, onCreate, saving = false, error = "" }) => {
           name="visibility"
           value={form.visibility}
           onChange={handleChange}
-          className="w-full mb-4 p-2 bg-[#1a1a1a] border border-[#333] rounded"
+          className="mb-4 w-full rounded border border-gray-300 bg-white p-2 text-gray-900 dark:border-[#333] dark:bg-[#1a1a1a] dark:text-white"
         >
           <option value="public">Public</option>
           <option value="private">Private</option>
         </select>
 
-        {error && <p className="mb-3 text-sm text-red-400">{error}</p>}
+        {error && <p className="mb-3 text-sm text-red-600 dark:text-red-400">{error}</p>}
 
         <div className="flex justify-end gap-2">
           <button
             type="button"
             onClick={onClose}
-            className="px-3 py-1 bg-gray-600 rounded cursor-pointer"
+            className="cursor-pointer rounded bg-gray-200 px-3 py-1 text-gray-900 hover:bg-gray-300 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
             disabled={saving}
           >
             Cancel
@@ -70,7 +70,7 @@ const RepoCreate = ({ onClose, onCreate, saving = false, error = "" }) => {
 
           <button
             type="submit"
-            className="px-3 py-1 bg-blue-600 rounded cursor-pointer disabled:opacity-60"
+            className="cursor-pointer rounded bg-gray-600 px-3 py-1 text-white hover:bg-gray-500 disabled:opacity-60"
             disabled={saving}
           >
             {saving ? "Creating..." : "Create"}

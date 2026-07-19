@@ -32,20 +32,20 @@ const RepoCard = ({ repo }) => {
 
   return (
     <>
-      <div className="border-b-1 border-default px-5 py-6">
+      <div className="border-b border-gray-200 px-5 py-6 dark:border-[#242424]">
         <NavLink
           to={repoPath}
-          className="font-semibold text-blue-500 hover:underline"
+          className="font-semibold text-gray-500 hover:underline"
         >
-          <h5 className="text-[15px]">{fullName}</h5>
+          <h5 className="text-[15px] text-gray-900 dark:text-[#f2f6ff]">{fullName}</h5>
         </NavLink>
-        <p className="text-[13px] text-gray-300">
+        <p className="text-[13px] text-gray-300 dark:text-[#9ba7b6] mt-1">
           {repo.description || "No description yet."}
         </p>
         <div className="flex items-center justify-between">
           <DashNavItem itemName={repo.visibility || "public"} />
 
-          <p className="text-[12px]" title={formatDate(updatedAt)}>
+          <p className="text-[12px] text-gray-500 dark:text-gray-400" title={formatDate(updatedAt)}>
             {getDaysAgo(updatedAt)}
           </p>
         </div>

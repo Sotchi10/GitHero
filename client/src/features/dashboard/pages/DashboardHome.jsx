@@ -1,9 +1,9 @@
-import { ArrowRight, BookOpen, ClipboardCheck, Flame } from "lucide-react";
+import { BookOpen, ClipboardCheck, Flame } from "lucide-react";
 import DashSideBarRight from "../../../layouts/dashboardlayout/DashSideBarRight";
 import { useAuth } from "../../../context/AuthContext";
 
 const DashboardHome = ({ className = "" }) => {
-  const { authUser, error: authError } = useAuth();
+  const { authUser } = useAuth();
   // Demo data
   const overallProgress = 72;
   const streak = 6;

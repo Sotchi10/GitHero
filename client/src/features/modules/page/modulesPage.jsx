@@ -67,6 +67,9 @@ function ModulesPage() {
             <ModulesGrid
               modules={filtered}
               onSelect={(module) => navigate(`/modules/${module.module_id}`)}
+              onContinue={(module) =>
+                navigate(`/modules/${module.module_id}?lesson=${module.next_lesson_id}`)
+              }
             />
           )}
         </main>

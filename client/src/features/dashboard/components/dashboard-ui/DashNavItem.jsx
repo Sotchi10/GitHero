@@ -1,11 +1,15 @@
-const DashNavItem = ({ img, icon: Icon, itemName, className = "" }) => {
+const DashNavItem = ({ img, icon: Icon, itemName, active = false, className = "" }) => {
   return (
     <div
-      className={`flex items-center gap-2 px-2 py-1.5 hover:bg-[#161616] hover:rounded-[5px] ${className}`}
+      className={`flex items-center gap-2 border-l-2 px-2 py-1.5 transition-colors hover:bg-surface-raised ${
+        active
+          ? "border-blue-500 bg-surface-raised font-semibold text-primary"
+          : "border-transparent text-muted hover:text-primary"
+      } ${className}`}
     >
       <div className="w-4.25 h-4.25 flex items-center justify-center">
         {Icon ? (
-          <Icon className="w-full h-full text-[#8a8a8a]" />
+          <Icon className={`h-full w-full ${active ? "text-blue-500" : "text-muted"}`} />
         ) : img ? (
           <img
             src={img}

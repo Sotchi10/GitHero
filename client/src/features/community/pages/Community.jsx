@@ -84,7 +84,7 @@ const Community = () => {
   return (
     <>
       <section
-        className={`flex min-h-full flex-col bg-[#080808] text-[#e0e0e0] px-4 py-8`}
+        className={`flex min-h-full flex-col text-[#e0e0e0] px-4 py-8`}
       >
         <h4>Feed</h4>
         <div className=" flex-1 overflow-hidden mt-5">
@@ -103,7 +103,7 @@ const Community = () => {
                       value={form.title}
                       onChange={handleChange}
                       placeholder="Post title"
-                      className="mt-4 w-full text-[13px] rounded border border-[#242424] bg-[#080808] px-3 py-2 text-sm outline-none focus:border-blue-500"
+                      className="mt-4 w-full text-[13px] rounded border border-[#242424]  px-3 py-2 text-sm outline-none focus:border-blue-500"
                       maxLength={150}
                       required
                     />
@@ -112,7 +112,7 @@ const Community = () => {
                       value={form.content}
                       onChange={handleChange}
                       placeholder="Share an article, tip, or update"
-                      className="mt-3 text-[13px] min-h-32 w-full rounded border border-[#242424] bg-[#080808] px-3 py-2 text-sm outline-none focus:border-blue-500"
+                      className="mt-3 text-[13px] min-h-32 w-full rounded border border-[#242424]  px-3 py-2 text-sm outline-none focus:border-blue-500"
                       maxLength={10000}
                       required
                     />

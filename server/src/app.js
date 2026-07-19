@@ -9,9 +9,8 @@ import postsRoute from "./features/posts/postsRoute.js";
 import userRoute from "./features/users/usersRoute.js";
 import repositoryRoute from "./features/repository/repositoryRoute.js";
 import notesRoute from "./features/notes/notesRoute.js";
-import moduleRoute, {
-  adminModuleRoute,
-} from "./admin/modules/moduleRoutes.js";
+import adminModuleRoute from "./admin/modules/moduleRoutes.js";
+import moduleRoute from "./features/modules/moduleRoutes.js";
 import lessonRoute from "./admin/lessons/lessonRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);

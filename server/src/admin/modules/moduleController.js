@@ -1,43 +1,81 @@
-import { createModule, deleteModule, getAllModules, getAvailableModuleById, getAvailableModules as findAvailableModules, getDashboardSummary, getLessonsByModuleId, getModuleById, getModuleLessonCount, updateModule } from "./moduleModels.js";
+import {
+  createModule,
+  deleteModule,
+  getAllModules,
+  getDashboardSummary,
+  getModuleById,
+  getModuleLessonCount,
+  updateModule,
+} from "./moduleModels.js";
 
 const parseId = (value) => {
   const id = Number(value);
+
   return Number.isInteger(id) && id > 0 ? id : null;
 };
 
 const validateModule = (module) => {
-  const title = String(module?.title || "").trim();
+  const title = String(module?.title ?? "").trim();
+  const description = String(module?.description ?? "").trim();
   const displayOrder = Number(module?.display_order);
   const estimatedMinutes = module?.estimated_minutes;
   const difficulty = module?.difficulty || null;
   const isPublished = module?.is_published;
 
-  if (!title) return { error: "Title is required" };
-  if (!Number.isInteger(displayOrder) || displayOrder < 0) {
-    return { error: "Display order must be a non-negative integer" };
+  if (!title) {
+    return {
+      error: "Title is required",
+    };
   }
+
+  if (!Number.isInteger(displayOrder) || displayOrder < 0) {
+    return {
+      error: "Display order must be a non-negative integer",
+    };
+  }
+
   if (
     estimatedMinutes !== null &&
     estimatedMinutes !== undefined &&
     estimatedMinutes !== "" &&
-    (!Number.isInteger(Number(estimatedMinutes)) || Number(estimatedMinutes) < 0)
+    (
+      !Number.isInteger(Number(estimatedMinutes)) ||
+      Number(estimatedMinutes) < 0
+    )
   ) {
-    return { error: "Estimated minutes must be a non-negative integer" };
+    return {
+      error: "Estimated minutes must be a non-negative integer",
+    };
   }
-  if (difficulty && !["Beginner", "Intermediate", "Advanced"].includes(difficulty)) {
-    return { error: "Difficulty must be Beginner, Intermediate, or Advanced" };
+
+  if (
+    difficulty &&
+    !["Beginner", "Intermediate", "Advanced"].includes(difficulty)
+  ) {
+    return {
+      error: "Difficulty must be Beginner, Intermediate, or Advanced",
+    };
   }
-  if (typeof isPublished !== "boolean" && isPublished !== 0 && isPublished !== 1) {
-    return { error: "Published status must be true or false" };
+
+  if (
+    typeof isPublished !== "boolean" &&
+    isPublished !== 0 &&
+    isPublished !== 1
+  ) {
+    return {
+      error: "Published status must be true or false",
+    };
   }
 
   return {
     value: {
       title,
-      description: module?.description?.trim() || null,
+      description: description || null,
       difficulty,
       estimated_minutes:
-        estimatedMinutes === null || estimatedMinutes === undefined || estimatedMinutes === ""
+        estimatedMinutes === null ||
+        estimatedMinutes === undefined ||
+        estimatedMinutes === ""
           ? null
           : Number(estimatedMinutes),
       display_order: displayOrder,
@@ -46,15 +84,21 @@ const validateModule = (module) => {
   };
 };
 
-export const getModules = async (req, res) => {
+/*
+|--------------------------------------------------------------------------
+| Admin module controllers
+|--------------------------------------------------------------------------
+*/
+
+export const getModules = async (_req, res) => {
   try {
     const modules = await getAllModules();
 
-    res.json(modules);
+    return res.json(modules);
   } catch (err) {
-    console.error(err);
+    console.error("Get modules error:", err);
 
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to load modules",
     });
   }
@@ -63,22 +107,27 @@ export const getModules = async (req, res) => {
 export const getModule = async (req, res) => {
   try {
     const moduleId = parseId(req.params.id);
-    if (!moduleId) return res.status(400).json({ message: "Invalid module ID" });
 
-    const module = await getModuleById(moduleId);
+    if (!moduleId) {
+      return res.status(400).json({
+        message: "Invalid module ID",
+      });
+    }
 
-    if (!module) {
+    const moduleData = await getModuleById(moduleId);
+
+    if (!moduleData) {
       return res.status(404).json({
         message: "Module not found",
       });
     }
 
-    res.json(module);
+    return res.json(moduleData);
   } catch (err) {
-    console.error(err);
+    console.error("Get module error:", err);
 
-    res.status(500).json({
-      message: "Server Error",
+    return res.status(500).json({
+      message: "Failed to load module",
     });
   }
 };
@@ -86,42 +135,84 @@ export const getModule = async (req, res) => {
 export const addModule = async (req, res) => {
   try {
     const validation = validateModule(req.body);
-    if (validation.error) return res.status(400).json({ message: validation.error });
 
-    const id = await createModule(validation.value);
+    if (validation.error) {
+      return res.status(400).json({
+        message: validation.error,
+      });
+    }
 
-    res.status(201).json({
+    const moduleId = await createModule(validation.value);
+
+    return res.status(201).json({
       message: "Module created successfully",
-      module_id: id,
+      module_id: moduleId,
     });
   } catch (err) {
-    console.error(err);
+    console.error("Create module error:", err);
 
-    res.status(500).json({ message: err.message });
+    if (err.code === "ER_DUP_ENTRY") {
+      return res.status(409).json({
+        message: "A module already uses this display order",
+      });
+    }
+
+    return res.status(500).json({
+      message: "Failed to create module",
+    });
   }
 };
 
 export const editModule = async (req, res) => {
   try {
     const moduleId = parseId(req.params.id);
-    if (!moduleId) return res.status(400).json({ message: "Invalid module ID" });
 
-    const validation = validateModule(req.body);
-    if (validation.error) return res.status(400).json({ message: validation.error });
-
-    if (!await getModuleById(moduleId)) {
-      return res.status(404).json({ message: "Module not found" });
+    if (!moduleId) {
+      return res.status(400).json({
+        message: "Invalid module ID",
+      });
     }
 
-    await updateModule(moduleId, validation.value);
+    const validation = validateModule(req.body);
 
-    res.json({
-      message: "Module updated",
+    if (validation.error) {
+      return res.status(400).json({
+        message: validation.error,
+      });
+    }
+
+    const existingModule = await getModuleById(moduleId);
+
+    if (!existingModule) {
+      return res.status(404).json({
+        message: "Module not found",
+      });
+    }
+
+    const result = await updateModule(
+      moduleId,
+      validation.value
+    );
+
+    if (!result.affectedRows) {
+      return res.status(404).json({
+        message: "Module not found",
+      });
+    }
+
+    return res.json({
+      message: "Module updated successfully",
     });
   } catch (err) {
-    console.error(err);
+    console.error("Update module error:", err);
 
-    res.status(500).json({
+    if (err.code === "ER_DUP_ENTRY") {
+      return res.status(409).json({
+        message: "A module already uses this display order",
+      });
+    }
+
+    return res.status(500).json({
       message: "Failed to update module",
     });
   }
@@ -130,25 +221,44 @@ export const editModule = async (req, res) => {
 export const removeModule = async (req, res) => {
   try {
     const moduleId = parseId(req.params.id);
-    if (!moduleId) return res.status(400).json({ message: "Invalid module ID" });
 
-    if (!await getModuleById(moduleId)) {
-      return res.status(404).json({ message: "Module not found" });
+    if (!moduleId) {
+      return res.status(400).json({
+        message: "Invalid module ID",
+      });
     }
 
-    if (await getModuleLessonCount(moduleId)) {
-      return res.status(409).json({ message: "Remove this module's lessons before deleting it" });
+    const existingModule = await getModuleById(moduleId);
+
+    if (!existingModule) {
+      return res.status(404).json({
+        message: "Module not found",
+      });
     }
 
-    await deleteModule(moduleId);
+    const lessonCount = await getModuleLessonCount(moduleId);
 
-    res.json({
-      message: "Module deleted",
+    if (lessonCount > 0) {
+      return res.status(409).json({
+        message: "Remove this module's lessons before deleting it",
+      });
+    }
+
+    const result = await deleteModule(moduleId);
+
+    if (!result.affectedRows) {
+      return res.status(404).json({
+        message: "Module not found",
+      });
+    }
+
+    return res.json({
+      message: "Module deleted successfully",
     });
   } catch (err) {
-    console.error(err);
+    console.error("Delete module error:", err);
 
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to delete module",
     });
   }
@@ -156,45 +266,15 @@ export const removeModule = async (req, res) => {
 
 export const getAdminDashboardSummary = async (_req, res) => {
   try {
-    res.json(await getDashboardSummary());
+    const summary = await getDashboardSummary();
+
+    return res.json(summary);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to load dashboard data" });
+    console.error("Admin dashboard error:", err);
+
+    return res.status(500).json({
+      message: "Failed to load dashboard data",
+    });
   }
 };
 
-export const getAvailableModules = async (_req, res) => {
-  try {
-    res.json(await findAvailableModules());
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to load modules" });
-  }
-};
-
-export const getAvailableModule = async (req, res) => {
-  try {
-    const moduleId = parseId(req.params.id);
-    if (!moduleId) return res.status(400).json({ message: "Invalid module ID" });
-    const module = await getAvailableModuleById(moduleId);
-    if (!module) return res.status(404).json({ message: "Module not found" });
-    res.json(module);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to load module" });
-  }
-};
-
-export const getAvailableModuleLessons = async (req, res) => {
-  try {
-    const moduleId = parseId(req.params.id);
-    if (!moduleId) return res.status(400).json({ message: "Invalid module ID" });
-    if (!await getAvailableModuleById(moduleId)) {
-      return res.status(404).json({ message: "Module not found" });
-    }
-    res.json(await getLessonsByModuleId(moduleId));
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to load lessons" });
-  }
-};

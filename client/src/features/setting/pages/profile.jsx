@@ -97,21 +97,12 @@ const Profile = () => {
   const roleLabel = authUser?.role || profile.role || "member";
 
   return (
-    <section className="relative overflow-hidden rounded-4xl border border-white/10 bg-primary text-white shadow-[0_30px_100px_rgba(0,0,0,0.45)]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,0,0,0),transparent_34%),radial-gradient(circle_at_10%_20%,rgba(0,0,0,0),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_32%)]" />
-
-      <div className="relative grid gap-6 p-5 sm:p-8 xl:grid-cols-[360px_minmax(0,1fr)]">
-        <ProfileSidebar
-          profile={profile}
-          authUser={authUser}
-          form={form}
-          displayName={displayName}
-          initialsSource={initialsSource}
-          roleLabel={roleLabel}
-        />
-
+    <section>
+      <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_220px]">
         <ProfileForm
           form={form}
+          profile={profile}
+          authUser={authUser}
           hasChanges={hasChanges}
           saving={saving}
           message={message}
@@ -119,6 +110,14 @@ const Profile = () => {
           onChange={handleChange}
           onReset={handleReset}
           onSave={handleSave}
+        />
+        <ProfileSidebar
+          profile={profile}
+          authUser={authUser}
+          form={form}
+          displayName={displayName}
+          initialsSource={initialsSource}
+          roleLabel={roleLabel}
         />
       </div>
     </section>

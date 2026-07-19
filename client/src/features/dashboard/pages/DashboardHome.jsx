@@ -1,20 +1,59 @@
 import { BookOpen, ClipboardCheck, Flame } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 import DashSideBarRight from "../../../layouts/dashboardlayout/DashSideBarRight";
 import { useAuth } from "../../../context/AuthContext";
+import { getUserDashboardSummary } from "../../../api/apiModule";
 
 const DashboardHome = ({ className = "" }) => {
   const { authUser } = useAuth();
-  // Demo data
-  const overallProgress = 72;
   const streak = 6;
+  const [learning, setLearning] = useState({
+    completedModules: 0,
+    totalModules: 0,
+    completedLessons: 0,
+    totalLessons: 0,
+    overallProgress: 0,
+    nextLesson: null,
+  });
+  const [progressLoading, setProgressLoading] = useState(true);
+  const [progressError, setProgressError] = useState("");
 
-  const completedModules = 8;
-  const totalModules = 12;
+  const loadLearningProgress = useCallback(async () => {
+    try {
+      setProgressError("");
+      const { data } = await getUserDashboardSummary();
+      setLearning({
+        completedModules: data.completed_modules,
+        totalModules: data.total_modules,
+        completedLessons: data.completed_lessons,
+        totalLessons: data.total_lessons,
+        overallProgress: data.overall_progress,
+        nextLesson: data.next_lesson && {
+          moduleId: data.next_lesson.module_id,
+          lessonId: data.next_lesson.lesson_id,
+          moduleTitle: data.next_lesson.module_title,
+          title: data.next_lesson.lesson_title,
+        },
+      });
+    } catch (err) {
+      setProgressError(
+        err.response?.data?.message || "Failed to load learning progress.",
+      );
+    } finally {
+      setProgressLoading(false);
+    }
+  }, []);
 
-  const completedQuizzes = 10;
-  const totalQuizzes = 15;
-
-  const quizAverage = 86;
+  useEffect(() => {
+    loadLearningProgress();
+    window.addEventListener("focus", loadLearningProgress);
+    window.addEventListener("learning-progress-updated", loadLearningProgress);
+    return () => {
+      window.removeEventListener("focus", loadLearningProgress);
+      window.removeEventListener("learning-progress-updated", loadLearningProgress);
+    };
+  }, [loadLearningProgress]);
 
   const gitTips = [
     "Commit early, commit often.",
@@ -29,7 +68,7 @@ const DashboardHome = ({ className = "" }) => {
 
   return (
     <section
-      className={`flex min-h-full flex-col bg-[#080808] text-[#e0e0e0] px-4 py-8 ${className}`}
+      className={`flex min-h-full flex-col  text-[#e0e0e0] px-4 py-8 ${className}`}
     >
       <div className="mt-5 flex-1 overflow-hidden">
         <main className="h-full overflow-y-auto px-5">
@@ -68,26 +107,32 @@ const DashboardHome = ({ className = "" }) => {
                   <h3 className="mt-4 text-[16px] font-semibold">Modules</h3>
 
                   <p className="mt-3 text-[22px] font-bold">
-                    {completedModules}/{totalModules}
+                    {progressLoading
+                      ? "…"
+                      : `${learning.completedModules}/${learning.totalModules}`}
                   </p>
 
                   <p className="text-sm text-gray-400 mt-2">
-                    Lessons Completed
+                    Published Modules Completed
                   </p>
                 </div>
 
-                {/* Quiz */}
+                {/* Lessons */}
                 <div className="rounded-xl border border-[#242424] bg-[#111111] p-6">
                   <ClipboardCheck size={28} className="text-purple-500" />
 
                   <h3 className="mt-4 text-[16px] font-semibold">
-                    Quiz Average
+                    Lessons
                   </h3>
 
-                  <p className="mt-3 text-[22px] font-bold">{quizAverage}%</p>
+                  <p className="mt-3 text-[22px] font-bold">
+                    {progressLoading
+                      ? "…"
+                      : `${learning.completedLessons}/${learning.totalLessons}`}
+                  </p>
 
                   <p className="text-sm text-gray-400 mt-2">
-                    {completedQuizzes}/{totalQuizzes} Completed
+                    Published Lessons Completed
                   </p>
                 </div>
               </div>
@@ -100,12 +145,14 @@ const DashboardHome = ({ className = "" }) => {
                     </h2>
 
                     <p className="mt-2 text-sm text-gray-400">
-                      {completedModules} of {totalModules} modules completed
+                      {progressLoading
+                        ? "Loading learning progress..."
+                        : `${learning.completedModules} of ${learning.totalModules} published modules completed`}
                     </p>
                   </div>
 
                   <h1 className="text-[20px] font-bold text-blue-500">
-                    {overallProgress}%
+                    {learning.overallProgress}%
                   </h1>
                 </div>
 
@@ -113,7 +160,7 @@ const DashboardHome = ({ className = "" }) => {
                   <div
                     className="h-2 rounded-full bg-blue-500"
                     style={{
-                      width: `${overallProgress}%`,
+                      width: `${learning.overallProgress}%`,
                     }}
                   />
                 </div>
@@ -128,29 +175,38 @@ const DashboardHome = ({ className = "" }) => {
                 <div className="grid gap-4 md:grid-cols-2">
                   <SummaryItem
                     label="Overall Progress"
-                    value={`${overallProgress}%`}
+                    value={`${learning.overallProgress}%`}
                   />
 
                   <SummaryItem
-                    label="Current Streak"
-                    value={`${streak} Days`}
+                    label="Lessons Completed"
+                    value={`${learning.completedLessons}/${learning.totalLessons}`}
                   />
 
                   <SummaryItem
                     label="Modules Completed"
-                    value={`${completedModules}/${totalModules}`}
+                    value={`${learning.completedModules}/${learning.totalModules}`}
                   />
 
-                  <SummaryItem
-                    label="Quizzes Completed"
-                    value={`${completedQuizzes}/${totalQuizzes}`}
-                  />
-
-                  <SummaryItem
-                    label="Average Quiz Score"
-                    value={`${quizAverage}%`}
-                  />
+                  <div className="rounded-lg bg-[#181818] p-4">
+                    <p className="text-xs uppercase tracking-wider text-gray-400">
+                      {learning.nextLesson ? "Continue Learning" : "Learning Status"}
+                    </p>
+                    {learning.nextLesson ? (
+                      <Link
+                        to={`/modules/${learning.nextLesson.moduleId}?lesson=${learning.nextLesson.lessonId}`}
+                        className="mt-2 block text-[15px] font-semibold text-blue-500 hover:underline"
+                      >
+                        {learning.nextLesson.title} · {learning.nextLesson.moduleTitle}
+                      </Link>
+                    ) : (
+                      <h3 className="mt-2 text-[15px] font-semibold">
+                        {learning.totalLessons ? "All published lessons completed" : "No published lessons"}
+                      </h3>
+                    )}
+                  </div>
                 </div>
+                {progressError && <p className="text-sm text-red-400">{progressError}</p>}
               </div>
 
               {/* Daily Git Tip */}

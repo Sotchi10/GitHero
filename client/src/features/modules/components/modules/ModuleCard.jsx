@@ -1,11 +1,14 @@
 import styles from "./ModuleCard.module.css";
 
-function ModuleCard({ module = {}, isSelected = false, onClick = () => {} }) {
+function ModuleCard({ module = {}, isSelected = false, onClick = () => {}, onContinue = () => {} }) {
   const {
     module_id = 0,
     title = "Untitled module",
     description = "No description available.",
-    total_lessons = 0,
+    published_lessons = 0,
+    completed_lessons = 0,
+    progress_percent = 0,
+    next_lesson_id,
     difficulty = "",
     estimated_minutes,
   } = module;
@@ -30,7 +33,21 @@ function ModuleCard({ module = {}, isSelected = false, onClick = () => {} }) {
       </div>
 
       <div className={styles.cardFooter}>
-        <span className={styles.topicCount}>{total_lessons} lessons</span>
+        <span className={styles.topicCount}>
+          {completed_lessons}/{published_lessons} lessons · {progress_percent}%
+        </span>
+        {published_lessons > 0 && next_lesson_id && (
+          <button
+            type="button"
+            className={styles.pdfBtn}
+            onClick={(event) => {
+              event.stopPropagation();
+              onContinue(module);
+            }}
+          >
+            Continue learning
+          </button>
+        )}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ const ProfileSidebar = ({
   roleLabel,
 }) => {
   return (
-    <aside className="space-y-6 rounded-[28px] border border-white/10 bg-surface p-6 backdrop-blur-xl">
+    <aside className="border-t border-default pt-6 xl:border-l xl:border-t-0 xl:pl-8 xl:pt-0">
       <ProfileSummaryCard
         profile={profile}
         authUser={authUser}

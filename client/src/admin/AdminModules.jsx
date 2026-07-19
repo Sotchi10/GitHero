@@ -232,8 +232,7 @@ const AdminModules = () => {
                 <div>
                   <h2 className="text-xl font-semibold">{module.title}</h2>
                   <p className="mt-2 text-sm leading-6 text-gray-400">
-                    {module.total_lessons} lessons · Order{" "}
-                    {module.display_order}
+                    Order {module.display_order}
                   </p>
                 </div>
                 <span className="rounded-lg border border-[#242424] px-3 py-1 text-xs text-gray-300">

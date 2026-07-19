@@ -43,7 +43,7 @@ const Reference = ({ className = "" }) => {
 
   return (
     <section
-      className={`flex min-h-full flex-col bg-white text-gray-900 dark:bg-[radial-gradient(circle_at_top_left,rgba(78,122,255,0.16),transparent_32%),#080808] dark:text-[#e0e0e0] ${className} px-4 py-15`}
+      className={`flex min-h-full flex-col dark:bg-black text-gray-900 dark:bg-[radial-gradient(circle_at_top_left,rgba(78,122,255,0.16),transparent_32%),#080808] dark:text-[#e0e0e0] ${className} px-4 py-15`}
     >
       <div className=" flex-1 overflow-hidden">
         <main className="h-full overflow-y-auto px-5 bg-amber-50 dark:bg-[#080808] ">

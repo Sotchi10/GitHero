@@ -31,7 +31,9 @@ const ProfileForm = ({
             </p>
           </div>
           <div className="grid gap-1 text-sm text-gray-600 dark:text-white/65 sm:text-right">
-            <p className="font-medium text-gray-900 dark:text-white">{displayName}</p>
+            <p className="font-medium text-gray-900 dark:text-white">
+              {displayName}
+            </p>
             <p className="text-xs uppercase tracking-[0.25em] text-gray-500 dark:text-white/40">
               {roleLabel}
             </p>
@@ -43,14 +45,14 @@ const ProfileForm = ({
             type="button"
             onClick={onReset}
             disabled={!hasChanges || saving}
-            className="rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-500 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/20 dark:text-white/75 dark:hover:border-white/40 dark:hover:text-white"
+            className="rounded-full border border-gray-900 px-4 py-2 text-sm font-medium text-gray-900 transition hover:border-gray-500 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/20 dark:text-white/75 dark:hover:border-white/40 dark:hover:text-white"
           >
             Reset
           </button>
           <button
             type="submit"
             disabled={!hasChanges || saving}
-            className="rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-full border border-black bg-white px-5 py-2 text-sm font-semibold text-black transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white dark:bg-transparent dark:text-white dark:hover:bg-gray-800"
           >
             {saving ? "Saving..." : "Save changes"}
           </button>
@@ -70,24 +72,66 @@ const ProfileForm = ({
 
       <div className="mt-6 grid gap-5 md:grid-cols-2">
         <label className="space-y-2">
-          <span className="text-sm font-medium text-gray-700 dark:text-white/75">First name</span>
-          <input name="first_name" value={form.first_name} onChange={onChange} placeholder="First name" className={fieldClass} />
+          <span className="text-sm font-medium text-gray-700 dark:text-white/75">
+            First name
+          </span>
+          <input
+            name="first_name"
+            value={form.first_name}
+            onChange={onChange}
+            placeholder="First name"
+            className={fieldClass}
+          />
         </label>
         <label className="space-y-2">
-          <span className="text-sm font-medium text-gray-700 dark:text-white/75">Last name</span>
-          <input name="last_name" value={form.last_name} onChange={onChange} placeholder="Last name" className={fieldClass} />
+          <span className="text-sm font-medium text-gray-700 dark:text-white/75">
+            Last name
+          </span>
+          <input
+            name="last_name"
+            value={form.last_name}
+            onChange={onChange}
+            placeholder="Last name"
+            className={fieldClass}
+          />
         </label>
         <label className="space-y-2 md:col-span-2">
-          <span className="text-sm font-medium text-gray-700 dark:text-white/75">Username</span>
-          <input name="username" value={form.username} onChange={onChange} placeholder="username" className={fieldClass} />
+          <span className="text-sm font-medium text-gray-700 dark:text-white/75">
+            Username
+          </span>
+          <input
+            name="username"
+            value={form.username}
+            onChange={onChange}
+            placeholder="username"
+            className={fieldClass}
+          />
         </label>
         <label className="space-y-2 md:col-span-2">
-          <span className="text-sm font-medium text-gray-700 dark:text-white/75">Short bio</span>
-          <textarea name="bio" value={form.bio} onChange={onChange} rows={3} placeholder="A quick line about what you do" className={fieldClass} />
+          <span className="text-sm font-medium text-gray-700 dark:text-white/75">
+            Short bio
+          </span>
+          <textarea
+            name="bio"
+            value={form.bio}
+            onChange={onChange}
+            rows={3}
+            placeholder="A quick line about what you do"
+            className={fieldClass}
+          />
         </label>
         <label className="space-y-2 md:col-span-2">
-          <span className="text-sm font-medium text-gray-700 dark:text-white/75">Profile description</span>
-          <textarea name="description" value={form.description} onChange={onChange} rows={6} placeholder="Add a longer description for your profile" className={fieldClass} />
+          <span className="text-sm font-medium text-gray-700 dark:text-white/75">
+            Profile description
+          </span>
+          <textarea
+            name="description"
+            value={form.description}
+            onChange={onChange}
+            rows={6}
+            placeholder="Add a longer description for your profile"
+            className={fieldClass}
+          />
         </label>
       </div>
     </form>

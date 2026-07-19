@@ -19,14 +19,20 @@ const AppearancePanel = ({ appearance, onAppearanceChange }) => {
               key={mode}
               type="button"
               onClick={() => onAppearanceChange(mode)}
-              className={`rounded-2xl border p-5 text-left transition-colors ${
+              className={`group rounded-2xl border p-5 text-left transition-colors ${
                 selected
-                  ? "border-cyan-400 bg-cyan-50 dark:border-cyan-400/50 dark:bg-cyan-400/10"
-                  : "border-gray-300 bg-white shadow-sm hover:border-gray-400 dark:border-white/10 dark:bg-white/5 dark:shadow-none dark:hover:border-white/20"
+                  ? "border-black bg-gray-100 text-black shadow-sm dark:border-white dark:bg-[#1a1a1a] dark:text-white"
+                  : "border-gray-300 bg-white text-black shadow-sm hover:border-black hover:bg-gray-50 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-white/20 dark:hover:bg-white dark:hover:text-black"
               }`}
             >
               <p className="text-sm font-semibold capitalize">{mode}</p>
-              <p className="mt-2 text-sm text-gray-600 dark:text-white/60">
+              <p
+                className={`mt-2 text-sm ${
+                  selected
+                    ? "text-gray-700 dark:text-white"
+                    : "text-gray-600 dark:text-white/60 dark:group-hover:text-black"
+                }`}
+              >
                 {mode === "dark"
                   ? "A deep black look with subtle contrast."
                   : "A light theme with white surfaces and soft borders."}

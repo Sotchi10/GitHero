@@ -1,5 +1,9 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "npm install",
-  "buildCommand": null
+  "version": 2,
+  "builds": [{"src": "src/server.js", "use": "@vercel/node"}],
+  "routes": [
+    {
+      "src":"src/server.js"
+    }
+  ]
 }

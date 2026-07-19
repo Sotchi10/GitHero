@@ -1,7 +1,5 @@
 import { findProfileByUserId } from "../features/profile/pfpModels.js";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
 
 const parseUserId = (value) => {
     const userId = Number(value);

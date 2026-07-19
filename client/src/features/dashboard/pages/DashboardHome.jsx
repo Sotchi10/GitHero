@@ -7,14 +7,15 @@ import { getUserDashboardSummary } from "../../../api/apiModule";
 
 const DashboardHome = ({ className = "" }) => {
   const { authUser } = useAuth();
-  const streak = 6;
   const [learning, setLearning] = useState({
+    learningStreak: 0,
     completedModules: 0,
     totalModules: 0,
     completedLessons: 0,
     totalLessons: 0,
     overallProgress: 0,
     nextLesson: null,
+    continueLearningUrl: null,
   });
   const [progressLoading, setProgressLoading] = useState(true);
   const [progressError, setProgressError] = useState("");
@@ -24,6 +25,7 @@ const DashboardHome = ({ className = "" }) => {
       setProgressError("");
       const { data } = await getUserDashboardSummary();
       setLearning({
+        learningStreak: data.learning_streak ?? 0,
         completedModules: data.completed_modules,
         totalModules: data.total_modules,
         completedLessons: data.completed_lessons,
@@ -35,6 +37,7 @@ const DashboardHome = ({ className = "" }) => {
           moduleTitle: data.next_lesson.module_title,
           title: data.next_lesson.lesson_title,
         },
+        continueLearningUrl: data.continue_learning_url,
       });
     } catch (err) {
       setProgressError(
@@ -95,7 +98,9 @@ const DashboardHome = ({ className = "" }) => {
                     Learning Streak
                   </h3>
 
-                  <p className="mt-3 text-[22px] font-bold">{streak}</p>
+                  <p className="mt-3 text-[22px] font-bold">
+                    {progressLoading ? "..." : learning.learningStreak}
+                  </p>
 
                   <p className="text-sm text-gray-400 mt-2">Consecutive Days</p>
                 </div>
@@ -152,7 +157,7 @@ const DashboardHome = ({ className = "" }) => {
                   </div>
 
                   <h1 className="text-[20px] font-bold text-blue-500">
-                    {learning.overallProgress}%
+                    {progressLoading ? "..." : `${learning.overallProgress}%`}
                   </h1>
                 </div>
 
@@ -194,7 +199,7 @@ const DashboardHome = ({ className = "" }) => {
                     </p>
                     {learning.nextLesson ? (
                       <Link
-                        to={`/modules/${learning.nextLesson.moduleId}?lesson=${learning.nextLesson.lessonId}`}
+                        to={learning.continueLearningUrl}
                         className="mt-2 block text-[15px] font-semibold text-blue-500 hover:underline"
                       >
                         {learning.nextLesson.title} · {learning.nextLesson.moduleTitle}
@@ -206,7 +211,7 @@ const DashboardHome = ({ className = "" }) => {
                     )}
                   </div>
                 </div>
-                {progressError && <p className="text-sm text-red-400">{progressError}</p>}
+                {progressError && <p className="mt-4 text-sm text-red-400">{progressError}</p>}
               </div>
 
               {/* Daily Git Tip */}

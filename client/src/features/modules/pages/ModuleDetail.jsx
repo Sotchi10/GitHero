@@ -46,9 +46,19 @@ const ModuleDetail = () => {
     try {
       setProgressError("");
       setProgressingId(lesson.lesson_id);
-      const response = await (completed ? completeLesson(lesson.lesson_id) : openLesson(lesson.lesson_id));
-      setModule(response.data.module);
-      setLessons(response.data.lessons);
+      if (completed) {
+        await completeLesson(lesson.lesson_id);
+        const [moduleRes, lessonsRes] = await Promise.all([
+          getModuleById(moduleId),
+          getModuleLessons(moduleId),
+        ]);
+        setModule(moduleRes.data);
+        setLessons(lessonsRes.data);
+      } else {
+        const response = await openLesson(lesson.lesson_id);
+        setModule(response.data.module);
+        setLessons(response.data.lessons);
+      }
       window.dispatchEvent(new Event("learning-progress-updated"));
     } catch (err) {
       setProgressError(err.response?.data?.message || "Failed to update lesson progress");

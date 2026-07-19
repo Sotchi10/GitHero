@@ -55,4 +55,21 @@ const updateProgress = (update, message) => async (req, res) => {
 };
 
 export const openLesson = updateProgress(startLessonProgress, "Lesson opened successfully");
-export const completeLesson = updateProgress(completeLessonProgress, "Lesson completed successfully");
+export const completeLesson = async (req, res) => {
+  try {
+    const userId = getUserId(req);
+    const lessonId = parseId(req.params.lessonId);
+
+    if (!userId) return res.status(401).json({ message: "Authentication required" });
+    if (!lessonId) return res.status(400).json({ message: "Invalid lesson ID" });
+
+    const lesson = await getAvailableLesson(lessonId);
+    if (!lesson) return res.status(404).json({ message: "Lesson not found" });
+
+    await completeLessonProgress(userId, lessonId);
+    return res.json({ message: "Lesson completed successfully", lesson_id: lessonId });
+  } catch (err) {
+    console.error("Complete lesson error:", err);
+    return res.status(500).json({ message: "Failed to complete lesson" });
+  }
+};

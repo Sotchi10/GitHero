@@ -11,7 +11,8 @@ export const getModuleById = (id) =>
 
 export const getModuleLessons = (id) => API.get(`/api/modules/${id}/lessons`);
 export const openLesson = (id) => API.post(`/api/modules/lessons/${id}/open`);
-export const completeLesson = (id) => API.post(`/api/modules/lessons/${id}/complete`);
+export const completeLesson = (lessonId) =>
+  API.post(`/api/modules/lessons/${lessonId}/complete`);
 
 export const getAdminModules = () => API.get("/api/admin/modules");
 export const getAdminDashboardSummary = () =>

@@ -8,6 +8,7 @@ import RepoCreate from "../components/layout/RepoCreate";
 import {
   getMyRepositories,
   createRepository,
+  deleteRepository,
 } from "../../../api/apiRepository";
 
 const Repository = ({ className = "" }) => {
@@ -77,6 +78,23 @@ const Repository = ({ className = "" }) => {
     }
   };
 
+  const handleDeleteRepository = async (repoId) => {
+    if (!repoId || !userId) return;
+    if (!window.confirm("Delete this repository?")) return;
+
+    try {
+      setVisibleLoadError("");
+      await deleteRepository(repoId, userId);
+      setRepositories((prev) =>
+        prev.filter((repo) => String(repo.id || repo.repo_id) !== String(repoId)),
+      );
+    } catch (err) {
+      setVisibleLoadError(
+        err.response?.data?.message || "Failed to delete repository",
+      );
+    }
+  };
+
   return (
     <>
       {/* POPUP */}
@@ -115,7 +133,12 @@ const Repository = ({ className = "" }) => {
                     </p>
                   ) : repositories.length > 0 ? (
                     repositories.map((repo) => (
-                      <RepoCard key={repo.repo_id} repo={repo} />
+                      <RepoCard
+                        key={repo.id || repo.repo_id}
+                        repo={repo}
+                        currentUserId={userId}
+                        onDelete={handleDeleteRepository}
+                      />
                     ))
                   ) : (
                     <p className="px-5 py-4 text-sm text-gray-400">

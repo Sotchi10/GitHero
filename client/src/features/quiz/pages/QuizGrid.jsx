@@ -2,7 +2,7 @@ import QuizCard from "./QuizCard";
 
 function QuizGrid({ quizzes, selectedId, onSelect }) {
   return (
-    <div className=" bg-[#0d0d0d] rounded-xl mb-4.5">
+    <div className=" rounded-xl mb-4.5">
       
       <div className="text-[#c5c8cc] mb-4">
         <h4>Quiz</h4>

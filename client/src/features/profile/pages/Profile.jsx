@@ -1,45 +1,18 @@
 import Description from "./../components/Description";
 import { useAuth } from "../../../context/AuthContext";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getPfp } from "../../../api/apiProfile";
-import Avatar from "../components/Avatar";
+import { useOutletContext, useParams } from "react-router-dom";
 
 
 const Profile = () => {
   const { username } = useParams();
-  const { authUser, profile: authProfile, error: authError, updateProfile } = useAuth();
-  const [profile, setProfile] = useState(null);
- 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const isOwnProfile = authProfile?.username === username;
+  const { profile: authProfile, error: authError } = useAuth();
+  const { viewedProfile: profile, profileLoading: loading, profileError: error } =
+    useOutletContext();
+  const isOwnProfile =
+    authProfile?.user_id &&
+    profile?.user_id &&
+    String(authProfile.user_id) === String(profile.user_id);
   const displayProfile = isOwnProfile && authProfile ? authProfile : profile;
-  const userId = authProfile?.user_id || authUser?.userId || authUser?.user_id;
-
-  useEffect(() => {
-    if (!username) return undefined;
-
-    let active = true;
-
-    getPfp(username)
-      .then((res) => {
-        if (!active) return;
-        setProfile(res.data);
-        setError("");
-      })
-      .catch((err) => {
-        if (!active) return;
-        setError(err.response?.data?.message || "Failed to load profile");
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [username, authProfile]);
 
 
   if (loading || (!error && profile && profile.username !== username)) {

@@ -1,7 +1,7 @@
 import ModuleCard from "./ModuleCard";
 import styles from "./ModuleGrid.module.css";
 
-function ModulesGrid({ modules, selectedId, onSelect }) {
+function ModulesGrid({ modules, onSelect }) {
   if (modules.length === 0) {
     return (
       <div className={styles.empty}>
@@ -14,9 +14,8 @@ function ModulesGrid({ modules, selectedId, onSelect }) {
     <div className={styles.grid}>
       {modules.map((module) => (
         <ModuleCard
-          key={module.id}
+          key={module.module_id}
           module={module}
-          isSelected={module.id === selectedId}
           onClick={() => onSelect(module)}
         />
       ))}

@@ -10,6 +10,7 @@ import Reference from "./features/reference/pages/Reference";
 import Codespaces from "./features/codespace/pages/Codespaces";
 import Community from "./features/community/pages/Community";
 import Module from "./features/modules/pages/Module";
+import ModuleDetail from "./features/modules/pages/ModuleDetail";
 import QuizzesPage from "./features/quiz/pages/QuizzesPage.jsx";
 import Setting from "./features/setting/pages/Setting";
 import Profile from "./features/profile/pages/Profile";
@@ -25,6 +26,7 @@ import AdminLayout from './admin/layout/AdminLayout';
 import AdminDashboard from './admin/AdminDashboard';
 import AdminModules from './admin/AdminModules';
 import AdminLessons from './admin/AdminLessons';
+import AdminUsers from "./admin/AdminUsers.jsx";
 
 
 function App() {
@@ -56,6 +58,7 @@ function App() {
             <Route path="/:username/post/:id" element={<Article />} />
             <Route path="/developers" element={<Developers />} />
             <Route path="/modules" element={<Module />} />
+            <Route path="/modules/:moduleId" element={<ModuleDetail />} />
             <Route path="/quiz" element={<QuizzesPage />} />
             <Route path="/settings" element={<Setting />} />
             <Route path="/profile/:username" element={<Profile />} />
@@ -64,10 +67,9 @@ function App() {
           <Route element={<AdminRoute />}>
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
-
               <Route path="modules" element={<AdminModules />} />
-
               <Route path="lessons" element={<AdminLessons />} />
+              <Route path="users" element={<AdminUsers />} />
             </Route>
           </Route>
         </Route>

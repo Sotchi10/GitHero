@@ -22,7 +22,9 @@ const DashNavBar = () => {
         <NavLink
           to="/dashboard"
           className="w-8 h-8 rounded-[100%] bg-gray-400 cursor-pointer"
-        ></NavLink>
+        >
+          <img src="../public/GitHero.png" alt="" className="w-full h-full"/>
+        </NavLink>
         <NavLink
           to={pathname === isPfp? isPfp : pathname}
           className="text-[14px] hover:bg-[#161616] px-2 py-1.5 rounded-[5px] font-semibold"

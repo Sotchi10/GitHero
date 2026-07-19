@@ -17,6 +17,9 @@ export const getMyRepositories = (userId) =>
 export const createRepository = (data, userId) =>
   API.post("/api/repositories", data, withUser(userId));
 
+export const deleteRepository = (repoId, userId) =>
+  API.delete(`/api/repositories/${repoId}`, withUser(userId));
+
 
 export const getRepositoryByPath = (username, repoName, userId) =>
   API.get(

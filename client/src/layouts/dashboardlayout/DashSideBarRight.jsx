@@ -77,14 +77,14 @@ const DashSideBarRight = ({ title, link }) => {
   if (isDashboard) {
     return (
       <aside className="space-y-4">
-        <div className="flex flex-col">
-          <p className="text-[13px]">
-            Total Community posts {postsCount}
-          </p>
-          <p className="text-[13px]">
-            Total developers {developers.length}
-          </p>
-        </div>
+        <aside className="space-y-4">
+          <LinkCard
+            title="Current Platform Status"
+            desc={`Total Community posts ${postsCount} Total developers ${developers.length}`}
+            link="/community"
+            linkTitle="See community posts"
+          />
+        </aside>
       </aside>
     );
   }
@@ -108,15 +108,10 @@ const DashSideBarRight = ({ title, link }) => {
             <div className="flex flex-col gap-2">
               {developers.length ? (
                 developers.map((developer) => (
-                  <DevCard
-                    key={developer.profile_id}
-                    developer={developer}
-                  />
+                  <DevCard key={developer.profile_id} developer={developer} />
                 ))
               ) : (
-                <p className="text-[13px] text-gray-400">
-                  No developers yet.
-                </p>
+                <p className="text-[13px] text-gray-400">No developers yet.</p>
               )}
             </div>
 
@@ -138,24 +133,24 @@ const DashSideBarRight = ({ title, link }) => {
 
   /* ---------------- Default ---------------- */
 
-  return (
-    <aside className="space-y-4">
-      <div className="rounded-xl border border-[#242424] bg-[#0d0d0d] p-4">
-        <h3 className="mb-3 font-semibold">Activity</h3>
+  //return (
+  //  <aside className="space-y-4">
+  //    <div className="rounded-xl border border-[#242424] bg-[#0d0d0d] p-4">
+  //      <h3 className="mb-3 font-semibold">Activity</h3>
 
-        <ul className="space-y-2 text-sm text-gray-400">
-          {activities.map((item, index) => (
-            <li
-              key={index}
-              className="rounded bg-[#161b22] p-2"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </aside>
-  );
+  //      <ul className="space-y-2 text-sm text-gray-400">
+  //        {activities.map((item, index) => (
+  //          <li
+  //            key={index}
+  //            className="rounded bg-[#161b22] p-2"
+  //          >
+  //            {item}
+  //          </li>
+  //        ))}
+  //      </ul>
+  //    </div>
+  //  </aside>
+  //);
 };
 
 export default DashSideBarRight;
@@ -169,10 +164,7 @@ const LinkCard = ({ title, desc, linkTitle, link }) => (
 
       <p className="text-[14px]">{desc}</p>
 
-      <NavLink
-        to={link}
-        className="text-[14px] text-blue-500 hover:underline"
-      >
+      <NavLink to={link} className="text-[14px] text-blue-500 hover:underline">
         {linkTitle}
       </NavLink>
     </div>

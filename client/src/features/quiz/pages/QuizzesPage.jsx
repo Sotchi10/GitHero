@@ -7,7 +7,7 @@ function QuizzesPage() {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
 
   return (
-    <div className="flex flex-1 flex-col min-h-screen text-[#e8eaed] font-sans">
+    <div className="flex flex-1 px-6 flex-col min-h-screen text-[#e8eaed]">
       {/* Content */}
       <div className="flex flex-col gap-0 p-5.5">
         <QuizGrid

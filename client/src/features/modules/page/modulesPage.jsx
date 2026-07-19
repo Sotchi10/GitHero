@@ -1,45 +1,47 @@
-import { useState, useMemo } from "react";
-import FilterBar from "../components/modules/FilterBar";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ModulesGrid from "../components/modules/ModuleGrid";
-import NotePanel from "../components/modules/NotePanel";
-import modulesData from "../data/modulesData";
+import { getModules } from "../../../api/apiModule";
 import styles from "./ModulesPage.module.css";
 
-function getStatusKey(progress) {
-  if (progress === 100) return "completed";
-  if (progress > 0) return "in-progress";
-  return "not-started";
-}
-
 function ModulesPage() {
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [modules, setModules] = useState([]);
   const [search, setSearch] = useState("");
-  const [selectedLesson, setSelectedLesson] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const filtered = useMemo(() => {
-    const list = Array.isArray(modulesData) ? modulesData : [];
+  useEffect(() => {
+    const loadModules = async () => {
+      try {
+        const res = await getModules();
+        setModules(res.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Failed to load modules");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadModules();
+  }, []);
 
-    return list.filter((m) => {
-      const matchesFilter =
-        activeFilter === "all" ||
-        getStatusKey(m?.progress ?? 0) === activeFilter;
-      const title = (m?.title ?? "").toLowerCase();
-      const matchesSearch =
-        search.trim() === "" || title.includes(search.toLowerCase());
-      return matchesFilter && matchesSearch;
-    });
-  }, [activeFilter, search]);
+  const filtered = useMemo(
+    () =>
+      modules.filter((module) =>
+        module.title.toLowerCase().includes(search.toLowerCase()),
+      ),
+    [modules, search],
+  );
 
   return (
     <div className={`${styles.page} px-4`}>
-      {/* Top Bar */}
       <div className={styles.topbar}>
         <div className={styles.topbarRight}>
           <div className={styles.searchBox}>
             <span className={styles.searchIcon}>⌕</span>
             <input
               type="text"
-              placeholder="Search modules…"
+              placeholder="Search modules..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className={styles.searchInput}
@@ -47,34 +49,27 @@ function ModulesPage() {
           </div>
         </div>
       </div>
-
-      {/* Main Layout */}
       <div className={styles.body}>
-        {/* Content */}
         <main className={styles.content}>
-          {/* Page Header */}
           <header className={styles.pageHeader}>
             <h1 className={styles.heading}>Modules</h1>
             <p className={styles.subheading}>
-              {modulesData.length} lessons · Learn Git and GitHub from scratch
+              Learn Git and GitHub from scratch
             </p>
           </header>
-
-          {/* Filters */}
-          <FilterBar active={activeFilter} onChange={setActiveFilter} />
-
-          {/* Modules */}
-          <ModulesGrid
-            modules={filtered}
-            selectedId={selectedLesson?.id}
-            onSelect={setSelectedLesson}
-          />
+          {loading && <p className="text-gray-400">Loading modules...</p>}
+          {error && (
+            <div className="rounded-lg border border-red-500 bg-red-500/10 p-4 text-red-400">
+              {error}
+            </div>
+          )}
+          {!loading && !error && (
+            <ModulesGrid
+              modules={filtered}
+              onSelect={(module) => navigate(`/modules/${module.module_id}`)}
+            />
+          )}
         </main>
-
-        {/* Right Sidebar */}
-        <aside>
-          <NotePanel selectedLesson={selectedLesson} />
-        </aside>
       </div>
     </div>
   );

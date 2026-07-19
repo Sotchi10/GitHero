@@ -21,9 +21,12 @@ const getDaysAgo = (createdAt) => {
   return days === 0 ? "Today" : days === 1 ? "Yesterday" : `${days} days ago`;
 };
 
-const RepoCard = ({ repo }) => {
+const RepoCard = ({ repo, currentUserId, onDelete }) => {
+  const repoId = repo.id || repo.repo_id;
   const repoName = repo.name || "Untitled repository";
   const username = repo.username || "unknown";
+  const canDelete =
+    repo.user_id && currentUserId && String(repo.user_id) === String(currentUserId);
   const fullName = `${username}/${repoName}`;
   const repoPath = `/repository/${encodeURIComponent(
     username,
@@ -45,9 +48,20 @@ const RepoCard = ({ repo }) => {
         <div className="flex items-center justify-between">
           <DashNavItem itemName={repo.visibility || "public"} />
 
-          <p className="text-[12px]" title={formatDate(updatedAt)}>
-            {getDaysAgo(updatedAt)}
-          </p>
+          <div className="flex items-center gap-3">
+            {canDelete && (
+              <button
+                type="button"
+                onClick={() => onDelete?.(repoId)}
+                className="text-[13px] text-red-400 hover:underline"
+              >
+                Delete
+              </button>
+            )}
+            <p className="text-[12px]" title={formatDate(updatedAt)}>
+              {getDaysAgo(updatedAt)}
+            </p>
+          </div>
         </div>
       </div>
     </>

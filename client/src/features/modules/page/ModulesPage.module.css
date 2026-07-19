@@ -4,7 +4,7 @@
   flex-direction: column;
   min-height: 100vh;
   color: #e8eaed;
-  font-family: sans-serif;
+  font-family: system-ui, sans-serif;
 }
 
 /* ── Topbar ── */
@@ -88,7 +88,7 @@
 }
 
 .subheading {
-  font-size: 13px;
+  font-size: 14px;
   color: #555a60;
   margin-top: 4px;
 }

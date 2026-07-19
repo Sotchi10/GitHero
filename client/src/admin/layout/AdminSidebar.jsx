@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { FiSearch, FiUsers } from "react-icons/fi";
 import {
   MdDashboard,
   MdLibraryBooks,
@@ -9,6 +10,7 @@ const navItems = [
   { label: "Dashboard", path: "/admin", icon: MdDashboard },
   { label: "Modules", path: "/admin/modules", icon: MdLibraryBooks },
   { label: "Lessons", path: "/admin/lessons", icon: MdOutlinePlayLesson },
+  { label: "Users", path: "/admin/users", icon: FiUsers },
 ];
 
 const AdminSidebar = () => {

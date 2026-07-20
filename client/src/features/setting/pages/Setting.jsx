@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Palette, User } from "lucide-react";
+import { LogOut, Palette, User, X } from "lucide-react";
 import { useAuth } from "../../../context/AuthContext";
 import Profile from "./profile.jsx";
 import SettingSidebar from "./SettingSidebar.jsx";
@@ -12,6 +12,7 @@ const Setting = ({ className = "" }) => {
   const { theme: appearance, setTheme: setAppearance } = useTheme();
 
   const [activeSection, setActiveSection] = useState("profile");
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const sections = useMemo(
     () => [
@@ -35,7 +36,7 @@ const Setting = ({ className = "" }) => {
           activeSection={activeSection}
           sections={sections}
           onSelectSection={setActiveSection}
-          onLogout={handleLogout}
+          onLogout={() => setShowLogoutConfirm(true)}
           appearance={appearance}
         />
 
@@ -50,6 +51,61 @@ const Setting = ({ className = "" }) => {
           )}
         </div>
       </div>
+
+      {showLogoutConfirm ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="logout-confirm-title"
+        >
+          <div className="w-full max-w-sm rounded-md border border-default bg-surface p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
+            <div className="flex items-start gap-3">
+              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-500/10 text-red-500">
+                <LogOut size={18} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-3">
+                  <h2
+                    id="logout-confirm-title"
+                    className="text-lg font-semibold"
+                  >
+                    Log out?
+                  </h2>
+                  <button
+                    type="button"
+                    onClick={() => setShowLogoutConfirm(false)}
+                    className="rounded-md p-1 text-muted transition hover:bg-surface-raised hover:text-primary"
+                    aria-label="Cancel logout"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+                <p className="mt-2 text-sm leading-6 text-gray-400">
+                  Are you sure you want to log out of your GitHero account?
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-5 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setShowLogoutConfirm(false)}
+                className="rounded-md border border-default px-4 py-2 text-sm font-medium transition hover:bg-surface-raised"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700"
+              >
+                Log out
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 };

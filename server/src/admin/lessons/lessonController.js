@@ -8,7 +8,6 @@ import {
   getLessonById,
   updateLesson,
   updateLessonPdfUrl,
-  updateModuleLessonTotal,
 } from "./lessonModels.js";
 
 const lessonsUploadDir = path.resolve(process.cwd(), "upload", "lesson");
@@ -71,7 +70,6 @@ export const addLesson = async (req, res) => {
       return res.status(404).json({ message: "Module not found" });
     }
     const lessonId = await createLesson(req.body);
-    await updateModuleLessonTotal(req.body.module_id);
     res.status(201).json({ message: "Lesson created successfully", lesson_id: lessonId });
   } catch (err) {
     console.error(err);
@@ -91,10 +89,6 @@ export const editLesson = async (req, res) => {
       return res.status(404).json({ message: "Module not found" });
     }
     await updateLesson(lessonId, req.body);
-    await updateModuleLessonTotal(existingLesson.module_id);
-    if (Number(existingLesson.module_id) !== Number(req.body.module_id)) {
-      await updateModuleLessonTotal(req.body.module_id);
-    }
     res.json({ message: "Lesson updated" });
   } catch (err) {
     console.error(err);
@@ -110,7 +104,6 @@ export const removeLesson = async (req, res) => {
     if (!lesson) return res.status(404).json({ message: "Lesson not found" });
     await deleteLesson(lessonId);
     await removeStoredPdf(lesson.pdf_url);
-    await updateModuleLessonTotal(lesson.module_id);
     res.json({ message: "Lesson deleted" });
   } catch (err) {
     console.error(err);

@@ -60,10 +60,3 @@ export const deleteLesson = async (lessonId) => {
   await db.query("DELETE FROM lessons WHERE lesson_id = ?", [lessonId]);
 };
 
-export const updateModuleLessonTotal = async (moduleId) => {
-  await db.query(`
-    UPDATE modules
-    SET total_lessons = (SELECT COUNT(*) FROM lessons WHERE module_id = ?)
-    WHERE module_id = ?
-  `, [moduleId, moduleId]);
-};

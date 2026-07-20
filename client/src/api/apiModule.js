@@ -3,12 +3,16 @@ import API from "./axios";
 
 export const getModules = () =>
     API.get("/api/modules");
+export const getUserDashboardSummary = () => API.get("/api/modules/dashboard-summary");
 
 
 export const getModuleById = (id) =>
     API.get(`/api/modules/${id}`);
 
 export const getModuleLessons = (id) => API.get(`/api/modules/${id}/lessons`);
+export const openLesson = (id) => API.post(`/api/modules/lessons/${id}/open`);
+export const completeLesson = (lessonId) =>
+  API.post(`/api/modules/lessons/${lessonId}/complete`);
 
 export const getAdminModules = () => API.get("/api/admin/modules");
 export const getAdminDashboardSummary = () =>

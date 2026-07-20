@@ -5,6 +5,18 @@
     <link rel="icon" type="image/jpeg" href="./src/public/GitHero.png"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GitHero - From Zero to Git Hero</title>
+    <script>
+      (() => {
+        const saved = localStorage.getItem("githero-theme");
+        const theme = saved === "light" || saved === "white"
+          ? "light"
+          : saved
+            ? "dark"
+            : matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -26,15 +26,9 @@ import AdminLayout from "./admin/layout/AdminLayout";
 import AdminDashboard from "./admin/AdminDashboard";
 import AdminModules from "./admin/AdminModules";
 import AdminLessons from "./admin/AdminLessons";
-import { useEffect } from "react";
 
 function App() {
   const { loading } = useAuth();  
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("githero-theme") || "dark";
-    document.documentElement.dataset.theme = storedTheme;
-  }, []);
 
   if (loading) return <div>Loading...</div>;
 

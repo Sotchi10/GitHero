@@ -238,11 +238,15 @@ const DashSideBar = ({ viewedProfile = null }) => {
                         <DashNavItem
                           icon={item.icon}
                           itemName={item.name}
+<<<<<<< HEAD
                           className={
                             isActive
                               ? "bg-gray-200 dark:bg-white/10 rounded-[3px] font-semibold"
                               : ""
                           }
+=======
+                          active={isActive}
+>>>>>>> c80c81371d78870aa2dacc63d8c8570ff549f0de
                         />
                       )}
                     </NavLink>

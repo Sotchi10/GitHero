@@ -83,7 +83,13 @@ const Community = () => {
 
   return (
     <>
+<<<<<<< HEAD
       <section className="flex min-h-full flex-col bg-white px-4 py-8 text-gray-900 dark:bg-[#080808] dark:text-[#e0e0e0]">
+=======
+      <section
+        className={`flex min-h-full flex-col text-[#e0e0e0] px-4 py-8`}
+      >
+>>>>>>> c80c81371d78870aa2dacc63d8c8570ff549f0de
         <h4>Feed</h4>
         <div className=" flex-1 overflow-hidden mt-5">
           <main className="h-full overflow-y-auto bg-white px-5 dark:bg-[#080808]">
@@ -103,7 +109,11 @@ const Community = () => {
                       value={form.title}
                       onChange={handleChange}
                       placeholder="Post title"
+<<<<<<< HEAD
                       className="mt-4 w-full rounded border border-gray-300 bg-white px-3 py-2 text-[13px] text-gray-900 outline-none focus:border-blue-500 dark:border-[#242424] dark:bg-[#080808] dark:text-white"
+=======
+                      className="mt-4 w-full text-[13px] rounded border border-[#242424]  px-3 py-2 text-sm outline-none focus:border-blue-500"
+>>>>>>> c80c81371d78870aa2dacc63d8c8570ff549f0de
                       maxLength={150}
                       required
                     />
@@ -112,7 +122,11 @@ const Community = () => {
                       value={form.content}
                       onChange={handleChange}
                       placeholder="Share an article, tip, or update"
+<<<<<<< HEAD
                       className="mt-3 min-h-32 w-full rounded border border-gray-300 bg-white px-3 py-2 text-[13px] text-gray-900 outline-none focus:border-blue-500 dark:border-[#242424] dark:bg-[#080808] dark:text-white"
+=======
+                      className="mt-3 text-[13px] min-h-32 w-full rounded border border-[#242424]  px-3 py-2 text-sm outline-none focus:border-blue-500"
+>>>>>>> c80c81371d78870aa2dacc63d8c8570ff549f0de
                       maxLength={10000}
                       required
                     />

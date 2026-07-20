@@ -1,6 +1,6 @@
 import ModuleCard from "./ModuleCard";
 
-function ModulesGrid({ modules, onSelect }) {
+function ModulesGrid({ modules, onSelect, onContinue }) {
   if (modules.length === 0) {
     return (
       <div className="py-12 text-center text-[13px] text-gray-500 dark:text-[#555a60]">
@@ -16,6 +16,7 @@ function ModulesGrid({ modules, onSelect }) {
           key={module.module_id}
           module={module}
           onClick={() => onSelect(module)}
+          onContinue={onContinue}
         />
       ))}
     </div>

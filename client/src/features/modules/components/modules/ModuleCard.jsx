@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 function ModuleCard({ module = {}, isSelected = false, onClick = () => {} }) {
+=======
+import styles from "./ModuleCard.module.css";
+
+function ModuleCard({ module = {}, isSelected = false, onClick = () => {}, onContinue = () => {} }) {
+>>>>>>> c80c81371d78870aa2dacc63d8c8570ff549f0de
   const {
     module_id = 0,
     title = "Untitled module",
     description = "No description available.",
-    total_lessons = 0,
+    published_lessons = 0,
+    completed_lessons = 0,
+    progress_percent = 0,
+    next_lesson_id,
     difficulty = "",
     estimated_minutes,
   } = module;
@@ -70,8 +79,26 @@ function ModuleCard({ module = {}, isSelected = false, onClick = () => {} }) {
       </div>
 
       <div className={styles.cardFooter}>
+<<<<<<< HEAD
         <span className={styles.topicCount}>{total_lessons} lessons</span>
 >>>>>>> f2a9bcab4362cf3db2b6f77b342368f09167d970
+=======
+        <span className={styles.topicCount}>
+          {completed_lessons}/{published_lessons} lessons · {progress_percent}%
+        </span>
+        {published_lessons > 0 && next_lesson_id && (
+          <button
+            type="button"
+            className={styles.pdfBtn}
+            onClick={(event) => {
+              event.stopPropagation();
+              onContinue(module);
+            }}
+          >
+            Continue learning
+          </button>
+        )}
+>>>>>>> c80c81371d78870aa2dacc63d8c8570ff549f0de
       </div>
     </div>
   );

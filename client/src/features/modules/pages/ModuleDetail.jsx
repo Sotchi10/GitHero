@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getModuleById, getModuleLessons } from "../../../api/apiModule";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { completeLesson, getModuleById, getModuleLessons, openLesson } from "../../../api/apiModule";
 
 const ModuleDetail = () => {
   const { moduleId } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [module, setModule] = useState(null);
   const [lessons, setLessons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [downloadErrors, setDownloadErrors] = useState({});
   const [downloadingId, setDownloadingId] = useState(null);
+  const [progressingId, setProgressingId] = useState(null);
+  const [progressError, setProgressError] = useState("");
 
   useEffect(() => {
     const loadModule = async () => {
@@ -21,6 +24,15 @@ const ModuleDetail = () => {
         ]);
         setModule(moduleRes.data);
         setLessons(lessonsRes.data);
+        const lessonId = Number(searchParams.get("lesson"));
+        if (lessonId && lessonsRes.data.some((lesson) => lesson.lesson_id === lessonId)) {
+          await openLesson(lessonId);
+          setLessons((current) => current.map((lesson) =>
+            lesson.lesson_id === lessonId && lesson.progress_status !== "completed"
+              ? { ...lesson, progress_status: "in_progress" }
+              : lesson,
+          ));
+        }
       } catch (err) {
         setError(err.response?.data?.message || "Failed to load module");
       } finally {
@@ -28,7 +40,35 @@ const ModuleDetail = () => {
       }
     };
     loadModule();
-  }, [moduleId]);
+  }, [moduleId, searchParams]);
+
+  const updateLessonProgress = async (lesson, completed = false) => {
+    try {
+      setProgressError("");
+      setProgressingId(lesson.lesson_id);
+      if (completed) {
+        await completeLesson(lesson.lesson_id);
+        const [moduleRes, lessonsRes] = await Promise.all([
+          getModuleById(moduleId),
+          getModuleLessons(moduleId),
+        ]);
+        setModule(moduleRes.data);
+        setLessons(lessonsRes.data);
+      } else {
+        const response = await openLesson(lesson.lesson_id);
+        setModule(response.data.module);
+        setLessons(response.data.lessons);
+      }
+      window.dispatchEvent(new Event("learning-progress-updated"));
+    } catch (err) {
+      setProgressError(err.response?.data?.message || "Failed to update lesson progress");
+    } finally {
+      setProgressingId(null);
+    }
+  };
+
+  const completedLessons = lessons.filter((lesson) => lesson.progress_status === "completed").length;
+  const progressPercent = lessons.length ? Math.round((completedLessons * 100) / lessons.length) : 0;
 
   const downloadUrl = (pdfUrl) =>
     pdfUrl.startsWith("http")
@@ -127,6 +167,10 @@ const ModuleDetail = () => {
         <p className="mt-3 whitespace-pre-wrap text-gray-300">
           {module.description || "No description available."}
         </p>
+        <p className="mt-4 text-sm text-gray-400">
+          {completedLessons}/{lessons.length} lessons completed · {progressPercent}%
+          {lessons.length > 0 && completedLessons === lessons.length ? " · Module complete" : ""}
+        </p>
       </header>
       <section className="rounded-lg border border-default ">
         <div className="border-b border-default p-5">
@@ -148,6 +192,29 @@ const ModuleDetail = () => {
                   lesson.content ||
                   "No description available."}
               </p>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => updateLessonProgress(lesson)}
+                  disabled={progressingId === lesson.lesson_id}
+                  className="rounded-lg border border-default px-3 py-2 text-sm hover:bg-surface-raised disabled:opacity-60"
+                >
+                  {progressingId === lesson.lesson_id ? "Updating..." : "Open lesson"}
+                </button>
+                {lesson.progress_status !== "completed" && (
+                  <button
+                    type="button"
+                    onClick={() => updateLessonProgress(lesson, true)}
+                    disabled={progressingId === lesson.lesson_id}
+                    className="rounded-lg bg-btn-primary px-3 py-2 text-sm text-white disabled:opacity-60"
+                  >
+                    Mark complete
+                  </button>
+                )}
+                <span className="text-sm text-gray-400">
+                  {lesson.progress_status === "completed" ? "Completed" : lesson.progress_status === "not_started" ? "Not started" : "In progress"}
+                </span>
+              </div>
               {lesson.pdf_url && (
                 <button
                   type="button"
@@ -172,6 +239,7 @@ const ModuleDetail = () => {
             No lessons are available for this module.
           </p>
         )}
+        {progressError && <p className="m-5 text-sm text-red-400">{progressError}</p>}
       </section>
     </div>
   );

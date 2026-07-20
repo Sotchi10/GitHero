@@ -5,6 +5,7 @@ import {
   MdLibraryBooks,
   MdOutlinePlayLesson,
 } from "react-icons/md";
+import ThemeToggle from "../../components/ui/ThemeToggle";
 
 const navItems = [
   { label: "Dashboard", path: "/admin", icon: MdDashboard },
@@ -48,6 +49,10 @@ const AdminSidebar = () => {
       </div>
 
       <div className="border-t border-default pt-5">
+        <div className="mb-4 flex items-center justify-between text-sm text-gray-400">
+          <span>Theme</span>
+          <ThemeToggle />
+        </div>
         <p className="text-xs uppercase text-gray-500">Signed in as</p>
         <div className="mt-3 flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-btn-primary font-semibold">

@@ -68,7 +68,7 @@ const Article = () => {
     : "/community";
 
   return (
-    <section className="min-h-full bg-[#080808] px-4 py-8 text-[#e0e0e0]">
+    <section className="min-h-full px-4 py-8 text-[#e0e0e0]">
       <div className=" flex-1 overflow-hidden mt-2">
         <main className="h-full overflow-y-auto px-5">
           <div className="grid gap-6 xl:grid-cols-[1fr_280px]">

@@ -15,15 +15,22 @@
 }
 
 .card:hover {
+<<<<<<< HEAD
   border-color: rgba(255, 255, 255, 0.45);
+=======
+  border-color: rgb(255, 255, 255);
+>>>>>>> c80c81371d78870aa2dacc63d8c8570ff549f0de
   transform: translateY(-2px);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
 }
 
 .card.selected {
+<<<<<<< HEAD
   border-color: rgba(255, 255, 255, 0.7);
+=======
+  border-color: rgb(255, 255, 255);
+>>>>>>> c80c81371d78870aa2dacc63d8c8570ff549f0de
   background: linear-gradient(180deg, rgba(24, 25, 27, 0.95) 0%, #101010 100%);
-  box-shadow: 0 16px 34px rgba(20, 122, 88, 0.15);
 }
 
 .cardTop {
@@ -92,6 +99,7 @@
   color: #7ab3f0;
 }
 
+<<<<<<< HEAD
 /* ── Light mode ── */
 :root[data-theme="white"] .card {
   background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
@@ -143,3 +151,19 @@
   background: transparent;
   color: #2f64d6;
 }
+=======
+:root[data-theme="light"] .card {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="light"] .card:hover { border-color: var(--color-accent); }
+:root[data-theme="light"] .card.selected { background: var(--color-surface-raised); }
+:root[data-theme="light"] .num,
+:root[data-theme="light"] .desc { color: var(--color-text-muted); }
+:root[data-theme="light"] .title { color: var(--color-text-primary); }
+:root[data-theme="light"] .quizBadge,
+:root[data-theme="light"] .selectBtn { background: var(--color-surface-raised); border-color: var(--color-border); color: var(--color-text-primary); }
+:root[data-theme="light"] .selectBtn:hover { background: #f3f4f6; }
+>>>>>>> c80c81371d78870aa2dacc63d8c8570ff549f0de

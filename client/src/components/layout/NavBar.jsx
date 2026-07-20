@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Button from "../../components/ui/Button";
+import ThemeToggle from "../ui/ThemeToggle";
 
 const NavBar = () => {
   return (
@@ -31,7 +32,8 @@ const NavBar = () => {
 
       {/*Buttons*/}
 
-      <div className="flex gap-1">
+      <div className="flex items-center gap-1">
+        <ThemeToggle />
         <Link to="/login">
           <Button bcolor="nonoutline">Sign in</Button>
         </Link>

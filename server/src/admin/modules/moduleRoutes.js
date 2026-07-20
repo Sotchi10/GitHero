@@ -1,25 +1,59 @@
 import express from "express";
-import { addModule, editModule, getAdminDashboardSummary, getAvailableModule, getAvailableModuleLessons, getAvailableModules, getModule, getModules, removeModule } from "./moduleController.js";
-import { requireAdmin, requireAuth } from "../../middleware/auth.js";
 
-const moduleRoute = express.Router();
+import {
+    addModule,
+    editModule,
+    getAdminDashboardSummary,
+    getModule,
+    getModules,
+    removeModule,
+} from "./moduleController.js";
+
+import {
+    requireAdmin,
+    requireAuth,
+} from "../../middleware/auth.js";
+
 const adminModuleRoute = express.Router();
 
-moduleRoute.get("/", getAvailableModules);
-moduleRoute.get("/:id/lessons", getAvailableModuleLessons);
-moduleRoute.get("/:id", getAvailableModule);
 
-adminModuleRoute.use(requireAuth, requireAdmin);
+adminModuleRoute.use(requireAuth);
+adminModuleRoute.use(requireAdmin);
 
-adminModuleRoute.get("/dashboard-summary", getAdminDashboardSummary);
-adminModuleRoute.get("/", getModules);
-adminModuleRoute.get("/:id", getModule);
+// Must remain before "/:id"
+adminModuleRoute.get(
+    "/dashboard-summary",
+    getAdminDashboardSummary
+);
 
-adminModuleRoute.post("/", addModule);
+// Get every module, including unpublished modules
+adminModuleRoute.get(
+    "/",
+    getModules
+);
 
-adminModuleRoute.put("/:id", editModule);
+// Get one module
+adminModuleRoute.get(
+    "/:id",
+    getModule
+);
 
-adminModuleRoute.delete("/:id", removeModule);
+// Create a module
+adminModuleRoute.post(
+    "/",
+    addModule
+);
 
-export default moduleRoute;
-export { adminModuleRoute };
+// Update a module
+adminModuleRoute.put(
+    "/:id",
+    editModule
+);
+
+// Delete a module
+adminModuleRoute.delete(
+    "/:id",
+    removeModule
+);
+
+export default adminModuleRoute;

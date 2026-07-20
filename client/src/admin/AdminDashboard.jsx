@@ -11,6 +11,15 @@ const errorMessage = (err) =>
 const formatDate = (value) =>
   value ? new Date(value).toLocaleDateString() : "No date available";
 
+const emptySummary = {
+  modules: {},
+  lessons: {},
+  users: {},
+  recent_modules: [],
+  recent_lessons: [],
+  modules_without_lessons: [],
+};
+
 const AdminDashboard = () => {
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,7 +31,14 @@ const AdminDashboard = () => {
         setLoading(true);
         setError("");
         const response = await getAdminDashboardSummary();
-        setSummary(response.data);
+        const data = response.data ?? {};
+        setSummary({
+          ...emptySummary,
+          ...data,
+          recent_modules: data.recent_modules ?? [],
+          recent_lessons: data.recent_lessons ?? [],
+          modules_without_lessons: data.modules_without_lessons ?? [],
+        });
       } catch (err) {
         setError(errorMessage(err));
       } finally {
@@ -36,28 +52,32 @@ const AdminDashboard = () => {
   const stats = useMemo(() => {
     if (!summary) return [];
 
+    const modules = summary.modules ?? {};
+    const lessons = summary.lessons ?? {};
+    const users = summary.users ?? {};
+
     return [
       {
         label: "Modules",
-        value: summary.modules.total,
-        detail: `${summary.modules.published} published · ${summary.modules.unpublished} unpublished`,
+        value: modules.total ?? 0,
+        detail: `${modules.published ?? 0} published · ${modules.unpublished ?? 0} unpublished`,
         icon: MdLibraryBooks,
       },
       {
         label: "Lessons",
-        value: summary.lessons.total,
-        detail: `${summary.lessons.with_pdf} with PDFs · ${summary.lessons.without_pdf} without PDFs`,
+        value: lessons.total ?? 0,
+        detail: `${lessons.with_pdf ?? 0} with PDFs · ${lessons.without_pdf ?? 0} without PDFs`,
         icon: MdOutlinePlayLesson,
       },
       {
         label: "Registered users",
-        value: summary.users.total,
+        value: users.total ?? 0,
         detail: "All registered accounts",
         icon: PiStudentFill,
       },
       {
         label: "Modules without lessons",
-        value: summary.modules_without_lessons.length,
+        value: summary.modules_without_lessons?.length ?? 0,
         detail: "Need lesson content",
         icon: MdLibraryBooks,
       },
@@ -111,7 +131,7 @@ const AdminDashboard = () => {
             <article className="rounded-lg border border-default p-5">
               <h2 className="text-xl font-semibold">Recently updated modules</h2>
               <div className="mt-5 space-y-3">
-                {summary.recent_modules.length ? summary.recent_modules.map((module) => (
+                {summary.recent_modules?.length ? summary.recent_modules.map((module) => (
                   <Link key={module.module_id} to="/admin/modules" className="block rounded-lg border border-default p-3 hover:bg-[#161616]">
                     <div className="flex items-center justify-between gap-3">
                       <span className="font-medium">{module.title}</span>
@@ -126,7 +146,7 @@ const AdminDashboard = () => {
             <article className="rounded-lg border border-default p-5">
               <h2 className="text-xl font-semibold">Recently updated lessons</h2>
               <div className="mt-5 space-y-3">
-                {summary.recent_lessons.length ? summary.recent_lessons.map((lesson) => (
+                {summary.recent_lessons?.length ? summary.recent_lessons.map((lesson) => (
                   <Link key={lesson.lesson_id} to="/admin/lessons" className="block rounded-lg border border-default p-3 hover:bg-[#161616]">
                     <p className="font-medium">{lesson.title}</p>
                     <p className="mt-1 text-sm text-gray-400">{lesson.module_title} · Updated {formatDate(lesson.updated_at)}</p>
@@ -140,7 +160,7 @@ const AdminDashboard = () => {
             <article className="rounded-lg border border-default p-5">
               <h2 className="text-xl font-semibold">Modules without lessons</h2>
               <div className="mt-5 space-y-3">
-                {summary.modules_without_lessons.length ? summary.modules_without_lessons.map((module) => (
+                {summary.modules_without_lessons?.length ? summary.modules_without_lessons.map((module) => (
                   <Link key={module.module_id} to={`/admin/lessons?moduleId=${module.module_id}`} className="flex items-center justify-between rounded-lg border border-default p-3 hover:bg-[#161616]">
                     <span className="font-medium">{module.title}</span>
                     <span className="text-xs text-gray-400">Add lesson</span>

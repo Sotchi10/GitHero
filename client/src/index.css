@@ -36,7 +36,7 @@
   --color-text-muted: #526174;
   --color-btn-primary: #1d4ed8;
   --color-btn-primary-hover: #1e40af;
-  --gradient-hero: linear-gradient(180deg, #ffffff 14%, #ffffff 81%);
+  --gradient-hero: linear-gradient(180deg, #ffffff 14%, #eef4ff 81%);
   --gradient-radial: radial-gradient(circle, rgba(29, 78, 216, 0.08) 42%, #ffffff 85%);
 }
 

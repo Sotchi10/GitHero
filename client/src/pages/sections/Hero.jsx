@@ -1,54 +1,46 @@
-import Button from "./../../components/ui/Button";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import Button from "./../../components/ui/Button";
+import dashboardPreview from "../../assets/image/landing/dashboard.png";
 
-const Hero = ({ sectionID }) => {
-  return (
-    <>
-      <section
-        id={sectionID}
-        className="bg-hero h-min flex flex-col justify-center items-center gap-3 px-40 py-40"
-      >
-        <div className="flex justify-center items-center flex-col px-80 text-center gap-2">
-          <h1 className="font-semibold">
-            Start Your Git Journey With Confidence
+const Hero = ({ sectionID }) => (
+  <section
+    id={sectionID}
+    className="bg-hero px-5 pb-16 pt-28 transition-[background] duration-300 sm:px-8 sm:pt-32 lg:pb-24 lg:pt-40"
+  >
+    <div className="mx-auto max-w-6xl flex justify-center items-center gap-12 lg:flex lg:flex-col">
+      <div>
+        <div className="flex flex-col justify-center item-center">
+          <h1 className="max-w-xl text-4xl leading-tight text-center text-primary sm:text-5xl lg:text-5xl font-medium">
+            Master Git and GitHub Through Practice
           </h1>
-          <p className="text-gray-300">
-            No more guessing commands, understand what you’re doing and why it
-            works.
+          <p className="mt-6 max-w-xl text-center text-base text-muted sm:text-lg">
+            Build practical Git skills with guided modules, hands-on command
+            practice, and progress you can see.
           </p>
         </div>
-
-        <div className="flex gap-3 ">
-          <form>
-            <div className="relative w-100 max-w-md">
-              <input
-                id="signup-email"
-                name="email"
-                type="email"
-                placeholder="Enter your email"
-                autoComplete="email"
-                className="w-full pr-10 py-3 pl-4 rounded-[7px] bg-white text-black placeholder-gray-600"
-              />
-
-              <Link to="/signup">
-                <Button
-                  bcolor="primary"
-                  className="absolute right-1 top-1 bottom-1 items-center flex"
-                >
-                  Sign up GitHero
-                </Button>
-              </Link>
-            </div>
-          </form>
-
-          <Button type="button" bcolor="outline">
-            Watch Demo
-          </Button>
+        <div className="mt-8 flex flex-col gap-3 items-center justify-center sm:flex-row">
+          <Link to="/signup">
+            <Button bcolor="primary">
+              Start Learning <ArrowRight className="ml-2" size={17} />
+            </Button>
+          </Link>
+          <Link to="/modules">
+            <Button bcolor="outline" className="text-primary border-default">
+              Explore Modules
+            </Button>
+          </Link>
         </div>
+      </div>
+      <div className="rounded-2xl border border-default bg-surface p-4 shadow-lg sm:p-6 h-[600px]">
+        <img
+          src={dashboardPreview}
+          alt="GitHero dashboard preview"
+          className="h-full w-full rounded-xl object-cover"
+        />
+      </div>
+    </div>
+  </section>
+);
 
-        <div className="w-full h-[95vh] bg-gray-600 rounded-[15px] mt-20"></div>
-      </section>
-    </>
-  );
-};
 export default Hero;

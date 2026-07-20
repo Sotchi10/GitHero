@@ -279,7 +279,7 @@ const RepositoryDetail = ({ className = "" }) => {
                     disabled={!selectedFile}
                     onChange={(e) => setContent(e.target.value)}
                     placeholder="File content..."
-                    className="min-h-[350px] resize-none rounded bg-[#111] border border-[#333] p-4 font-mono text-sm"
+                    className="min-h-[350px] w-full resize-none rounded bg-[#111] border border-[#333] p-4 font-mono text-sm"
                   />
                 </div>
               </div>

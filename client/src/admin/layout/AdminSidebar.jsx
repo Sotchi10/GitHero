@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { FiSearch, FiUsers } from "react-icons/fi";
+import { FiUsers, FiX } from "react-icons/fi";
 import {
   MdDashboard,
   MdLibraryBooks,
@@ -14,10 +14,11 @@ const navItems = [
   { label: "Users", path: "/admin/users", icon: FiUsers },
 ];
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ isOpen = false, onClose }) => {
   return (
-    <aside className="fixed left-0 top-0 z-20 flex h-screen w-75 flex-col justify-between border-r border-default bg-[#0D0D0D] px-8 py-20">
+    <aside className={`fixed left-0 top-0 z-20 flex h-screen w-72 max-w-[85vw] flex-col justify-between border-r border-default bg-[#0D0D0D] px-6 py-8 transition-transform lg:w-72 lg:translate-x-0 lg:px-8 lg:py-20 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
       <div>
+        <button type="button" onClick={onClose} className="mb-5 rounded p-2 hover:bg-surface-raised lg:hidden" aria-label="Close admin navigation"><FiX /></button>
         <div className="mb-8">
           <h1 className="text-2xl font-bold tracking-normal">GitHero Admin</h1>
           <p className="mt-1 text-sm leading-6 text-gray-400">LMS management</p>
@@ -32,6 +33,7 @@ const AdminSidebar = () => {
                 key={item.path}
                 to={item.path}
                 end={item.path === "/admin"}
+                onClick={onClose}
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
                     isActive

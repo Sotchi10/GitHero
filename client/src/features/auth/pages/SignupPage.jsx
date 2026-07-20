@@ -195,7 +195,7 @@ const Select = ({ label, value, onChange }) => {
     label.toLowerCase() === "gender" ? genderOptions : roleOptions;
 
   return (
-    <label className="flex flex-col text-sm gap-1 w-1/4">
+    <label className="flex w-full flex-col gap-1 text-sm sm:w-1/4">
       <span>{label}</span>
 
       <select

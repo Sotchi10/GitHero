@@ -14,7 +14,7 @@ import DashNavItem from "../../features/dashboard/components/dashboard-ui/DashNa
 import Avatar from "../../features/profile/components/Avatar";
 import { useState } from "react";
 
-const DashSideBar = ({ viewedProfile = null }) => {
+const DashSideBar = ({ viewedProfile = null, isOpen = false, onClose }) => {
   const { authUser, profile, updateProfile } = useAuth();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -131,11 +131,7 @@ const DashSideBar = ({ viewedProfile = null }) => {
 
   return (
     <aside
-      className={`${
-        isProfileSection
-          ? "w-95 bg-[#080808] px-20"
-          : "w-75 border-r border-default bg-[#0D0D0D] px-5"
-      } h-auto py-10`}
+      className={`fixed inset-y-16 left-0 z-40 h-[calc(100vh-4rem)] max-w-[85vw] overflow-y-auto border-r border-default bg-[#0D0D0D] py-6 transition-transform lg:static lg:h-auto lg:max-w-none lg:translate-x-0 lg:shrink-0 lg:py-10 ${isOpen ? "translate-x-0" : "-translate-x-full"} ${isProfileSection ? "w-72 px-6 lg:w-95 lg:bg-[#080808] lg:px-10" : "w-72 px-5 lg:w-75"}`}
     >
       {isProfileSection ? (
         // ===== PROFILE SECTION =====
@@ -206,7 +202,7 @@ const DashSideBar = ({ viewedProfile = null }) => {
         // ===== DASHBOARD NAV =====
         <>
           <div className="flex items-center gap-2">
-            <NavLink to={`/profile/${profile.username}`}>
+            <NavLink to={`/profile/${profile.username}`} onClick={onClose}>
               <div className="flex items-center gap-2">
                 <Avatar profile={profile} size="sm" />
                 <p className="text-[13px]">{profile.username}</p>
@@ -223,7 +219,7 @@ const DashSideBar = ({ viewedProfile = null }) => {
               <ul className="flex flex-col gap-1">
                 {section.items.map((item) => (
                   <li key={item.path}>
-                    <NavLink to={item.path}>
+                    <NavLink to={item.path} onClick={onClose}>
                       {({ isActive }) => (
                         <DashNavItem
                           icon={item.icon}

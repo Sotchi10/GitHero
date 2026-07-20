@@ -19,10 +19,10 @@ const RepoCreate = ({ onClose, onCreate, saving = false, error = "" }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/50 p-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-[#111] p-6 rounded-lg w-[400px] border border-[#242424]"
+        className="w-full max-w-md rounded-lg border border-[#242424] bg-[#111] p-4 sm:p-6"
       >
         <h2 className="text-lg font-semibold mb-4">Create Repository</h2>
 
@@ -58,7 +58,7 @@ const RepoCreate = ({ onClose, onCreate, saving = false, error = "" }) => {
 
         {error && <p className="mb-3 text-sm text-red-400">{error}</p>}
 
-        <div className="flex justify-end gap-2">
+        <div className="flex flex-col-reverse justify-end gap-2 sm:flex-row">
           <button
             type="button"
             onClick={onClose}

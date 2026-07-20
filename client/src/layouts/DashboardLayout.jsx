@@ -14,6 +14,7 @@ const DashboardLayout = () => {
     profile: null,
     error: "",
   });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const viewedProfile =
     profileUsername && profileResult.username === profileUsername
       ? profileResult.profile
@@ -58,18 +59,19 @@ const DashboardLayout = () => {
   return (
     <div className="min-h-screen w-full flex flex-col bg-primary">
       {/* Navbar */}
-      <DashNavBar activePath={pathname} />
+      <DashNavBar onMenuToggle={() => setIsSidebarOpen((open) => !open)} />
 
       {/* Body */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 min-w-0">
         {/* Sidebar */}
         {!isSettings && (
-          <DashSideBar activePath={pathname} viewedProfile={viewedProfile} />
+          <DashSideBar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} viewedProfile={viewedProfile} />
         )}
+        {!isSettings && isSidebarOpen && <button type="button" className="fixed inset-16 z-30 bg-black/50 lg:hidden" aria-label="Close navigation menu" onClick={() => setIsSidebarOpen(false)} />}
 
         {/* Content */}
         <main
-          className={`flex-1 overflow-y-auto ${isSettings ? "p-0" : "p-6"}`}
+          className={`min-w-0 flex-1 overflow-y-auto ${isSettings ? "p-0" : "p-4 sm:p-6"}`}
         >
           <Outlet context={{ viewedProfile, profileLoading, profileError }} />
         </main>

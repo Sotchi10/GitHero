@@ -128,8 +128,8 @@ const AdminUsers = () => {
       </section>
 
       {/* Users Table */}
-      <section className="overflow-hidden rounded-lg border border-default">
-        <table className="w-full">
+      <section className="overflow-x-auto rounded-lg border border-default">
+        <table className="min-w-160 w-full">
           <thead className="bg-[#111]">
             <tr className="text-left text-sm text-gray-400">
               <th className="p-4">User</th>

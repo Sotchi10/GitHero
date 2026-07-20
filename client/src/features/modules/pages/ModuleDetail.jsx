@@ -151,7 +151,7 @@ const ModuleDetail = () => {
     );
 
   return (
-    <div className="w-full px-10 space-y-6">
+    <div className="w-full space-y-6 px-4 sm:px-6 lg:px-10">
       <button
         onClick={() => navigate("/modules")}
         className="text-sm text-blue-500 cursor-pointer hover:underline"

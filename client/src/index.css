@@ -90,13 +90,15 @@
     color: var(--color-text-primary, #ffffff);
     font-family: system-ui, sans-serif;
     overflow-x: hidden;
-    width: 100vw;
+    min-width: 0;
     transition:
       background-color 0.25s ease,
       color 0.25s ease;
   }
 
   body { color: var(--color-text-primary); }
+
+  img, video, canvas, svg { max-width: 100%; }
 
   :root[data-theme="light"] .text-white,
   :root[data-theme="white"] .text-white {

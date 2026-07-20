@@ -32,11 +32,11 @@ const Hero = ({ sectionID }) => (
           </Link>
         </div>
       </div>
-      <div className="rounded-2xl border border-default bg-surface p-4 shadow-lg sm:p-6 h-[600px]">
+      <div className="w-full max-w-5xl rounded-2xl border border-default bg-surface p-4 shadow-lg sm:p-6">
         <img
           src={dashboardPreview}
           alt="GitHero dashboard preview"
-          className="h-full w-full rounded-xl object-cover"
+          className="h-auto w-full rounded-xl object-cover"
         />
       </div>
     </div>

@@ -48,12 +48,12 @@ const Profile = () => {
 
   if (loading || (!error && profile && profile.username !== username)) {
     return (
-      <p className="py-18 px-10 text-sm text-gray-400">Loading profile...</p>
+      <p className="px-4 py-18 text-sm text-gray-400 sm:px-6 lg:px-10">Loading profile...</p>
     );
   }
 
   return (
-    <section className="py-18 px-10 text-[#e0e0e0]">
+    <section className="px-4 py-18 text-[#e0e0e0] sm:px-6 lg:px-10">
       <h4>{profile?.username || "Profile"}'s Profile</h4>
 
       {(error || authError) && (

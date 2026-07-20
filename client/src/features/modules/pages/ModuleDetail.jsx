@@ -193,14 +193,7 @@ const ModuleDetail = () => {
                   "No description available."}
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => updateLessonProgress(lesson)}
-                  disabled={progressingId === lesson.lesson_id}
-                  className="rounded-lg border border-default px-3 py-2 text-sm hover:bg-surface-raised disabled:opacity-60"
-                >
-                  {progressingId === lesson.lesson_id ? "Updating..." : "Open lesson"}
-                </button>
+                
                 {lesson.progress_status !== "completed" && (
                   <button
                     type="button"

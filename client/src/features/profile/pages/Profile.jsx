@@ -1,6 +1,9 @@
+import { useEffect, useState } from "react";
 import Description from "./../components/Description";
 import { useAuth } from "../../../context/AuthContext";
 import { useOutletContext, useParams } from "react-router-dom";
+import { getMyRepositories } from "../../../api/apiRepository";
+import RepoCard from "../../repository/components/layout/RepoCard";
 
 
 const Profile = () => {
@@ -13,6 +16,34 @@ const Profile = () => {
     profile?.user_id &&
     String(authProfile.user_id) === String(profile.user_id);
   const displayProfile = isOwnProfile && authProfile ? authProfile : profile;
+  const userId = authProfile?.user_id;
+  const [repositories, setRepositories] = useState([]);
+  const [repositoriesLoading, setRepositoriesLoading] = useState(false);
+  const [repositoriesError, setRepositoriesError] = useState("");
+
+  useEffect(() => {
+    if (!isOwnProfile || !userId) return;
+
+    const loadRepositories = async () => {
+      try {
+        setRepositoriesLoading(true);
+        setRepositoriesError("");
+        const response = await getMyRepositories(userId);
+        setRepositories(Array.isArray(response.data) ? response.data : []);
+      } catch (err) {
+        setRepositoriesError(
+          err.response?.data?.message || "Failed to load repositories",
+        );
+        setRepositories([]);
+      } finally {
+        setRepositoriesLoading(false);
+      }
+    };
+
+    loadRepositories();
+    window.addEventListener("repositories-changed", loadRepositories);
+    return () => window.removeEventListener("repositories-changed", loadRepositories);
+  }, [isOwnProfile, userId]);
 
 
   if (loading || (!error && profile && profile.username !== username)) {
@@ -52,21 +83,25 @@ const Profile = () => {
 
           <Description profile={displayProfile} canEdit={isOwnProfile} />
 
-          {/*<div className="mt-5 rounded border border-default p-5">
-            <h5 className="text-base font-semibold">Repositories</h5>
-            {repoError && (
-              <p className="mt-3 text-sm text-red-400">{repoError}</p>
-            )}
-            <div className="mt-3">
-              {repositories.length > 0 ? (
-                repositories.map((repo) => (
-                  <RepoCard key={repo.repo_id} repo={repo} />
-                ))
+          {isOwnProfile && (
+            <div className="mt-5 rounded border border-default p-5">
+              <h5 className="text-base font-semibold">Repositories</h5>
+              {repositoriesError && (
+                <p className="mt-3 text-sm text-red-400">{repositoriesError}</p>
+              )}
+              {repositoriesLoading ? (
+                <p className="mt-3 text-sm text-gray-400">Loading repositories...</p>
+              ) : (repositories ?? []).length > 0 ? (
+                <div className="mt-3 grid gap-4 md:grid-cols-2">
+                  {(repositories ?? []).map((repo) => (
+                    <RepoCard key={repo.id || repo.repo_id} repo={repo} currentUserId={userId} />
+                  ))}
+                </div>
               ) : (
-                <p className="text-sm text-gray-400">No repositories yet.</p>
+                <p className="mt-3 text-sm text-gray-400">No repositories yet.</p>
               )}
             </div>
-          </div>*/}
+          )}
         </>
       )}
     </section>

@@ -35,7 +35,7 @@ const DashNavBar = () => {
           to="/dashboard"
           className="w-8 h-8 rounded-[100%] bg-gray-400 cursor-pointer"
         >
-          <img src="../public/GitHero.png" alt="" className="w-full h-full"/>
+          <img src="../../public/GitHeroLOGO.png" alt="" className="w-full h-full rounded-[100%]"/>
         </NavLink>
         <NavLink
           to={pathname === isPfp? isPfp : pathname}

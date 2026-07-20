@@ -59,8 +59,8 @@ const Reference = ({ className = "" }) => {
                       onClick={() => setActiveTab(tab.id)}
                       className={`rounded-md px-4 py-2 text-sm transition cursor-pointer ${
                         activeTab === tab.id
-                          ? "bg-[#161616]  text-[#f2f6ff]"
-                          : "text-[#8f9aad] hover:bg-[#161616]  hover:text-[#f2f6ff]"
+                          ? "bg-surface-raised text-primary"
+                          : "text-muted hover:bg-surface-raised hover:text-primary"
                       }`}
                     >
                       {tab.label}

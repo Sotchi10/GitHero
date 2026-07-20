@@ -67,6 +67,7 @@ const Repository = ({ className = "" }) => {
       const res = await createRepository(form, userId);
 
       setRepositories((prev) => [res.data.repository, ...prev]);
+      window.dispatchEvent(new Event("repositories-changed"));
 
       setShowCreate(false);
     } catch (err) {
@@ -88,6 +89,7 @@ const Repository = ({ className = "" }) => {
       setRepositories((prev) =>
         prev.filter((repo) => String(repo.id || repo.repo_id) !== String(repoId)),
       );
+      window.dispatchEvent(new Event("repositories-changed"));
     } catch (err) {
       setVisibleLoadError(
         err.response?.data?.message || "Failed to delete repository",

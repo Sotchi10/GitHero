@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import DashNavItem from "./../../../dashboard/components/dashboard-ui/DashNavItem";
 
 const formatDate = (value) => {
   if (!value) return "";
@@ -28,6 +27,8 @@ const RepoCard = ({ repo, currentUserId, onDelete }) => {
   const canDelete =
     repo.user_id && currentUserId && String(repo.user_id) === String(currentUserId);
   const fullName = `${username}/${repoName}`;
+  const language = repo.language || "Not specified";
+  const visibility = repo.visibility === "private" ? "private" : "public";
   const repoPath = `/repository/${encodeURIComponent(
     username,
   )}/${encodeURIComponent(repoName)}`;
@@ -35,7 +36,7 @@ const RepoCard = ({ repo, currentUserId, onDelete }) => {
 
   return (
     <>
-      <div className="border-b-1 border-default px-5 py-6">
+      <div className="border border-default px-5 py-6">
         <NavLink
           to={repoPath}
           className="font-semibold text-blue-500 hover:underline"
@@ -46,7 +47,16 @@ const RepoCard = ({ repo, currentUserId, onDelete }) => {
           {repo.description || "No description yet."}
         </p>
         <div className="flex items-center justify-between">
-          <DashNavItem itemName={repo.visibility || "public"} />
+          <div className="flex items-center gap-2">
+            <span
+              className={`h-2.5 w-2.5 rounded-full ${
+                visibility === "private" ? "bg-red-500" : "bg-green-500"
+              }`}
+              aria-hidden="true"
+            />
+            <span className="text-[13.5px] text-muted">{visibility}</span>
+            <span className="text-[12px] text-gray-400">{language}</span>
+          </div>
 
           <div className="flex items-center gap-3">
             {canDelete && (

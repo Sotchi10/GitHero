@@ -4,7 +4,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Avatar from "../features/profile/components/Avatar";
 import ThemeToggle from "../components/ui/ThemeToggle";
-import { FiGrid } from "react-icons/fi";
+import { FiGrid, FiHome } from "react-icons/fi";
 import { PiGitBranch } from "react-icons/pi";
 import { MdOutlinePlayLesson } from "react-icons/md";
 import { TbBuildingCommunity } from "react-icons/tb";
@@ -33,9 +33,10 @@ const DashNavBar = () => {
       <div className="flex gap-1 items-center">
         <NavLink
           to="/dashboard"
-          className="w-8 h-8 rounded-[100%] bg-gray-400 cursor-pointer"
+          aria-label="Dashboard home"
+          className="flex h-8 w-8 items-center justify-center rounded-full text-primary hover:bg-surface-raised"
         >
-          <img src="../../public/GitHeroLOGO.png" alt="" className="w-full h-full rounded-[100%]"/>
+          <FiHome className="text-lg" aria-hidden="true" />
         </NavLink>
         <NavLink
           to={pathname === isPfp? isPfp : pathname}
